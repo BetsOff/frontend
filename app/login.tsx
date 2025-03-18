@@ -29,7 +29,7 @@ const LoginScreen = () => {
           'Content-Type': 'application/json',
         }
       });
-      
+
       if (response.status === 200) {
         storageSetItem('user', response.data.user);
         storageSetItem('user_id', `${response.data.id}`);
@@ -37,7 +37,7 @@ const LoginScreen = () => {
         login();
         router.replace('/(tabs)/standings');
       }
-      
+
     } catch (error) {
       console.error('Error logging in:', error);
     } finally {
@@ -48,29 +48,29 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.inputView, {borderColor: color.active_text}]}>
+      <View style={[styles.inputView, { borderColor: color.active_text }]}>
         <TextInput
-        style={[styles.inputText, {color: color.active_text}]}
-        placeholder="Username"
-        placeholderTextColor={color.inactive_text}
-        value={username}
-        onChangeText={setUsername}
+          style={[styles.inputText, { color: color.active_text }]}
+          placeholder="Username"
+          placeholderTextColor={color.inactive_text}
+          value={username}
+          onChangeText={setUsername}
         />
       </View>
-      <View style={[styles.inputView, {borderColor: color.active_text}]}>
+      <View style={[styles.inputView, { borderColor: color.active_text }]}>
         <TextInput
-        secureTextEntry
-        style={[styles.inputText, {color: color.active_text}]}
-        placeholder="Password"
-        placeholderTextColor={color.inactive_text}
-        value={password}
-        onChangeText={setPassword}
+          secureTextEntry
+          style={[styles.inputText, { color: color.active_text }]}
+          placeholder="Password"
+          placeholderTextColor={color.inactive_text}
+          value={password}
+          onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleLogin}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, {backgroundColor: color.background_2}]} onPress={handleSignUp}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: color.background_2 }]} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>

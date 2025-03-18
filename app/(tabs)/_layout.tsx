@@ -15,65 +15,55 @@ import Feather from '@expo/vector-icons/Feather';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useThemeColor } from '@/components/Themed';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: useThemeColor(undefined, 'tint'),
-          // Disable the static render of the header on web
-          // to prevent a hydration error in React Navigation v6.
-          headerShown: useClientOnlyValue(false, true),
-        }}>
-        <Tabs.Screen
-          name="standings"
-          options={{
-            title: 'Standings',
-            headerShown: false,
-            tabBarIcon: ({ color }) => <AntDesign name="barschart" size={24} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="scores"
-          options={{
-            title: 'Scores',
-            headerShown: false,
-            tabBarIcon: ({ color }) => <MaterialCommunityIcons name="scoreboard-outline" size={24} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="live_match"
-          options={{
-            title: 'Live Match',
-            headerShown: false,
-            tabBarIcon: ({ color }) => <MaterialIcons name="attach-money" size={32} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="feedback"
-          options={{
-            title: 'Feedback',
-            headerShown: false,
-            tabBarIcon: ({ color }) => <Feather name="help-circle" size={24} color={color} />,
-          }}
-        />
-        <Tabs.Screen 
-          name="more"
-          options={{
-            title: 'More',
-            headerShown: false,
-            tabBarIcon: ({ color }) =><Entypo name="dots-three-horizontal" size={24} color={color} />,
-          }}
-        />
-      </Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: useThemeColor(undefined, 'tint'),
+        headerShown: useClientOnlyValue(false, true),
+      }}>
+      <Tabs.Screen
+        name="standings"
+        options={{
+          title: 'Standings',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <AntDesign name="barschart" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="scores"
+        options={{
+          title: 'Scores',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="scoreboard-outline" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="live-match"
+        options={{
+          title: 'Live Match',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <MaterialIcons name="attach-money" size={32} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="feedback"
+        options={{
+          title: 'Feedback',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <Feather name="help-circle" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen 
+        name="more"
+        options={{
+          title: 'More',
+          headerShown: false,
+          tabBarIcon: ({ color }) =><Entypo name="dots-three-horizontal" size={24} color={color} />,
+        }}
+      />
+    </Tabs>
   );
 }

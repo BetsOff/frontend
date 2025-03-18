@@ -26,16 +26,16 @@ export default function StandingsScreen() {
       {season.season_number == 0 || season.season_number == undefined
         ? league.commissioner
           ? <View style={styles.seasonButtonContainer}>
-              <CreateButton object='Season' link='/create_season' />
-            </View>
+            <CreateButton object='Season' link='/create_season' />
+          </View>
           : <></>
-        : <View> 
-            <SeasonHeader 
-              name={`Season ${season.season_number}`} 
-              start_date={season.start_date} 
-              end_date={season.end_date}
-            />
-            <StandingsTable />
+        : <View>
+          <SeasonHeader
+            name={`Season ${season.season_number}`}
+            start_date={season.start_date}
+            end_date={season.end_date}
+          />
+          <StandingsTable />
         </View>
       }
     </View>

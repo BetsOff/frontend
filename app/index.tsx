@@ -5,7 +5,7 @@ import { storageGetItem } from '@/util/Storage';
 
 export default function StartScreen() {
   const router = useRouter();
-  
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (storageGetItem('token') == null) {

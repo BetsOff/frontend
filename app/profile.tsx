@@ -24,7 +24,7 @@ export default function ProfileScreen() {
       <Text style={styles.title}>Profile</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <TouchableOpacity onPress={signout}>
-        <View style={[styles.signoutButton, {backgroundColor: color.brand}]}>
+        <View style={[styles.signoutButton, { backgroundColor: color.brand }]}>
           <Text style={styles.signoutText}>Sign out</Text>
         </View>
       </TouchableOpacity>

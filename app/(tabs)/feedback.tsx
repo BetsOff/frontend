@@ -17,7 +17,7 @@ export default function HelpScreen() {
       Alert.alert(`Don't know how to open this URL: ${formLink}`);
     }
   }
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Feedback</Text>
@@ -30,11 +30,11 @@ export default function HelpScreen() {
         <Text style={styles.instructions}>(Include screenshot if applicable)</Text>
       </View>
       <TouchableOpacity onPress={handleLink}>
-        <View style={[styles.buttonContainer, {backgroundColor: color.brand}]}>
+        <View style={[styles.buttonContainer, { backgroundColor: color.brand }]}>
           <Text style={styles.buttonText}>Join our Discord</Text>
         </View>
       </TouchableOpacity>
-      </View>
+    </View>
   );
 }
 

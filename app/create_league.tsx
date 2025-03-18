@@ -8,93 +8,93 @@ import { useRouter } from 'expo-router';
 import { fetchLeagues, useLeagueSetContext } from '@/context/useLeagueSetContext';
 
 const CreateLeagueScreen = () => {
-    const color = useColor();
-    const router = useRouter();
-    const [name, setName] = useState('');
-    const [maxPlayers, setMaxPlayers] = useState('');
-    const { setLeagueSet } = useLeagueSetContext();
+	const color = useColor();
+	const router = useRouter();
+	const [name, setName] = useState('');
+	const [maxPlayers, setMaxPlayers] = useState('');
+	const { setLeagueSet } = useLeagueSetContext();
 
-    const handleCreateLeague = async () => {
-        try {
-            const response = await axios.post(`${api['url']}/leagues/create/`, {
-                name: name,
-                max_players: maxPlayers,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Authorization': `Token ${storageGetItem('token')}`
-                }
-            });
+	const handleCreateLeague = async () => {
+    try {
+			const response = await axios.post(`${api['url']}/leagues/create/`, {
+				name: name,
+				max_players: maxPlayers,
+			}, {
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Authorization': `Token ${storageGetItem('token')}`
+				}
+			});
 
-            if (response.status === 201) {
-                setLeagueSet(await fetchLeagues())
-                router.replace('/(tabs)/standings')
-            }
-        } catch (error) {
-            console.error('Error creating league: ', error)
-        } finally {
-            setName('');
-            setMaxPlayers('');
-        }
+			if (response.status === 201) {
+				setLeagueSet(await fetchLeagues());
+				router.replace('/(tabs)/standings');
+			}
+    } catch (error) {
+			console.error('Error creating league: ', error);
+    } finally {
+			setName('');
+			setMaxPlayers('');
     }
+	}
 
-    return (
-        <View style={styles.container}>
-            <View style={[styles.inputView, {borderColor: color.active_text}]}>
-                <TextInput 
-                    style={[styles.inputText, {color: color.active_text}]}
-                    placeholder="League Name"
-                    placeholderTextColor={color.inactive_text}
-                    value={name}
-                    onChangeText={setName}
-                />
-            </View>
-            <View style={[styles.inputView, {borderColor: color.active_text}]}>
-                <TextInput
-                    style={[styles.inputText, {color: color.active_text}]}
-                    placeholder="Max Players (4-16)"
-                    placeholderTextColor={color.inactive_text}
-                    value={maxPlayers}
-                    onChangeText={setMaxPlayers}
-                />
-            </View>
-            <TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleCreateLeague}>
-                <Text style={styles.buttonText}>Create League</Text>
-            </TouchableOpacity>
-        </View>
-    )
+	return (
+		<View style={styles.container}>
+			<View style={[styles.inputView, {borderColor: color.active_text}]}>
+				<TextInput 
+					style={[styles.inputText, {color: color.active_text}]}
+					placeholder="League Name"
+					placeholderTextColor={color.inactive_text}
+					value={name}
+					onChangeText={setName}
+				/>
+			</View>
+			<View style={[styles.inputView, {borderColor: color.active_text}]}>
+				<TextInput
+					style={[styles.inputText, {color: color.active_text}]}
+					placeholder="Max Players (4-16)"
+					placeholderTextColor={color.inactive_text}
+					value={maxPlayers}
+					onChangeText={setMaxPlayers}
+				/>
+			</View>
+			<TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleCreateLeague}>
+				<Text style={styles.buttonText}>Create League</Text>
+			</TouchableOpacity>
+    </View>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingTop: 20,
-    },
-    inputView: {
-        width: '80%',
-        borderRadius: 25,
-        height: 50,
-        marginBottom: 20,
-        justifyContent: 'center',
-        padding: 20,
-        borderWidth: 1,
-    },
-    inputText: {
-        height: 50,
-    },
-    button: {
-        width: '80%',
-        borderRadius: 25,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 10,
-    },
-    buttonText: {
-        fontSize: 20,
-    },
-  });
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'flex-start',
+		paddingTop: 20,
+	},
+	inputView: {
+		width: '80%',
+		borderRadius: 25,
+		height: 50,
+		marginBottom: 20,
+		justifyContent: 'center',
+		padding: 20,
+		borderWidth: 1,
+	},
+	inputText: {
+		height: 50,
+	},
+	button: {
+		width: '80%',
+		borderRadius: 25,
+		height: 50,
+		alignItems: 'center',
+		justifyContent: 'center',
+		margin: 10,
+	},
+	buttonText: {
+		fontSize: 20,
+	},
+});
 
 export default CreateLeagueScreen;

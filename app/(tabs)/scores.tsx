@@ -24,7 +24,7 @@ export default function ScoresScreen() {
 
   if (league == emptyLeague) {
     return (
-      <NoDataScreen data='league'/>
+      <NoDataScreen data='league' />
     )
   } else if (season == emptySeason) {
     return (
@@ -113,8 +113,8 @@ export default function ScoresScreen() {
         <LeagueHeader />
         {league.commissioner
           ? <View style={styles.seasonButtonContainer}>
-              <CreateButton object='Season' link='/create_season' />
-            </View>
+            <CreateButton object='Season' link='/create_season' />
+          </View>
           : <></>
         }
       </View>
@@ -126,12 +126,12 @@ export default function ScoresScreen() {
       <LeagueHeader />
       <MatchHeader />
       <SteppingBar onGoForward={forwardMatch} onGoBack={backMatch} />
-      <MatchList 
+      <MatchList
         matches={matchSet.matches}
         starting_credits={matchSet.starting_credits}
         status={matchSet.status}
       />
-      
+
     </View>
   );
 }

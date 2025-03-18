@@ -13,7 +13,6 @@ import { SelectedLineProvider } from '@/context/useSelectedLineContext';
 import { SelectedLeagueProvider } from '@/context/useSelectedLeagueContext';
 import { PlayerOneBetListProvider } from '@/context/usePlayerOneBetListContext';
 import { PlayerTwoBetListProvider } from '@/context/usePlayerTwoBetListContext';
-import { storageGetItem } from '@/util/Storage';
 import { AuthProvider } from '@/context/useAuthContext';
 import { SeasonProvider } from '@/context/useSeasonContext';
 import { LeagueProvider } from '@/context/useLeagueContext';
@@ -70,14 +69,14 @@ function RootLayoutNav() {
                     <SelectedLineProvider>
                       <PlayerOneBetListProvider>
                         <PlayerTwoBetListProvider>
-                            <Stack>
+                          <Stack>
 
-                              <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
-                              <Stack.Screen name="create_account" options={{ headerShown: false, }}/>
-                              <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
-                              <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
+                            <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
+                            <Stack.Screen name="create_account" options={{ headerShown: false, }} />
+                            <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
+                            <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
 
-                            </Stack>
+                          </Stack>
                         </PlayerTwoBetListProvider>
                       </PlayerOneBetListProvider>
                     </SelectedLineProvider>

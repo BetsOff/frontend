@@ -80,13 +80,13 @@ export default function InvitesScreen() {
 	return (
 		<View style={styles.container}>
 			{invites.map((invite, index) => (
-				<View key={index} style={[styles.invite, {backgroundColor: index % 2 == 0 ?  color.background_1 : color.background_2}]}>
+				<View key={index} style={[styles.invite, { backgroundColor: index % 2 == 0 ? color.background_1 : color.background_2 }]}>
 					<Text style={styles.leagueText}>{invite.league_name}</Text>
 					<View style={styles.buttons}>
-						<TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={() => handleAccept(invite.league)}>
+						<TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={() => handleAccept(invite.league)}>
 							<Text style={styles.buttonText}>Accept</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={[styles.button, {backgroundColor:  color.red}]} onPress={() => handleDecline(invite.league)}>
+						<TouchableOpacity style={[styles.button, { backgroundColor: color.red }]} onPress={() => handleDecline(invite.league)}>
 							<Text style={styles.buttonText}>Decline</Text>
 						</TouchableOpacity>
 					</View>
@@ -98,36 +98,36 @@ export default function InvitesScreen() {
 
 const styles = StyleSheet.create({
 	container: {
-			flexDirection: 'column',
-			height: '100%',
-			justifyContent: 'flex-start',
-			alignItems: 'flex-start',
+		flexDirection: 'column',
+		height: '100%',
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
 	},
 	invite: {
-			padding: 10,
-			paddingHorizontal: 20,
-			flexDirection: 'row',
-			width: '100%',
-			justifyContent: 'space-between',
-			alignItems: 'center',
+		padding: 10,
+		paddingHorizontal: 20,
+		flexDirection: 'row',
+		width: '100%',
+		justifyContent: 'space-between',
+		alignItems: 'center',
 	},
 	leagueText: {
-			fontSize: 20,
-			fontWeight: 500,
+		fontSize: 20,
+		fontWeight: 500,
 	},
 	buttons: {
-			flexDirection: 'row',
+		flexDirection: 'row',
 	},
 	button: {
-			padding: 5,
-			borderRadius: 5,
-			alignItems: 'center',
-			justifyContent: 'center',
-			margin: 10,
+		padding: 5,
+		borderRadius: 5,
+		alignItems: 'center',
+		justifyContent: 'center',
+		margin: 10,
 	},
 	buttonText: {
-			fontSize: 20,
-			fontWeight: 500,
-			color: 'white',
+		fontSize: 20,
+		fontWeight: 500,
+		color: 'white',
 	},
 })

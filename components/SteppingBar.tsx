@@ -3,8 +3,8 @@ import { Button, StyleSheet } from 'react-native';
 import { View } from '@/components/Themed';
 
 type SteppingBarProps = {
-    onGoForward: () => void;
-    onGoBack: () => void;
+  onGoForward: () => void;
+  onGoBack: () => void;
 }
 
 const SteppingBar: React.FC<SteppingBarProps> = ({ onGoForward, onGoBack }) => {
