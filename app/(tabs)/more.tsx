@@ -7,51 +7,51 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function MoreScreen() {
-    const color = useColor();
-    const pages = [
-			{
-				title: "Profile",
-				icon: (<MaterialCommunityIcons name="account" size={28} color={color.active_text} />),
-				link: '/profile'
-			},
-			{
-				title: "My Leagues",
-				icon: (<FontAwesome name="group" size={24} color={color.active_text} />),
-				link: '/leagues'
-			},
-			{
-				title: "Invites",
-				icon: (<MaterialIcons name="mail" size={24} color={color.active_text} />),
-				link: '/invites'
-			}
-    ]
-    return (
-			<View style={styles.container}>
-				<Text style={styles.text}>More</Text>
-				{pages.map((page, index) => (
-					<PageRow 
-						title={page.title}
-						icon={page.icon}
-						link={page.link}
-						row={index}
-						key={index}
-					/>
-				))}
-			</View>
-		)
+  const color = useColor();
+  const pages = [
+    {
+      title: "Profile",
+      icon: (<MaterialCommunityIcons name="account" size={28} color={color.active_text} />),
+      link: '/profile'
+    },
+    {
+      title: "My Leagues",
+      icon: (<FontAwesome name="group" size={24} color={color.active_text} />),
+      link: '/leagues'
+    },
+    {
+      title: "Invites",
+      icon: (<MaterialIcons name="mail" size={24} color={color.active_text} />),
+      link: '/invites'
+    }
+  ]
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>More</Text>
+      {pages.map((page, index) => (
+        <PageRow
+          title={page.title}
+          icon={page.icon}
+          link={page.link}
+          row={index}
+          key={index}
+        />
+      ))}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-	container: {
-		paddingVertical: 50,
-		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'flex-start',
-		justifyContent: 'flex-start'
-	},
-	text: {
-		fontSize: 32,
-		fontWeight: 500,
-		padding: 15,
-	}
+  container: {
+    paddingVertical: 50,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  text: {
+    fontSize: 32,
+    fontWeight: 500,
+    padding: 15,
+  }
 });

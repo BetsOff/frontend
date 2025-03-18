@@ -9,7 +9,7 @@ type PageRowProps = {
   row: number;
   icon: ReactNode;
   title: string;
-  link: Href;
+  link: string;
 }
 
 const PageRow: React.FC<PageRowProps> = ({ row, icon, title, link }) => {
@@ -20,7 +20,7 @@ const PageRow: React.FC<PageRowProps> = ({ row, icon, title, link }) => {
     : color.background_2
 
   const rowPressed = () => {
-    router.push(link)
+    router.push(link as Href)
   }
 
   return (
