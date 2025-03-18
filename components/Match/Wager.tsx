@@ -1,0 +1,153 @@
+import { Text, useColor, View } from '@/components/Themed';
+import calcualtePointsWon from '@/util/calculatePointsWon';
+import { StyleSheet } from 'react-native';
+
+type WagerProps = {
+    league_name: string;
+    status: string;
+    wager: Wager;
+}
+
+const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
+    const color = useColor();
+
+    var market_title = wager.market == 'totals'
+        ? league_name == 'MLB'
+            ? 'Total Runs'
+            : 'Total Points'
+        : 'Moneyline'
+
+    var pointsStyle = [textStyles.pointsEarnedLost, {color: color.red}];
+    if (wager.points_earned > 0) {
+        pointsStyle = [textStyles.pointsEarnedWon, {color: color.brand}];
+    }
+
+    // var selectionStyle = [textStyles.selectionNotPicked, {}];
+    var selectionPicked = wager.first_selection_picked
+        ? wager.first_selection
+        : wager.second_selection
+    var selectionPriceNumber = wager.first_selection_picked
+        ? wager.first_price
+        : wager.second_price
+    
+    if (selectionPicked == 'over') {
+        selectionPicked = 'OVR'
+    } else if (selectionPicked == 'under') {
+        selectionPicked = 'UND'
+    }
+    
+    const selectionStyle = status == "Final"
+        ? wager.points_earned > 0
+            ? [textStyles.selectionWon, {color: color.brand}]
+            : [textStyles.selectionLost, {color: color.red}]
+        : textStyles.selectionLive
+
+    const selectionPrice: string = selectionPriceNumber > 0
+        ? `+${selectionPriceNumber}`
+        : `${selectionPriceNumber}`
+
+    return (
+        <View style={styles.container}>
+            <View style={[styles.separatorPadding, {backgroundColor: color.background_2}]}>
+                <View style={[styles.separator, {backgroundColor: color.inactive_text}]} />
+            </View>
+            {/* Wager Header */}
+            <View style={[styles.flexRow, {backgroundColor: color.background_2}]}>
+                <View style={[styles.wagerHeader, {backgroundColor: color.background_2}]}>
+                    <Text style={textStyles.header}>{market_title}</Text>
+                    <Text style={textStyles.header}>{wager.wager}</Text>
+                </View>
+            </View>
+            {/* Selections and Score */}
+            <View style={[styles.flexRow, {backgroundColor: color.background_2}]}>
+                <View style={[styles.selectionsAndScoreContainer, {backgroundColor: color.background_2}]}>
+                    {/* Selections */}
+                    <View style={[styles.selectionsContainer, {backgroundColor: color.background_2}]}>
+                        <Text style={selectionStyle}>{selectionPrice} {selectionPicked} {wager.point}</Text>
+                    </View>
+                    {/* Score */}
+                    {status == "Final" ? (
+                        <Text style={pointsStyle}>{wager.points_earned}</Text>
+                    ) : (
+                        <Text style={[textStyles.potentialPointsEarned, {color: color.inactive_text}]}>{calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price)}</Text>
+                    )}
+                    
+                </View>
+            </View>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'column',
+        
+    },
+    wagerHeader: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        marginHorizontal: 5,
+        marginBottom: 5,
+    },
+    selectionsAndScoreContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
+        marginHorizontal: 5,
+        justifyContent: 'space-between',
+    },
+    selectionsContainer: {
+        flexDirection: 'row',
+    },
+    flexRow: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: '100%',
+    },
+    separatorPadding: {
+        justifyContent: 'center',
+        padding: 5,
+    },
+    separator: {
+        height: 1,
+        width: '100%',
+    },
+    defaultText: {
+        fontSize: 18,
+    },
+})
+
+const textStyles = StyleSheet.create({
+    header: {
+        fontSize: 14,
+    },
+    pointsEarnedWon: {
+        fontWeight: 600,
+        fontSize: 24,
+    },
+    pointsEarnedLost: {
+        fontWeight: 600,
+        fontSize: 24,
+    },
+    potentialPointsEarned: {
+        fontWeight: 300,
+        fontSize: 20,
+        fontStyle: "italic",
+    },
+    selectionNotPicked: {
+        ...styles.defaultText,
+    },
+    selectionLive: {
+        ...styles.defaultText,
+    },
+    selectionWon: {
+        ...styles.defaultText,
+    },
+    selectionLost: {
+        ...styles.defaultText,
+    }
+})
+
+export default Wager
