@@ -22,13 +22,19 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: useThemeColor(undefined, 'tint'),
+        tabBarStyle: {
+          backgroundColor: useThemeColor(undefined, 'background_2'),
+        },
+        headerStyle: {
+          backgroundColor: useThemeColor(undefined, 'brand'),
+        },
+        headerTintColor: useThemeColor(undefined, 'active_text'),
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
         name="standings"
         options={{
           title: 'Standings',
-          headerShown: false,
           tabBarIcon: ({ color }) => <AntDesign name="barschart" size={24} color={color} />,
         }}
       />
@@ -36,7 +42,6 @@ export default function TabLayout() {
         name="scores"
         options={{
           title: 'Scores',
-          headerShown: false,
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="scoreboard-outline" size={24} color={color} />,
         }}
       />
@@ -44,7 +49,6 @@ export default function TabLayout() {
         name="live-match"
         options={{
           title: 'Live Match',
-          headerShown: false,
           tabBarIcon: ({ color }) => <MaterialIcons name="attach-money" size={32} color={color} />,
         }}
       />
@@ -52,7 +56,6 @@ export default function TabLayout() {
         name="feedback"
         options={{
           title: 'Feedback',
-          headerShown: false,
           tabBarIcon: ({ color }) => <Feather name="help-circle" size={24} color={color} />,
         }}
       />
@@ -60,7 +63,6 @@ export default function TabLayout() {
         name="more"
         options={{
           title: 'More',
-          headerShown: false,
           tabBarIcon: ({ color }) =><Entypo name="dots-three-horizontal" size={24} color={color} />,
         }}
       />

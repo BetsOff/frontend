@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-evenly',
 		alignItems: 'stretch',
-		width: '100%',
+		width: '83%',
 	}
 })
 

@@ -138,7 +138,6 @@ export default function ScoresScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 50,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-start',

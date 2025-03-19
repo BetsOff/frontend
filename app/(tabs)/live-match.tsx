@@ -75,7 +75,6 @@ export default function LiveMatchScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 50,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center', 
