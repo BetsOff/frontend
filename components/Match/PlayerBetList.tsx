@@ -71,9 +71,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		paddingHorizontal: 0,
-		margin: 10,
-		marginHorizontal: 50,
+		marginHorizontal: 40,
 		width: '30%',
 	}
 })

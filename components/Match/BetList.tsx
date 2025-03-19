@@ -58,16 +58,15 @@ const BetList: React.FC<BetListProps> = ({ }) => {
 
 const styles = StyleSheet.create({
 	betListContainer: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'stretch',
-		width: '100%',
+		flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
 	},
 	playerBetListContainer: {
 		flexDirection: 'row',
-		justifyContent: 'space-evenly',
-		alignItems: 'stretch',
-		width: '83%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
 	}
 })
 

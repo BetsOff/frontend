@@ -5,7 +5,7 @@ export default {
   light: {
     text: '#000',
     brand: "#58984C",
-    red: 'red',
+    red: '#9C2B2B',
     background_1: '#fff',
     background_2: '#eee',
     background_3: '#ddd',
@@ -18,7 +18,7 @@ export default {
   dark: {
     text: '#fff',
     brand: "#58984C",
-    red: 'red',
+    red: '#9C2B2B',
     background_1: '#171717',
     background_2: '#272727',
     background_3: '#585858',

@@ -58,6 +58,7 @@ export default function LiveMatchScreen() {
   if (match.participants[0].user_id == Number(storageGetItem('user_id')) && todayInTimeFrame(match.start_date, match.end_date) && match.participants[0].credits_remaining > 0) {
       loadMakeBets = true;
   }
+  console.log(loadMakeBets);
 
   return (
     <View style={styles.container}>
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '107%',
+    top: '93%',
     borderRadius: 100,
   },
 });

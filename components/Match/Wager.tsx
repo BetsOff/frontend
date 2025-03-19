@@ -17,10 +17,11 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 			: 'Total Points'
 		: 'Moneyline'
 
-	var pointsStyle = [textStyles.pointsEarnedLost, { color: color.red }];
-	if (wager.points_earned > 0) {
-		pointsStyle = [textStyles.pointsEarnedWon, { color: color.brand }];
-	}
+	const bgColor = status == "Final"
+		? wager.points_earned > 0
+			? color.brand
+			: color.red
+		: color.background_2
 
 	// var selectionStyle = [textStyles.selectionNotPicked, {}];
 	var selectionPicked = wager.first_selection_picked
@@ -36,42 +37,43 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 		selectionPicked = 'UND'
 	}
 
-	const selectionStyle = status == "Final"
-		? wager.points_earned > 0
-			? [textStyles.selectionWon, { color: color.brand }]
-			: [textStyles.selectionLost, { color: color.red }]
-		: textStyles.selectionLive
+	// const selectionStyle = status == "Final"
+	// 	? wager.points_earned > 0
+	// 		? [textStyles.selectionWon, { color: color.brand }]
+	// 		: [textStyles.selectionLost, { color: color.red }]
+	// 	: textStyles.selectionLive
 
 	const selectionPrice: string = selectionPriceNumber > 0
 		? `+${selectionPriceNumber}`
 		: `${selectionPriceNumber}`
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, { backgroundColor: color.background_2 }]}>
 			<View style={[styles.separatorPadding, { backgroundColor: color.background_2 }]}>
 				<View style={[styles.separator, { backgroundColor: color.inactive_text }]} />
 			</View>
-			{/* Wager Header */}
-			<View style={[styles.flexRow, { backgroundColor: color.background_2 }]}>
-				<View style={[styles.wagerHeader, { backgroundColor: color.background_2 }]}>
-					<Text style={textStyles.header}>{market_title}</Text>
-					<Text style={textStyles.header}>{wager.wager}</Text>
-				</View>
-			</View>
-			{/* Selections and Score */}
-			<View style={[styles.flexRow, { backgroundColor: color.background_2 }]}>
-				<View style={[styles.selectionsAndScoreContainer, { backgroundColor: color.background_2 }]}>
-					{/* Selections */}
-					<View style={[styles.selectionsContainer, { backgroundColor: color.background_2 }]}>
-						<Text style={selectionStyle}>{selectionPrice} {selectionPicked} {wager.point}</Text>
+			<View style={[styles.wagerContainer, { backgroundColor: bgColor }]}>
+				{/* Wager Header */}
+				<View style={[styles.flexRow, { backgroundColor: bgColor }]}>
+					<View style={[styles.wagerHeader, { backgroundColor: bgColor }]}>
+						<Text style={textStyles.header}>{market_title}</Text>
+						<Text style={textStyles.header}>{wager.wager}</Text>
 					</View>
-					{/* Score */}
-					{status == "Final" ? (
-						<Text style={pointsStyle}>{wager.points_earned}</Text>
-					) : (
-						<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>{calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price)}</Text>
-					)}
-
+				</View>
+				{/* Selections and Score */}
+				<View style={[styles.flexRow, { backgroundColor: bgColor }]}>
+					<View style={[styles.selectionsAndScoreContainer, { backgroundColor: bgColor }]}>
+						{/* Selections */}
+						<View style={[styles.selectionsContainer, { backgroundColor: bgColor }]}>
+							<Text style={styles.defaultText}>{selectionPrice} {selectionPicked} {wager.point}</Text>
+						</View>
+						{/* Score */}
+						{status == "Final" ? (
+							<Text style={[textStyles.pointsEarned]}>{wager.points_earned}</Text>
+						) : (
+							<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>{calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price)}</Text>
+						)}
+					</View>
 				</View>
 			</View>
 		</View>
@@ -81,7 +83,11 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
-
+	},
+	wagerContainer: {
+		width: '100%',
+		borderRadius: 10,
+		padding: 3,
 	},
 	wagerHeader: {
 		flexDirection: 'row',
@@ -123,11 +129,7 @@ const textStyles = StyleSheet.create({
 	header: {
 		fontSize: 14,
 	},
-	pointsEarnedWon: {
-		fontWeight: 600,
-		fontSize: 24,
-	},
-	pointsEarnedLost: {
+	pointsEarned: {
 		fontWeight: 600,
 		fontSize: 24,
 	},

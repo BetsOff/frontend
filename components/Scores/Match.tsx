@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useColor, View } from '@/components/Themed';
-import { useRouter } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import { useMatchContext } from '../../context/useMatchContext';
 
 import PlayerScore from './PlayerScore';
@@ -20,7 +20,7 @@ const Match: React.FC<MatchProps> = ({ match, status }) => {
 
   const handleMatchPressed = () => {
     setMatch(match)
-    router.replace('/live_match');
+    router.replace('/live-match' as Href);
   }
 
   return (

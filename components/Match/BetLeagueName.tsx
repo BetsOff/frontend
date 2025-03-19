@@ -19,7 +19,7 @@ const BetLeagueName: React.FC<BetLeagueNameProps> = ({ league_name }) => {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-		justifyContent: 'flex-start',
+		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	text: {
