@@ -1,6 +1,5 @@
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { fetchLeagues, useLeagueSetContext } from '@/context/useLeagueSetContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
@@ -8,13 +7,15 @@ import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import apiRoutes from '@/routes/apiRoutes';
+import { setLeagues } from '@/state/league/LeagueSlice';
+import { fetchLeagues } from '@/util/fetch/fetchLeagues';
 
 export default function InvitesScreen() {
 	const color = useColor();
 	const router = useRouter();
 	const [invites, setInvites] = useState<Invite[]>([]);
-	const { setLeagueSet } = useLeagueSetContext();
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+	const league = useSelector((state: RootState) => state.league.currentLeague);
 
 	const fetchInvites = async () => {
 		const user_id = storageGetItem('user_id')
@@ -49,7 +50,7 @@ export default function InvitesScreen() {
 
 			if (response.status == 200) {
 				fetchInvites();
-				setLeagueSet(await fetchLeagues());
+				dispatch(setLeagues(await fetchLeagues()));
 				router.navigate('/(tabs)/standings')
 			}
 		} catch (error) {
@@ -132,3 +133,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 })
+
+function dispatch(arg0: { payload: League[]; type: "league/setLeagues"; }) {
+	throw new Error('Function not implemented.');
+}

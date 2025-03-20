@@ -1,5 +1,4 @@
 import { Text, useColor, View } from '@/components/Themed';
-import { useLeagueContext } from '@/context/useLeagueContext';
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from 'axios';
@@ -7,11 +6,13 @@ import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import { fetchSeason, useSeasonContext } from '@/context/useSeasonContext';
 import apiRoutes from '@/routes/apiRoutes';
+import { RootState } from '@/state/store';
+import { useSelector } from 'react-redux';
 
 const CreateSeasonScreen = () => {
 	const color = useColor();
 	const router = useRouter();
-	const { league } = useLeagueContext();
+	const league = useSelector((state: RootState) => state.league.currentLeague);
 	const { setSeason } = useSeasonContext();
 	const [numMatches, setNumMatches] = useState('');
 	const [matchupLength, setMatchupLength] = useState('');
@@ -20,6 +21,8 @@ const CreateSeasonScreen = () => {
 	const [teamsInPlayoffs, setTeamsInPlayoffs] = useState('');
 
 	const handleCreateSeason = async () => {
+		if (!league) return;
+
 		try {
 			const response = await axios.post(apiRoutes.season.create, {
 				league: league.id,

@@ -14,8 +14,6 @@ import { SelectedLeagueProvider } from '@/context/useSelectedLeagueContext';
 import { PlayerOneBetListProvider } from '@/context/usePlayerOneBetListContext';
 import { PlayerTwoBetListProvider } from '@/context/usePlayerTwoBetListContext';
 import { SeasonProvider } from '@/context/useSeasonContext';
-import { LeagueProvider } from '@/context/useLeagueContext';
-import { LeagueSetProvider } from '@/context/useLeagueSetContext';
 import { Provider } from 'react-redux';
 import { store } from '@/state/store';
 
@@ -61,30 +59,26 @@ function RootLayoutNav() {
   return (
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <LeagueSetProvider>
-          <LeagueProvider>
-            <SeasonProvider>
-              <MatchSetProvider>
-                <MatchProvider>
-                  <SelectedLeagueProvider>
-                    <SelectedLineProvider>
-                      <PlayerOneBetListProvider>
-                        <PlayerTwoBetListProvider>
-                          <Stack>
-                            <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
-                            <Stack.Screen name="create_account" options={{ headerShown: false, }} />
-                            <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
-                            <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
-                          </Stack>
-                        </PlayerTwoBetListProvider>
-                      </PlayerOneBetListProvider>
-                    </SelectedLineProvider>
-                  </SelectedLeagueProvider>
-                </MatchProvider>
-              </MatchSetProvider>
-            </SeasonProvider>
-          </LeagueProvider>
-        </LeagueSetProvider>
+        <SeasonProvider>
+          <MatchSetProvider>
+            <MatchProvider>
+              <SelectedLeagueProvider>
+                <SelectedLineProvider>
+                  <PlayerOneBetListProvider>
+                    <PlayerTwoBetListProvider>
+                      <Stack>
+                        <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
+                        <Stack.Screen name="create_account" options={{ headerShown: false, }} />
+                        <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
+                        <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
+                      </Stack>
+                    </PlayerTwoBetListProvider>
+                  </PlayerOneBetListProvider>
+                </SelectedLineProvider>
+              </SelectedLeagueProvider>
+            </MatchProvider>
+          </MatchSetProvider>
+        </SeasonProvider>
       </ThemeProvider>
     </Provider>
   );

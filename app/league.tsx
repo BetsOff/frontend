@@ -1,16 +1,21 @@
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useLeagueContext } from '@/context/useLeagueContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import apiRoutes from '@/routes/apiRoutes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 export default function LeagueScreen() {
   const color = useColor();
-  const { league } = useLeagueContext();
+  const league = useSelector((state: RootState) => state.league.currentLeague);
   const [user, setUser] = useState('');
   const [members, setMembers] = useState<Member[]>([])
+
+  if (!league) {
+    return (<></>);
+  }
 
   const fetchMembers = async () => {
     try {

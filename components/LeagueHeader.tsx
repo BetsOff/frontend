@@ -1,15 +1,17 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Text, View } from '@/components/Themed';
-
-import { useLeagueContext } from '../context/useLeagueContext';
+import { RootState } from '@/state/store';
+import { useSelector } from 'react-redux';
 
 type LeagueProps = {
 
 }
 
 const LeagueHeader: React.FC<LeagueProps> = ({ }) => {
-  const { league } = useLeagueContext();
+  const league = useSelector((state: RootState) => state.league.currentLeague);
+
+  if (!league) return (<></>);
 
   return (
     <View style={styles.leagueContainer}>

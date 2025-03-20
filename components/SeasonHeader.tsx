@@ -4,7 +4,9 @@ import { Text, useColor, View } from '@/components/Themed';
 
 import formatDateWithYear from '@/util/date/formatDateWithYear';
 import CreateButton from './CreateButton';
-import { useLeagueContext } from '@/context/useLeagueContext';
+
+import { RootState } from '@/state/store';
+import { useSelector } from 'react-redux';
 
 type SeasonProps = {
   name: string;
@@ -14,12 +16,14 @@ type SeasonProps = {
 
 const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => {
   const color = useColor();
-  const { league } = useLeagueContext();
+  const league = useSelector((state: RootState) => state.league.currentLeague);
 
   const today = new Date();
   const startDate = new Date(start_date)
   const endDate = new Date(end_date)
   endDate.setDate(endDate.getDate() - 1);
+
+  if (!league) return (<></>);
 
   return (
     <View style={styles.container}>

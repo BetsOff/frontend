@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { storageGetItem } from "@/util/Storage";
-import { useLeagueContext } from "./useLeagueContext";
 import apiRoutes from "@/routes/apiRoutes";
+import { RootState } from "@/state/store";
+import { useSelector } from "react-redux";
 
 export const emptySeason: Season = {
     id: 0,
@@ -46,10 +47,11 @@ export const fetchSeason = async (league: League) => {
 
 export const SeasonProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [season, setSeason] = useState<Season>(emptySeason);
-    const { league, setLeague } = useLeagueContext();
-
+    const league = useSelector((state: RootState) => state.league.currentLeague);
+  
     useEffect(() => {
         const fetchData = async () => {
+            if (!league) return;
             setSeason(await fetchSeason(league));
         }
         fetchData();

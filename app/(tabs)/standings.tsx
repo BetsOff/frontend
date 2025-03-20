@@ -6,15 +6,16 @@ import LeagueHeader from '@/components/LeagueHeader';
 import SeasonHeader from '@/components/SeasonHeader';
 import StandingsTable from '@/components/Standings/StandingsTable';
 import { useSeasonContext } from '@/context/useSeasonContext';
-import { useLeagueContext } from '@/context/useLeagueContext';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
+import { RootState } from '@/state/store';
+import { useSelector } from 'react-redux';
 
 export default function StandingsScreen() {
   const { season, setSeason } = useSeasonContext();
-  const { league, setLeague } = useLeagueContext();
+  const league = useSelector((state: RootState) => state.league.currentLeague);
 
-  if (league.id == 0) {
+  if (league == null) {
     return (
       <NoDataScreen data='league' />
     )

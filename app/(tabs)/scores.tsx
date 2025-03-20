@@ -11,18 +11,19 @@ import { useMatchSetContext } from '@/context/useMatchSetContext';
 import SteppingBar from '@/components/SteppingBar';
 import { storageGetItem } from '@/util/Storage';
 import { emptySeason, useSeasonContext } from '@/context/useSeasonContext';
-import { emptyLeague, useLeagueContext } from '@/context/useLeagueContext';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
 import apiRoutes from '@/routes/apiRoutes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 export default function ScoresScreen() {
-  const { league } = useLeagueContext();
+  const league = useSelector((state: RootState) => state.league.currentLeague);
   const { matchSet, setMatchSet } = useMatchSetContext();
   const [loading, setLoading] = useState(true);
   const { season } = useSeasonContext();
 
-  if (league == emptyLeague) {
+  if (league == null) {
     return (
       <NoDataScreen data='league' />
     )
