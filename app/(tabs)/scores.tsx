@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-import api from '../../api_url.json'
 
 import { Text, View } from '@/components/Themed';
 import LeagueHeader from '@/components/LeagueHeader';
@@ -15,6 +14,7 @@ import { emptySeason, useSeasonContext } from '@/context/useSeasonContext';
 import { emptyLeague, useLeagueContext } from '@/context/useLeagueContext';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
+import apiRoutes from '@/routes/apiRoutes';
 
 export default function ScoresScreen() {
   const { league } = useLeagueContext();
@@ -81,12 +81,9 @@ export default function ScoresScreen() {
       if (playoff) {
         p = 'True'
       }
-      // Construct the URL based on the matchNumber
-      const baseUrl: string = `${api['url']}/matches/get/?season_id=${season.id}`;
-      const fullUrl: string = matchNumber === 0 ? baseUrl : `${baseUrl}&match_number=${matchNumber}&playoff=${p}`;
+      const queryParams: string = `?season_id=${season.id}&match_number=${matchNumber}&playoff=${p}`
 
-      // Fetch the data
-      const response = await axios.get(fullUrl, {
+      const response = await axios.get(apiRoutes.match.get + queryParams, {
         headers: {
           'Content-Type': 'application/json',
           'X-Authorization': `Token ${storageGetItem('token')}`,

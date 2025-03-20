@@ -3,11 +3,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { fetchLeagues, useLeagueSetContext } from '@/context/useLeagueSetContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import api from '@/api_url.json'
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import apiRoutes from '@/routes/apiRoutes';
 
 export default function InvitesScreen() {
 	const color = useColor();
@@ -22,7 +22,7 @@ export default function InvitesScreen() {
 			return;
 		}
 		try {
-			const response = await axios.get(api['url'] + `/leagues/invites/get`, {
+			const response = await axios.get(apiRoutes.league.getInvites, {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Authorization': `Token ${storageGetItem('token')}`,
@@ -40,7 +40,7 @@ export default function InvitesScreen() {
 
 	const handleAccept = async (league_id: number) => {
 		try {
-			const response = await axios.put(api['url'] + `/leagues/invite/accept/?league_id=${league_id}`, {}, {
+			const response = await axios.put(apiRoutes.league.acceptInvite + `?league_id=${league_id}`, {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Authorization': `Token ${storageGetItem('token')}`,
@@ -59,7 +59,7 @@ export default function InvitesScreen() {
 
 	const handleDecline = async (league_id: number) => {
 		try {
-			const response = await axios.delete(api['url'] + `/leagues/leave/?league_id=${league_id}`, {
+			const response = await axios.delete(apiRoutes.league.leave + `?league_id=${league_id}`, {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Authorization': `Token ${storageGetItem('token')}`,

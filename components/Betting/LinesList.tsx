@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
 
 import getToday from '@/util/date/getToday';
 import axios from 'axios';
-import api from '../../api_url.json'
 import { storageGetItem } from '@/util/Storage';
 import { useMatchContext } from '@/context/useMatchContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 type LinesListProps = {
 
@@ -23,8 +23,7 @@ const LinesList: React.FC<LinesListProps> = ({ }) => {
 
 	const fetchData = async () => {
 		try {
-			const fullUrl: string = `${api['url']}/lines/?league=${selectedLeague}&date=${getToday()}`
-			const response = await axios.get(fullUrl, {
+			const response = await axios.get(apiRoutes.line.get + `?league=${selectedLeague}&date=${getToday()}`, {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Authorization': `Token ${storageGetItem('token')}`

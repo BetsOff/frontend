@@ -1,8 +1,8 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import api from '../api_url.json'
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import { useSeasonContext } from './useSeasonContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 export const emptyMatchSet: MatchSet = {
   match_number: 0,
@@ -31,7 +31,7 @@ export const fetchMatchSet = async (season: Season) => {
     return emptyMatchSet
   }
   try {
-    const response = await axios.get(api['url'] + `/matches/get/?season_id=${season.id}`, {
+    const response = await axios.get(apiRoutes.match.get + `?season_id=${season.id}`, {
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': `Token ${storageGetItem('token')}`,

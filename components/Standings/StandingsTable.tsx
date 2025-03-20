@@ -3,10 +3,10 @@ import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import api from '../../api_url.json'
 
 import StandingsRow from './StandingsRow'
 import { useSeasonContext } from '../../context/useSeasonContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 const StandingsTable = () => {
   const { season } = useSeasonContext();
@@ -25,7 +25,7 @@ const StandingsTable = () => {
       return;
     }
     try {
-      const response = await axios.get(api['url'] + `/seasons/standings/?season_id=${season.id}`);
+      const response = await axios.get(apiRoutes.season.standings + `?season_id=${season.id}`);
       setStandings(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

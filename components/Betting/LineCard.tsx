@@ -6,12 +6,12 @@ import SubmitWager from './SubmitWager';
 import { useSelectedLineContext } from '../../context/useSelectedLineContext';
 import { useMatchContext } from '../../context/useMatchContext';
 import axios from 'axios';
-import api from '@/api_url.json'
 import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { useRouter } from 'expo-router';
 import { storageGetItem } from '@/util/Storage';
 import { emptyMatchSet, useMatchSetContext } from '../../context/useMatchSetContext';
 import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
+import apiRoutes from '@/routes/apiRoutes';
 
 type LineProps = {
 	line: Line;
@@ -38,7 +38,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 
 	const handleBetSubmit = async () => {
 		try {
-			const response = await axios.post(`${api['url']}/bets/create/`, {
+			const response = await axios.post(apiRoutes.bet.create, {
 				user_id: storageGetItem('user_id'),
 				match_id: match.match_id,
 				line_id: selectedLine.id,

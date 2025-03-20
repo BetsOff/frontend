@@ -3,10 +3,10 @@ import { useLeagueContext } from '@/context/useLeagueContext';
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from 'axios';
-import api from '@/api_url.json'
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import { fetchSeason, useSeasonContext } from '@/context/useSeasonContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 const CreateSeasonScreen = () => {
 	const color = useColor();
@@ -21,7 +21,7 @@ const CreateSeasonScreen = () => {
 
 	const handleCreateSeason = async () => {
 		try {
-			const response = await axios.post(`${api['url']}/seasons/create/`, {
+			const response = await axios.post(apiRoutes.season.create, {
 				league: league.id,
 				num_matches: Number(numMatches),
 				matchup_length: Number(matchupLength),

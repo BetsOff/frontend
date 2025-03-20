@@ -2,10 +2,10 @@ import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 import BetListForLeague from './BetListForLeague';
 import axios from 'axios';
-import api from '../../api_url.json'
 import { useEffect, useState } from 'react';
 import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { usePlayerTwoBetListContext } from '../../context/usePlayerTwoBetListContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 type PlayerBetListProps = {
 	match_id: number;
@@ -25,8 +25,7 @@ const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, partic
 			return;
 		}
 		try {
-			const fullUrl: string = `${api['url']}/bets/get/?match_id=${match_id}&user_id=${user_id}`;
-			const response = await axios.get(fullUrl);
+			const response = await axios.get(apiRoutes.bet.get + `?match_id=${match_id}&user_id=${user_id}`);
 
 			setBets(response.data);
 			const _ = participant_index == 0

@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import api from '../api_url.json'
 import { storageGetItem } from "@/util/Storage";
 import { useLeagueContext } from "./useLeagueContext";
+import apiRoutes from "@/routes/apiRoutes";
 
 export const emptySeason: Season = {
     id: 0,
@@ -31,7 +31,7 @@ export const fetchSeason = async (league: League) => {
         return emptySeason;
     }
     try {
-        const response = await axios.get(api['url'] + `/seasons/get/?league_id=${league.id}`, {
+        const response = await axios.get(apiRoutes.season.get + `?league_id=${league.id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Authorization': `Token ${storageGetItem('token')}`,

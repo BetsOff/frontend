@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { useMatchSetContext } from './useMatchSetContext';
-import temp from '../temp_variables.json'
 import { storageGetItem } from '@/util/Storage';
 
 export const emptyMatch: Match = {

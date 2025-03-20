@@ -1,6 +1,5 @@
 import { Text, useColor, View } from '@/components/Themed';
 import axios from 'axios';
-import api from '@/api_url.json'
 
 import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, StyleSheet } from 'react-native';
@@ -8,6 +7,7 @@ import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
 import { login } from '@/state/auth/AuthSlice';
 import { storageSetItem } from '@/util/Storage';
+import apiRoutes from '@/routes/apiRoutes';
 
 const LoginScreen = () => {
   const color = useColor();
@@ -23,7 +23,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${api['url']}/users/login/`, {
+      const response = await axios.post(apiRoutes.users.login, {
         username: username,
         password: password,
       }, {

@@ -1,12 +1,12 @@
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from 'axios';
-import api from '@/api_url.json'
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { storageSetItem } from "@/util/Storage";
 import { useDispatch } from 'react-redux';
 import { login } from '@/state/auth/AuthSlice';
+import apiRoutes from '@/routes/apiRoutes';
 
 const CreateAccountScreen = () => {
 	const color = useColor();
@@ -25,7 +25,7 @@ const CreateAccountScreen = () => {
 				return;
 		}
 		try {
-			const response = await axios.post(`${api['url']}/users/create-account/`, {
+			const response = await axios.post(apiRoutes.users.create, {
 				username: username,
 				password: password,
 				email: email,

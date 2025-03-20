@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import api from '../api_url.json'
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import apiRoutes from '@/routes/apiRoutes';
 
 export const emptyLeagueSet: League[] = []
 
@@ -20,7 +20,7 @@ export const fetchLeagues = async () => {
         return [];
     }
     try {
-        const response = await axios.get(api['url'] + `/leagues/get/?user_id=${storageGetItem('user_id')}`, {
+        const response = await axios.get(apiRoutes.league.get + `?user_id=${storageGetItem('user_id')}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Authorization': `Token ${storageGetItem('token')}`,

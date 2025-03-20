@@ -1,11 +1,11 @@
 import { Text, useColor, View } from '@/components/Themed';
 import axios from 'axios';
-import api from '@/api_url.json'
 import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import { fetchLeagues, useLeagueSetContext } from '@/context/useLeagueSetContext';
+import apiRoutes from '@/routes/apiRoutes';
 
 const CreateLeagueScreen = () => {
 	const color = useColor();
@@ -16,7 +16,7 @@ const CreateLeagueScreen = () => {
 
 	const handleCreateLeague = async () => {
     try {
-			const response = await axios.post(`${api['url']}/leagues/create/`, {
+			const response = await axios.post(apiRoutes.league.create, {
 				name: name,
 				max_players: maxPlayers,
 			}, {

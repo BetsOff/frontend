@@ -3,8 +3,8 @@ import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useLeagueContext } from '@/context/useLeagueContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import api from '@/api_url.json'
 import { storageGetItem } from '@/util/Storage';
+import apiRoutes from '@/routes/apiRoutes';
 
 export default function LeagueScreen() {
   const color = useColor();
@@ -14,7 +14,7 @@ export default function LeagueScreen() {
 
   const fetchMembers = async () => {
     try {
-      const response = await axios.get(api['url'] + `/leagues/get/users/?league_id=${league.id}`, {
+      const response = await axios.get(apiRoutes.league.getUsers + `?league_id=${league.id}`, {
         headers: {
           'Content-Type': 'application/json',
           'X-Authorization': `Token ${storageGetItem('token')}`,
@@ -33,7 +33,7 @@ export default function LeagueScreen() {
 
   const handleInvite = async () => {
     try {
-      const response = await axios.post(`${api['url']}/leagues/invite/`, {
+      const response = await axios.post(apiRoutes.league.invite, {
         league_id: league.id,
         user: user,
       }, {
