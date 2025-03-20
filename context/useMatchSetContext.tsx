@@ -2,7 +2,6 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import api from '../api_url.json'
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
-import { useAuthContext } from './useAuthContext';
 import { useSeasonContext } from './useSeasonContext';
 
 export const emptyMatchSet: MatchSet = {
@@ -50,7 +49,6 @@ export const fetchMatchSet = async (season: Season) => {
 export const MatchSetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [matchSet, setMatchSet] = useState<MatchSet>(emptyMatchSet);
   const { season } = useSeasonContext();
-  const { isLoggedIn } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,8 +1,4 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { useAuthContext } from "./useAuthContext";
-import axios from "axios";
-import api from '../api_url.json';
-import { storageGetItem } from "@/util/Storage";
 import { useLeagueSetContext } from "./useLeagueSetContext";
 
 export const emptyLeague: League = {
@@ -24,7 +20,6 @@ const LeagueContext = createContext<LeagueContextType | undefined>(undefined);
 export const LeagueProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [league, setLeague] = useState<League>(emptyLeague);
     const { leagueSet, setLeagueSet } = useLeagueSetContext();
-    const { isLoggedIn } = useAuthContext();
 
     useEffect(() => {
         const getDefaultLeague = () => {

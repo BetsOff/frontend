@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 import api from '../api_url.json'
 import { storageGetItem } from "@/util/Storage";
@@ -48,7 +47,6 @@ export const fetchSeason = async (league: League) => {
 export const SeasonProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [season, setSeason] = useState<Season>(emptySeason);
     const { league, setLeague } = useLeagueContext();
-    const { isLoggedIn } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {

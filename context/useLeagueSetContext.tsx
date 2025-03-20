@@ -2,7 +2,8 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import api from '../api_url.json'
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
-import { useAuthContext } from './useAuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 export const emptyLeagueSet: League[] = []
 
@@ -36,7 +37,7 @@ export const fetchLeagues = async () => {
 
 export const LeagueSetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [leagueSet, setLeagueSet] = useState<League[]>(emptyLeagueSet);
-    const { isLoggedIn } = useAuthContext();
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
     useEffect(() => {
         const fetchData = async () => {

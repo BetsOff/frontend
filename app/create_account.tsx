@@ -1,4 +1,3 @@
-import { useAuthContext } from "@/context/useAuthContext"
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from 'axios';
@@ -6,10 +5,11 @@ import api from '@/api_url.json'
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { storageSetItem } from "@/util/Storage";
+import { useDispatch } from 'react-redux';
+import { login } from '@/state/auth/AuthSlice';
 
 const CreateAccountScreen = () => {
 	const color = useColor();
-	const { login } = useAuthContext();
 	const router = useRouter();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -17,6 +17,7 @@ const CreateAccountScreen = () => {
 	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
+	const dispatch = useDispatch();
 
 	const handleCreateAccount = async () => {
 		if (password != confirmPassword) {
@@ -40,7 +41,8 @@ const CreateAccountScreen = () => {
 				storageSetItem('user', response.data.user);
 				storageSetItem('user_id', `${response.data.id}`);
 				storageSetItem('token', response.data.token);
-				login();
+
+				dispatch(login());
 				router.replace('/(tabs)/standings');
 			}
 			

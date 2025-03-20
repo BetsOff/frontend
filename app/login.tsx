@@ -5,15 +5,17 @@ import api from '@/api_url.json'
 import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { login } from '@/state/auth/AuthSlice';
 import { storageSetItem } from '@/util/Storage';
-import { useAuthContext } from '@/context/useAuthContext';
 
 const LoginScreen = () => {
   const color = useColor();
-  const { login } = useAuthContext();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
 
   const handleSignUp = () => {
     router.push('/create_account')
@@ -34,7 +36,8 @@ const LoginScreen = () => {
         storageSetItem('user', response.data.user);
         storageSetItem('user_id', `${response.data.id}`);
         storageSetItem('token', response.data.token);
-        login();
+
+        dispatch(login());
         router.replace('/(tabs)/standings');
       }
 

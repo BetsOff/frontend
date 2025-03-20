@@ -6,14 +6,15 @@ import axios from 'axios';
 import api from '@/api_url.json'
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
-import { useAuthContext } from '@/context/useAuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 export default function InvitesScreen() {
 	const color = useColor();
 	const router = useRouter();
 	const [invites, setInvites] = useState<Invite[]>([]);
-	const { isLoggedIn } = useAuthContext();
 	const { setLeagueSet } = useLeagueSetContext();
+	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
 	const fetchInvites = async () => {
 		const user_id = storageGetItem('user_id')

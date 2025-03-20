@@ -1,20 +1,14 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, useColor, View } from '@/components/Themed';
-import { storageRemoveItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
-import { useAuthContext } from '@/context/useAuthContext';
-
+import { logout } from '@/state/auth/AuthSlice';
 
 export default function ProfileScreen() {
   const color = useColor();
-  const { logout } = useAuthContext();
   const router = useRouter();
 
   const signout = async () => {
-    await storageRemoveItem('user');
-    await storageRemoveItem('user_id');
-    await storageRemoveItem('token');
     logout();
     router.replace('/login');
   }
