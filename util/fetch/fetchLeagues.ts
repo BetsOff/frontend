@@ -20,4 +20,4 @@ export const fetchLeagues = async () => {
     console.error('Error fetching league: ', error);
     return [];
   }
-}
+};
