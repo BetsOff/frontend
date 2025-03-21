@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import BetListForLeague from './BetListForLeague';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
-import { usePlayerTwoBetListContext } from '../../context/usePlayerTwoBetListContext';
 import apiRoutes from '@/routes/apiRoutes';
+import { useDispatch } from 'react-redux';
+import { setPlayerOneBets, setPlayerTwoBets } from '@/state/BetSlice';
 
 type PlayerBetListProps = {
 	match_id: number;
@@ -16,8 +16,7 @@ type PlayerBetListProps = {
 const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, participant_index }) => {
 	const [loading, setLoading] = useState(true);
 	const [bets, setBets] = useState([]);
-	const { setPlayerOneBetList } = usePlayerOneBetListContext();
-	const { setPlayerTwoBetList } = usePlayerTwoBetListContext();
+	const dispatch = useDispatch();
 
 	const fetchData = async () => {
 		if (match_id == 0 || user_id == 0) {
@@ -29,8 +28,8 @@ const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, partic
 
 			setBets(response.data);
 			const _ = participant_index == 0
-				? setPlayerOneBetList(response.data)
-				: setPlayerTwoBetList(response.data)
+				? dispatch(setPlayerOneBets(response.data))
+				: dispatch(setPlayerTwoBets(response.data))
 
 		} catch (error) {
 			console.error('Error fetching data:', error);

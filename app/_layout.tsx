@@ -7,8 +7,6 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import { PlayerOneBetListProvider } from '@/context/usePlayerOneBetListContext';
-import { PlayerTwoBetListProvider } from '@/context/usePlayerTwoBetListContext';
 import { Provider } from 'react-redux';
 import { store } from '@/state/store';
 
@@ -54,16 +52,12 @@ function RootLayoutNav() {
   return (
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <PlayerOneBetListProvider>
-          <PlayerTwoBetListProvider>
-            <Stack>
-              <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
-              <Stack.Screen name="create_account" options={{ headerShown: false, }} />
-              <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
-              <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
-            </Stack>
-          </PlayerTwoBetListProvider>
-        </PlayerOneBetListProvider>
+        <Stack>
+          <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
+          <Stack.Screen name="create_account" options={{ headerShown: false, }} />
+          <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
+          <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
+        </Stack>
       </ThemeProvider>
     </Provider>
   );

@@ -1,8 +1,6 @@
 import { StyleSheet, ScrollView } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import ScoreCard from './ScoreCard';
-import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
-import { usePlayerTwoBetListContext } from '../../context/usePlayerTwoBetListContext';
 import { storageGetItem } from '@/util/Storage';
 import { useEffect } from 'react';
 import { RootState } from '@/state/store';
@@ -14,8 +12,7 @@ type PlayerVsPlayerProps = {
 
 const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
-	const { playerOneBetList } = usePlayerOneBetListContext();
-	const { playerTwoBetList } = usePlayerTwoBetListContext();
+	const { playerOneBetList, playerTwoBetList } = useSelector((state: RootState) => state.bet);
 
 	useEffect(() => { }, [matches]);
 

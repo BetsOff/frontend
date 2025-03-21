@@ -4,7 +4,6 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import MarketLine from './MarketLine';
 import SubmitWager from './SubmitWager';
 import axios from 'axios';
-import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { useRouter } from 'expo-router';
 import { storageGetItem } from '@/util/Storage';
 import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
@@ -21,7 +20,6 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 	const color = useColor();
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { setPlayerOneBetList } = usePlayerOneBetListContext();
 	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 
@@ -56,8 +54,6 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 			console.error('Error creating bet', error);
 		} finally {
 			dispatch(resetSelectedLine());
-			setPlayerOneBetList([]);
-
 			router.back()
 		}
 
