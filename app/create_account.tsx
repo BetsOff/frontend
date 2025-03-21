@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import { storageSetItem } from "@/util/Storage";
 import { useDispatch } from 'react-redux';
-import { login } from '@/state/auth/AuthSlice';
+import { login } from '@/state/AuthSlice';
 import apiRoutes from '@/routes/apiRoutes';
 
 const CreateAccountScreen = () => {

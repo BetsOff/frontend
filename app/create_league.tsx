@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
 import { fetchLeagues } from '../util/fetch/fetchLeagues';
 import { useDispatch } from 'react-redux';
-import { setLeagues } from '@/state/league/LeagueSlice';
+import { setLeagues } from '@/state/LeagueSlice';
 
 const CreateLeagueScreen = () => {
 	const dispatch = useDispatch();

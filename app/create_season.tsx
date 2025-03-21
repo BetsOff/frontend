@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
 import { RootState } from '@/state/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSeason } from '@/state/season/SeasonSlice';
+import { setSeason } from '@/state/SeasonSlice';
 import { fetchSeason } from '@/util/fetch/fetchSeasons';
 
 const CreateSeasonScreen = () => {

@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import apiRoutes from '@/routes/apiRoutes';
-import { setLeagues } from '@/state/league/LeagueSlice';
+import { setLeagues } from '@/state/LeagueSlice';
 import { fetchLeagues } from '@/util/fetch/fetchLeagues';
 
 export default function InvitesScreen() {

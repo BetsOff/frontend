@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
-import { login } from '@/state/auth/AuthSlice';
+import { login } from '@/state/AuthSlice';
 import { storageSetItem } from '@/util/Storage';
 import apiRoutes from '@/routes/apiRoutes';
 

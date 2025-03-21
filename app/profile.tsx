@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, useColor, View } from '@/components/Themed';
 import { useRouter } from 'expo-router';
-import { logout } from '@/state/auth/AuthSlice';
+import { logout } from '@/state/AuthSlice';
 
 export default function ProfileScreen() {
   const color = useColor();

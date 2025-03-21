@@ -5,7 +5,7 @@ import CreateButton from '@/components/CreateButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
-import { setCurrentLeague } from '@/state/league/LeagueSlice';
+import { setCurrentLeague } from '@/state/LeagueSlice';
 
 export default function LeaguesScreen() {
   const color = useColor();
