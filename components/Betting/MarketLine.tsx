@@ -1,8 +1,10 @@
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { useSelectedLineContext } from '../../context/useSelectedLineContext';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
+import { setSelectedLine } from '@/state/LineSlice';
 
 type MarketLineProps = {
 	line: Line;
@@ -11,7 +13,8 @@ type MarketLineProps = {
 
 const MarketLine: React.FC<MarketLineProps> = ({ line, marketLine }) => {
 	const color = useColor();
-	const { selectedLine, setSelectedLine } = useSelectedLineContext();
+	const dispatch = useDispatch();
+	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 	const [showDescription, setShowDescription] = useState<boolean>(false);
 
 	const first_price: string = marketLine.first_price > 0
@@ -39,19 +42,19 @@ const MarketLine: React.FC<MarketLineProps> = ({ line, marketLine }) => {
 		: 'How many combined points will be scored?'
 
 	const handleWagerPressed = (first_selection_picked: boolean) => {
-		setSelectedLine({
+		dispatch(setSelectedLine({
 			market: marketLine.market,
 			id: marketLine.id,
 			first_selection_picked: first_selection_picked,
 			wager: 0,
-		})
+		}));
 	}
 
-	const firstSelectionStyle = selectedLine.id == marketLine.id && selectedLine.first_selection_picked
+	const firstSelectionStyle = (selectedLine && selectedLine.id == marketLine.id && selectedLine.first_selection_picked)
 		? [styles.selectable, { backgroundColor: color.brand }]
 		: [styles.selectable, { backgroundColor: color.background_3, borderColor: color.inactive_text }]
 
-	const secondSelectionStyle = selectedLine.id == marketLine.id && !selectedLine.first_selection_picked
+	const secondSelectionStyle = (selectedLine && selectedLine.id == marketLine.id && !selectedLine.first_selection_picked)
 		? [styles.selectable, { backgroundColor: color.brand }]
 		: [styles.selectable, { backgroundColor: color.background_3, borderColor: color.inactive_text }]
 

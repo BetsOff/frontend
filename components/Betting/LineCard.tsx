@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import MarketLine from './MarketLine';
 import SubmitWager from './SubmitWager';
-import { useSelectedLineContext } from '../../context/useSelectedLineContext';
 import axios from 'axios';
 import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { useRouter } from 'expo-router';
@@ -12,6 +11,7 @@ import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
 import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { resetSelectedLine } from '@/state/LineSlice';
 
 type LineProps = {
 	line: Line;
@@ -22,23 +22,23 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { setPlayerOneBetList } = usePlayerOneBetListContext();
-	const { selectedLine, setSelectedLine } = useSelectedLineContext();
+	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 
 	if (!currentMatch) return (<></>)
 
 	const startTime: Date = new Date(line.start_time);
 
-	const h2hSelected: boolean = selectedLine.market == 'h2h'
-	const totalsSelected: boolean = selectedLine.market == 'totals'
 	let containsSelectedLine: boolean = false
 	for (let i = 0; i < line.lines.length; i++) {
-		if (line.lines[i].id == selectedLine.id) {
+		if (selectedLine && line.lines[i].id == selectedLine.id) {
 			containsSelectedLine = true
 		}
 	}
 
 	const handleBetSubmit = async () => {
+		if (!selectedLine) return (<></>);
+
 		try {
 			const response = await axios.post(apiRoutes.bet.create, {
 				user_id: storageGetItem('user_id'),
@@ -55,7 +55,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 		} catch (error) {
 			console.error('Error creating bet', error);
 		} finally {
-			setSelectedLine({ market: '', id: 0, wager: 0, first_selection_picked: false });
+			dispatch(resetSelectedLine());
 			setPlayerOneBetList([]);
 
 			router.back()
@@ -63,9 +63,9 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 
 	}
 
-	const buttonColor = selectedLine.wager > 0
-		? color.brand
-		: color.background_3
+	const buttonColor = selectedLine && selectedLine.wager > 0
+	? color.brand
+	: color.background_3
 
 	return (
 		<View>
@@ -91,13 +91,13 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 				))}
 
 				{line.lines.map((marketLine, index) => (
-					marketLine.id == selectedLine.id && (
+					marketLine.id == (selectedLine && selectedLine.id) && (
 						<SubmitWager marketLine={line.lines[index]} />
 					)))}
 			</View>
 
 			{line.lines.map((marketLine, index) => (
-				marketLine.id == selectedLine.id && (
+				marketLine.id == (selectedLine && selectedLine.id) && (
 					<TouchableOpacity onPress={handleBetSubmit}>
 						<View style={[styles.button, { backgroundColor: buttonColor }]}>
 							<Text style={styles.submit}>Submit</Text>

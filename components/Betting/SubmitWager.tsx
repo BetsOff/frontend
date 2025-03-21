@@ -1,11 +1,10 @@
 import { Text, useColor, View, } from '@/components/Themed';
 import { StyleSheet, TextInput } from 'react-native';
 
-import { useSelectedLineContext } from '../../context/useSelectedLineContext';
-
 import calcualtePointsWon from '@/util/calculatePointsWon';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { setWager } from '@/state/LineSlice';
 
 type SubmitWagerProps = {
 	marketLine: MarketLine | null;
@@ -13,12 +12,15 @@ type SubmitWagerProps = {
 
 const SubmitWager: React.FC<SubmitWagerProps> = ({ marketLine }) => {
 	const color = useColor();
-	const { selectedLine, setSelectedLine } = useSelectedLineContext();
+	const dispatch = useDispatch();
 	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 
 	if (!marketLine) return (<></>);
 
 	if (!matches || !currentMatch) return (<></>);
+
+	if (!selectedLine) return (<></>);
 
 	const handleSetWager = (text: string) => {
 		const input = Number(text)
@@ -30,10 +32,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = ({ marketLine }) => {
 				: maxCredits / 2
 			: credits_remaining
 
-		setSelectedLine(prevState => ({
-			...prevState,
-			wager: wager
-		}))
+		dispatch(setWager(wager));
 	}
 
 	const selectedPrice: number = selectedLine.first_selection_picked

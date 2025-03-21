@@ -1,7 +1,9 @@
 import { Text, useColor, View } from '@/components/Themed';
-import { useSelectedLeagueContext } from '@/context/useSelectedLeagueContext';
+import { setSelectedLeague } from '@/state/LineSlice';
+import { RootState } from '@/state/store';
 import getIcon from '@/util/Icons';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 type LeagueChoicesProps = {
 
@@ -9,12 +11,14 @@ type LeagueChoicesProps = {
 
 const LeagueChoices: React.FC<LeagueChoicesProps> = ({ }) => {
   const color = useColor();
-  const { selectedLeague, setSelectedLeague } = useSelectedLeagueContext();
+  const dispatch = useDispatch();
+  const selectedLeague = useSelector((state: RootState) => state.line.selectedLeague);
   const leagues = ['MLB', 'NFL', 'NBA', 'NHL']
+
   return (
     <View style={styles.container}>
       {leagues.map((league, index) => (
-        <TouchableOpacity style={styles.leagueCell} key={index} onPress={() => setSelectedLeague(league)}>
+        <TouchableOpacity style={styles.leagueCell} key={index} onPress={() => dispatch(setSelectedLeague(league))}>
           <View>
             <View style={styles.row}>
               {getIcon(league, league == selectedLeague ? color.active_text : color.inactive_text, 20)}

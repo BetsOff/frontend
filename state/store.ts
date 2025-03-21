@@ -3,6 +3,7 @@ import authReducer from "./AuthSlice";
 import leagueReducer from "./LeagueSlice";
 import seasonReducer from "./SeasonSlice";
 import matchReducer from "./MatchSlice";
+import lineReducer from "./LineSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     league: leagueReducer,
     season: seasonReducer,
     match: matchReducer,
+    line: lineReducer,
   },
 });
 

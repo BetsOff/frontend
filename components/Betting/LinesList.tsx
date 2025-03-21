@@ -2,13 +2,14 @@ import { Text, View } from '@/components/Themed';
 
 import LineCard from './LineCard'
 import { StyleSheet, ScrollView } from 'react-native';
-import { useSelectedLeagueContext } from '../../context/useSelectedLeagueContext';
 import { useEffect, useState } from 'react';
 
 import getToday from '@/util/date/getToday';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import apiRoutes from '@/routes/apiRoutes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type LinesListProps = {
 
@@ -16,7 +17,7 @@ type LinesListProps = {
 
 const LinesList: React.FC<LinesListProps> = ({ }) => {
 	const [loading, setLoading] = useState(true);
-	const { selectedLeague } = useSelectedLeagueContext();
+	const selectedLeague = useSelector((state: RootState) => state.line.selectedLeague);
 	const [lines, setLines] = useState<Line[]>([]);
 
 	const fetchData = async () => {
