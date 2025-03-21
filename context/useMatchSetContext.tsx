@@ -1,8 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
-import { useSeasonContext } from './useSeasonContext';
 import apiRoutes from '@/routes/apiRoutes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 export const emptyMatchSet: MatchSet = {
   match_number: 0,
@@ -48,11 +49,12 @@ export const fetchMatchSet = async (season: Season) => {
 // Create a provider component
 export const MatchSetProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [matchSet, setMatchSet] = useState<MatchSet>(emptyMatchSet);
-  const { season } = useSeasonContext();
+  const season = useSelector((state: RootState) => state.season.season);
 
   useEffect(() => {
     const fetchData = async () => {
-        setMatchSet(await fetchMatchSet(season));
+      if (!season) return;
+      setMatchSet(await fetchMatchSet(season));
     }
     fetchData();
   }, [season]);

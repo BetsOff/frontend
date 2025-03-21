@@ -5,14 +5,17 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 import StandingsRow from './StandingsRow'
-import { useSeasonContext } from '../../context/useSeasonContext';
 import apiRoutes from '@/routes/apiRoutes';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 const StandingsTable = () => {
-  const { season } = useSeasonContext();
+  const season = useSelector((state: RootState) => state.season.season);
   const [standings, setStandings] = useState<Standing[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+
+  if (!season) return (<></>);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);

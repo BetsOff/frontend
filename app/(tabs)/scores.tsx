@@ -10,7 +10,6 @@ import { useMatchSetContext } from '@/context/useMatchSetContext';
 
 import SteppingBar from '@/components/SteppingBar';
 import { storageGetItem } from '@/util/Storage';
-import { emptySeason, useSeasonContext } from '@/context/useSeasonContext';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
 import apiRoutes from '@/routes/apiRoutes';
@@ -21,13 +20,13 @@ export default function ScoresScreen() {
   const league = useSelector((state: RootState) => state.league.currentLeague);
   const { matchSet, setMatchSet } = useMatchSetContext();
   const [loading, setLoading] = useState(true);
-  const { season } = useSeasonContext();
+  const season = useSelector((state: RootState) => state.season.season);
 
   if (league == null) {
     return (
       <NoDataScreen data='league' />
     )
-  } else if (season == emptySeason) {
+  } else if (season == null) {
     return (
       <NoDataScreen data='season' />
     )

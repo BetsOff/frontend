@@ -5,7 +5,6 @@ import PlayerVsPlayerHeader from '@/components/Match/PlayerVsPlayerHeader';
 import MatchHeader from '@/components/Scores/MatchHeader';
 import BetList from '@/components/Match/BetList';
 import NoDataScreen from '../no_data';
-import { emptySeason, useSeasonContext } from '@/context/useSeasonContext';
 import LeagueHeader from '@/components/LeagueHeader';
 import CreateButton from '@/components/CreateButton';
 import { emptyMatch, useMatchContext } from '@/context/useMatchContext';
@@ -17,14 +16,14 @@ import { RootState } from '@/state/store';
 
 export default function LiveMatchScreen() {
   const { match } = useMatchContext();
-  const { season } = useSeasonContext();
   const league = useSelector((state: RootState) => state.league.currentLeague);
+  const season = useSelector((state: RootState) => state.season.season);
 
   if (league == null) {
     return (
       <NoDataScreen data='league'/>
     )
-  } else if (season == emptySeason) {
+  } else if (season == null) {
     return (
       <NoDataScreen data='season' />
     )

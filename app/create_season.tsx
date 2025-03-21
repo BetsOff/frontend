@@ -4,16 +4,17 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
-import { fetchSeason, useSeasonContext } from '@/context/useSeasonContext';
 import apiRoutes from '@/routes/apiRoutes';
 import { RootState } from '@/state/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSeason } from '@/state/season/SeasonSlice';
+import { fetchSeason } from '@/util/fetch/fetchSeasons';
 
 const CreateSeasonScreen = () => {
 	const color = useColor();
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const league = useSelector((state: RootState) => state.league.currentLeague);
-	const { setSeason } = useSeasonContext();
 	const [numMatches, setNumMatches] = useState('');
 	const [matchupLength, setMatchupLength] = useState('');
 	const [breakLength, setBreakLength] = useState('');
@@ -39,7 +40,7 @@ const CreateSeasonScreen = () => {
 			});
 
 			if (response.status === 201) {
-				setSeason(await fetchSeason(league));
+				dispatch(setSeason(await fetchSeason(league)));
 				router.replace('/(tabs)/standings')
 			}
 		} catch (error) {

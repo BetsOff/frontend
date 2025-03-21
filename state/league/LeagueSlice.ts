@@ -8,7 +8,7 @@ interface LeagueState {
 const initialLeagueState: LeagueState = {
   leagues: [],
   currentLeague: null,
-}
+};
 
 const leagueSlice = createSlice({
   name: 'league',
