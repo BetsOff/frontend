@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useColor, View } from '@/components/Themed';
 import { Href, useRouter } from 'expo-router';
-import { useMatchContext } from '../../context/useMatchContext';
 
 import PlayerScore from './PlayerScore';
-import { useMatchSetContext } from '../../context/useMatchSetContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
+import { setCurrentMatch } from '@/state/MatchSlice';
 
 type MatchProps = {
   match: Match;
@@ -15,11 +16,13 @@ type MatchProps = {
 const Match: React.FC<MatchProps> = ({ match, status }) => {
   const color = useColor();
   const router = useRouter();
-  const { setMatch } = useMatchContext();
-  const { matchSet } = useMatchSetContext();
+  const dispatch = useDispatch();
+	const matches =  useSelector((state: RootState) => state.match.matches);
+
+  if (!matches) return (<></>);
 
   const handleMatchPressed = () => {
-    setMatch(match)
+    dispatch(setCurrentMatch(match));
     router.replace('/live-match' as Href);
   }
 
@@ -29,13 +32,13 @@ const Match: React.FC<MatchProps> = ({ match, status }) => {
         <PlayerScore
           participant={match.participants[0]}
           winner={match.winner}
-          starting_credits={matchSet.starting_credits}
+          starting_credits={matches.starting_credits}
           status={status}
         />
         <PlayerScore
           participant={match.participants[1]}
           winner={match.winner}
-          starting_credits={matchSet.starting_credits}
+          starting_credits={matches.starting_credits}
           status={status}
         />
       </View>

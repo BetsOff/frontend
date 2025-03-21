@@ -2,8 +2,9 @@ import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 
 import { getLogoColor } from '@/util/getLogoColor';
-import { useMatchSetContext } from '../../context/useMatchSetContext';
 import calcualtePointsWon from '@/util/calculatePointsWon';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type ScoreCardProps = {
   name: string,
@@ -37,10 +38,12 @@ const getTotalPotentialPoints = (betList: LeagueBets[]): number => {
 
 const ScoreCard: React.FC<ScoreCardProps> = ({ name, player_color, record, score, credits_remaining, betList }) => {
   const color = useColor();
-  const { matchSet } = useMatchSetContext();
+	const matches =  useSelector((state: RootState) => state.match.matches);
   const logoColor = getLogoColor(player_color);
 
-  const potentialPoints = getTotalPotentialPoints(betList)
+  const potentialPoints = getTotalPotentialPoints(betList);
+
+  if (!matches) return (<></>);
 
   const scoreStyle = score >= 100 && score != potentialPoints
     ? styles.smallScore
@@ -65,7 +68,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ name, player_color, record, score
         )}
 
       </View>
-      <Text style={[styles.remaining_credits, { color: textColor }]}>Credits: {credits_remaining}/{matchSet.starting_credits}</Text>
+      <Text style={[styles.remaining_credits, { color: textColor }]}>Credits: {credits_remaining}/{matches.starting_credits}</Text>
     </View>
   )
 }

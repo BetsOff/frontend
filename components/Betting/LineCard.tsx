@@ -4,14 +4,14 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import MarketLine from './MarketLine';
 import SubmitWager from './SubmitWager';
 import { useSelectedLineContext } from '../../context/useSelectedLineContext';
-import { useMatchContext } from '../../context/useMatchContext';
 import axios from 'axios';
 import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { useRouter } from 'expo-router';
 import { storageGetItem } from '@/util/Storage';
-import { emptyMatchSet, useMatchSetContext } from '../../context/useMatchSetContext';
 import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
 import apiRoutes from '@/routes/apiRoutes';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type LineProps = {
 	line: Line;
@@ -20,10 +20,12 @@ type LineProps = {
 const LineCard: React.FC<LineProps> = ({ line }) => {
 	const color = useColor();
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const { setPlayerOneBetList } = usePlayerOneBetListContext();
 	const { selectedLine, setSelectedLine } = useSelectedLineContext();
-	const { match } = useMatchContext();
-	const { matchSet, setMatchSet } = useMatchSetContext();
+	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+
+	if (!currentMatch) return (<></>)
 
 	const startTime: Date = new Date(line.start_time);
 
@@ -40,7 +42,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 		try {
 			const response = await axios.post(apiRoutes.bet.create, {
 				user_id: storageGetItem('user_id'),
-				match_id: match.match_id,
+				match_id: currentMatch.match_id,
 				line_id: selectedLine.id,
 				first_selection_picked: selectedLine.first_selection_picked,
 				wager: selectedLine.wager,
@@ -55,11 +57,6 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 		} finally {
 			setSelectedLine({ market: '', id: 0, wager: 0, first_selection_picked: false });
 			setPlayerOneBetList([]);
-			// Cause a re render of live match page
-			match.participants[0].credits_remaining = match.participants[0].credits_remaining - selectedLine.wager
-			const oldMatchSet = matchSet;
-			setMatchSet(emptyMatchSet);
-			setMatchSet(oldMatchSet);
 
 			router.back()
 		}

@@ -6,47 +6,52 @@ import { Text, View } from '@/components/Themed';
 import LeagueHeader from '@/components/LeagueHeader';
 import MatchHeader from '@/components/Scores/MatchHeader';
 import MatchList from '@/components/Scores/MatchList';
-import { useMatchSetContext } from '@/context/useMatchSetContext';
 
 import SteppingBar from '@/components/SteppingBar';
 import { storageGetItem } from '@/util/Storage';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
 import apiRoutes from '@/routes/apiRoutes';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { setMatches } from '@/state/MatchSlice';
 
 export default function ScoresScreen() {
-  const league = useSelector((state: RootState) => state.league.currentLeague);
-  const { matchSet, setMatchSet } = useMatchSetContext();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const league = useSelector((state: RootState) => state.league.currentLeague);
   const season = useSelector((state: RootState) => state.season.season);
+  const matches = useSelector((state: RootState) => state.match.matches);
 
-  if (league == null) {
+  if (!league) {
     return (
       <NoDataScreen data='league' />
     )
-  } else if (season == null) {
+  } else if (!season) {
     return (
       <NoDataScreen data='season' />
+    )
+  } else if (!matches) {
+    return (
+      <></>
     )
   }
 
   const backMatch = () => {
     var next_match = 1;
     var playoff = false;
-    if (matchSet.playoff == true) {
+    if (matches.playoff == true) {
       // Playoff
-      if (matchSet.match_number == 1) {
-        next_match = matchSet.num_regular_season_matches;
+      if (matches.match_number == 1) {
+        next_match = matches.num_regular_season_matches;
       } else {
-        next_match = matchSet.match_number - 1;
+        next_match = matches.match_number - 1;
         playoff = true;
       }
     } else {
       // Regular Season
-      if (matchSet.match_number > 1) {
-        next_match = matchSet.match_number - 1;
+      if (matches.match_number > 1) {
+        next_match = matches.match_number - 1;
       }
     }
     fetchData(next_match, playoff)
@@ -55,21 +60,21 @@ export default function ScoresScreen() {
   const forwardMatch = () => {
     var next_match = 1;
     var playoff = false;
-    if (matchSet.playoff == true) {
+    if (matches.playoff == true) {
       // Playoff
       playoff = true;
-      if (matchSet.match_number < matchSet.num_playoff_matches) {
-        next_match = matchSet.match_number + 1;
+      if (matches.match_number < matches.num_playoff_matches) {
+        next_match = matches.match_number + 1;
       } else {
-        next_match = matchSet.num_playoff_matches;
+        next_match = matches.num_playoff_matches;
       }
     } else {
       // Regular Season
-      if (matchSet.match_number == matchSet.num_regular_season_matches && matchSet.num_playoff_matches > 0) {
+      if (matches.match_number == matches.num_regular_season_matches && matches.num_playoff_matches > 0) {
         next_match = 1
         playoff = true
       } else {
-        next_match = matchSet.match_number + 1;
+        next_match = matches.match_number + 1;
       }
     }
     fetchData(next_match, playoff)
@@ -90,7 +95,7 @@ export default function ScoresScreen() {
         },
       });
 
-      setMatchSet(response.data);
+      dispatch(setMatches(response.data));
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -124,9 +129,9 @@ export default function ScoresScreen() {
       <MatchHeader />
       <SteppingBar onGoForward={forwardMatch} onGoBack={backMatch} />
       <MatchList
-        matches={matchSet.matches}
-        starting_credits={matchSet.starting_credits}
-        status={matchSet.status}
+        matches={matches.matches}
+        starting_credits={matches.starting_credits}
+        status={matches.status}
       />
 
     </View>

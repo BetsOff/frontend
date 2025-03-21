@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import getToday from '@/util/date/getToday';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
-import { useMatchContext } from '@/context/useMatchContext';
 import apiRoutes from '@/routes/apiRoutes';
 
 type LinesListProps = {
@@ -18,7 +17,6 @@ type LinesListProps = {
 const LinesList: React.FC<LinesListProps> = ({ }) => {
 	const [loading, setLoading] = useState(true);
 	const { selectedLeague } = useSelectedLeagueContext();
-	const { match } = useMatchContext();
 	const [lines, setLines] = useState<Line[]>([]);
 
 	const fetchData = async () => {

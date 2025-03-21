@@ -1,20 +1,19 @@
 import { View } from '@/components/Themed';
 import { StyleSheet, ScrollView } from 'react-native';
 import PlayerBetList from './PlayerBetList';
-import { useMatchContext } from '../../context/useMatchContext';
 import { storageGetItem } from '@/util/Storage';
 import todayInTimeFrame from '@/util/inTimeFrame';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type BetListProps = {
 
 }
 
 const BetList: React.FC<BetListProps> = ({ }) => {
-	const { match } = useMatchContext();
+	const match =  useSelector((state: RootState) => state.match.currentMatch);
 
-	if (match.participants[0] == undefined || match.participants[1] == undefined) {
-		return (<></>)
-	}
+	if (!match || !match.participants[0] || !match.participants[1]) return (<></>);
 
 	const user_id: Number = Number(storageGetItem('user_id'))
 

@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./AuthSlice";
 import leagueReducer from "./LeagueSlice";
 import seasonReducer from "./SeasonSlice";
+import matchReducer from "./MatchSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     league: leagueReducer,
     season: seasonReducer,
+    match: matchReducer,
   },
 });
 

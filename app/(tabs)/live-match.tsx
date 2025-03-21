@@ -7,7 +7,6 @@ import BetList from '@/components/Match/BetList';
 import NoDataScreen from '../no_data';
 import LeagueHeader from '@/components/LeagueHeader';
 import CreateButton from '@/components/CreateButton';
-import { emptyMatch, useMatchContext } from '@/context/useMatchContext';
 import { storageGetItem } from '@/util/Storage';
 import todayInTimeFrame from '@/util/inTimeFrame';
 import MakeBetButton from '@/components/Match/MakeBetButton';
@@ -15,23 +14,23 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 
 export default function LiveMatchScreen() {
-  const { match } = useMatchContext();
   const league = useSelector((state: RootState) => state.league.currentLeague);
   const season = useSelector((state: RootState) => state.season.season);
+  const match = useSelector((state: RootState) => state.match.currentMatch);
 
-  if (league == null) {
+  if (!league) {
     return (
       <NoDataScreen data='league'/>
     )
-  } else if (season == null) {
+  } else if (!season) {
     return (
       <NoDataScreen data='season' />
     )
-  } else if (match == emptyMatch) {
+  } else if (!match) {
     return (<></>)
   }
 
-  if (season.season_number == 0 || season.season_number == undefined) {
+  if (season.season_number == 0 || !season.season_number) {
     return (
       <View style={[styles.container, {alignItems: 'flex-start'}]}>
         <LeagueHeader />

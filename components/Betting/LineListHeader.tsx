@@ -1,31 +1,30 @@
 import { Text, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
-import { useMatchContext } from '../../context/useMatchContext';
-import { useMatchSetContext } from '../../context/useMatchSetContext';
 import formatDateWithDay from '@/util/date/formatDateWithDay';
 import LeagueChoices from './LeagueChoices';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type LineListHeaderProps = {
 
 }
 
 const LineListHeader: React.FC<LineListHeaderProps> = ({ }) => {
-	const { match } = useMatchContext();
-	const { matchSet } = useMatchSetContext();
+	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 	const date = formatDateWithDay(new Date());
 
-	if (match.participants[0].credits_remaining == undefined) {
+	if (!currentMatch || !matches || !currentMatch.participants[0].credits_remaining) {
 		return (<></>)
 	}
 
-	const credits_remaining = match.participants[0].credits_remaining
+	const credits_remaining = currentMatch.participants[0].credits_remaining
 
 	return (
 		<View style={styles.headerContainer}>
 			<View style={styles.row}>
 				<Text style={styles.title}>{date}</Text>
 				<View style={styles.creditsRemainingContainer}>
-					<Text style={styles.credits}>{credits_remaining} / {matchSet.starting_credits}</Text>
+					<Text style={styles.credits}>{credits_remaining} / {matches.starting_credits}</Text>
 					<Text style={styles.remainingText}>credits remaining</Text>
 				</View>
 			</View>

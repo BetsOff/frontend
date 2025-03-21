@@ -4,39 +4,32 @@ import ScoreCard from './ScoreCard';
 import { usePlayerOneBetListContext } from '../../context/usePlayerOneBetListContext';
 import { usePlayerTwoBetListContext } from '../../context/usePlayerTwoBetListContext';
 import { storageGetItem } from '@/util/Storage';
-import { useMatchContext } from '../../context/useMatchContext';
 import { useEffect } from 'react';
-import { useMatchSetContext } from '../../context/useMatchSetContext';
+import { RootState } from '@/state/store';
+import { useSelector } from 'react-redux';
 
 type PlayerVsPlayerProps = {
 
 }
 
 const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
-	const { match } = useMatchContext();
-	const { matchSet } = useMatchSetContext();
+	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 	const { playerOneBetList } = usePlayerOneBetListContext();
 	const { playerTwoBetList } = usePlayerTwoBetListContext();
 
-	useEffect(() => { }, [matchSet]);
+	useEffect(() => { }, [matches]);
 
-	if (match.participants == undefined) {
-		return (<></>)
-	}
-
-	if (match.participants[0] == undefined || match.participants[1] == undefined) {
-		return (<></>)
-	}
+	if (!currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);
 
 	const user_id: Number = Number(storageGetItem('user_id'))
 
-	const participant1: MatchParticipant = user_id == match.participants[1].user_id
-		? match.participants[1]
-		: match.participants[0]
+	const participant1: MatchParticipant = user_id == currentMatch.participants[1].user_id
+		? currentMatch.participants[1]
+		: currentMatch.participants[0]
 
-	const participant2: MatchParticipant = user_id == match.participants[1].user_id
-		? match.participants[0]
-		: match.participants[1]
+	const participant2: MatchParticipant = user_id == currentMatch.participants[1].user_id
+		? currentMatch.participants[0]
+		: currentMatch.participants[1]
 
 	return (
 		<View style={styles.container}>

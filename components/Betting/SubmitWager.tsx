@@ -4,8 +4,8 @@ import { StyleSheet, TextInput } from 'react-native';
 import { useSelectedLineContext } from '../../context/useSelectedLineContext';
 
 import calcualtePointsWon from '@/util/calculatePointsWon';
-import { useMatchContext } from '@/context/useMatchContext';
-import { useMatchSetContext } from '@/context/useMatchSetContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type SubmitWagerProps = {
 	marketLine: MarketLine | null;
@@ -14,17 +14,16 @@ type SubmitWagerProps = {
 const SubmitWager: React.FC<SubmitWagerProps> = ({ marketLine }) => {
 	const color = useColor();
 	const { selectedLine, setSelectedLine } = useSelectedLineContext();
-	const { match } = useMatchContext();
-	const { matchSet } = useMatchSetContext();
+	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 
-	if (marketLine == null) {
-		return (<></>)
-	}
+	if (!marketLine) return (<></>);
+
+	if (!matches || !currentMatch) return (<></>);
 
 	const handleSetWager = (text: string) => {
 		const input = Number(text)
-		const credits_remaining = match.participants[0].credits_remaining
-		const maxCredits = matchSet.starting_credits
+		const credits_remaining = currentMatch.participants[0].credits_remaining
+		const maxCredits = matches.starting_credits
 		const wager = input <= credits_remaining
 			? input <= maxCredits / 2
 				? input
