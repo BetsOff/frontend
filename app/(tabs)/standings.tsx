@@ -28,7 +28,7 @@ export default function StandingsScreen() {
     if (!userId || !token) return;
   
     const fetchLeagues = async () => {
-      console.log('fetching leagues')
+      console.log('fetching leagues');
       if (!userId) return;
       await axios.get(apiRoutes.league.get + `?user_id=${userId}`, {
         headers: {
