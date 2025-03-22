@@ -22,7 +22,7 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
 
   if (status == 'final') {
     if (winner == participant.user) {
-      scoreCardBackgroundColor = color.brand
+      scoreCardBackgroundColor = color.won
     } else if (winner != null) {
       userTextColor = color.inactive_text
     }

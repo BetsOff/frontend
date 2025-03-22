@@ -19,8 +19,8 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 
 	const bgColor = status == "Final"
 		? wager.points_earned > 0
-			? color.brand
-			: color.red
+			? color.won
+			: color.loss
 		: color.background_2
 
 	// var selectionStyle = [textStyles.selectionNotPicked, {}];
