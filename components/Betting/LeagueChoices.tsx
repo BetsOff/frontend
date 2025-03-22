@@ -12,12 +12,11 @@ type LeagueChoicesProps = {
 const LeagueChoices: React.FC<LeagueChoicesProps> = ({ }) => {
   const color = useColor();
   const dispatch = useDispatch();
-  const selectedLeague = useSelector((state: RootState) => state.line.selectedLeague);
-  const leagues = ['MLB', 'NFL', 'NBA', 'NHL']
+  const { selectedLeague, leagueChoices }= useSelector((state: RootState) => state.line);
 
   return (
     <View style={styles.container}>
-      {leagues.map((league, index) => (
+      {leagueChoices.map((league, index) => (
         <TouchableOpacity style={styles.leagueCell} key={index} onPress={() => dispatch(setSelectedLeague(league))}>
           <View>
             <View style={styles.row}>

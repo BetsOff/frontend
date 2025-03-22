@@ -7,15 +7,24 @@ interface SelectedLine {
   wager: number;
 }
 
-interface LineState {
+export interface LineState {
   selectedLeague: string;
   selectedLine: SelectedLine | null;
+  leagueChoices: string[];
+  mlbLines: Line[];
+  nflLines: Line[];
+  nbaLines: Line[];
+  nhlLines: Line[];
 }
 
-// TODO: Dynamically determine selected league based on what's in season
 const initialLineSlice: LineState = {
-  selectedLeague: 'MLB',
+  selectedLeague: '',
   selectedLine: null,
+  leagueChoices: [],
+  mlbLines: [],
+  nflLines: [],
+  nbaLines: [],
+  nhlLines: [],
 };
 
 const validLeagues = ['MLB', 'NFL', 'NBA', 'NHL'];
@@ -37,9 +46,58 @@ const lineSlice = createSlice({
     },
     resetSelectedLine: (state) => {
       state.selectedLine = null;
+    },
+    setMlbLines: (state, action: PayloadAction<Line[]>) => {
+      const lines = action.payload;
+      state.mlbLines = action.payload;
+      if (lines.length > 0) {
+        state.selectedLeague = 'MLB';
+        state.leagueChoices = [...new Set([...state.leagueChoices, 'MLB'])];
+      }
+    },
+    setNflLines: (state, action: PayloadAction<Line[]>) => {
+      const lines = action.payload;
+      state.nflLines = action.payload;
+      if (lines.length > 0) {
+        state.selectedLeague = 'NFL';
+        state.leagueChoices = [...new Set([...state.leagueChoices, 'NFL'])];
+      }
+    },
+    setNbaLines: (state, action: PayloadAction<Line[]>) => {
+      const lines = action.payload;
+      state.nbaLines = action.payload;
+      if (lines.length > 0) {
+        state.selectedLeague = 'NBA';
+        state.leagueChoices = [...new Set([...state.leagueChoices, 'NBA'])];
+      }
+    },
+    setNhlLines: (state, action: PayloadAction<Line[]>) => {
+      const lines = action.payload;
+      state.nhlLines = action.payload;
+      if (lines.length > 0) {
+        state.selectedLeague = 'NHL';
+        state.leagueChoices = [...new Set([...state.leagueChoices, 'NHL'])];
+      }
+    },
+    resetLines: (state) => {
+      state.mlbLines = [];
+      state.nflLines = [];
+      state.nbaLines = [];
+      state.nhlLines = [];
+      state.leagueChoices = [];
     }
   }
 });
 
-export const { setSelectedLeague, setSelectedLine, setWager, resetSelectedLine } = lineSlice.actions;
+export const { 
+  setSelectedLeague,
+  setSelectedLine,
+  setWager,
+  resetSelectedLine,
+  setMlbLines,
+  setNflLines,
+  setNbaLines,
+  setNhlLines,
+  resetLines,
+} = lineSlice.actions;
 export default lineSlice.reducer;

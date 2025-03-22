@@ -10,50 +10,44 @@ import { storageGetItem } from '@/util/Storage';
 import apiRoutes from '@/routes/apiRoutes';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { LineState } from '@/state/LineSlice';
+
+const leagueMapping: Record<'MLB' | 'NFL' | 'NBA' | 'NHL', keyof LineState> = {
+  MLB: "mlbLines",
+  NFL: "nflLines",
+  NBA: "nbaLines",
+  NHL: "nhlLines",
+};
 
 type LinesListProps = {
 
 }
 
 const LinesList: React.FC<LinesListProps> = ({ }) => {
-	const [loading, setLoading] = useState(true);
-	const selectedLeague = useSelector((state: RootState) => state.line.selectedLeague);
-	const [lines, setLines] = useState<Line[]>([]);
+	const lineState = useSelector((state: RootState) => state.line);
+	const selectedLeague = lineState.selectedLeague;
+	const lines = selectedLeague === 'MLB'
+		? lineState.mlbLines
+		: selectedLeague === 'NFL'
+			? lineState.nflLines
+			: selectedLeague === 'NBA'
+				? lineState.nbaLines
+				: selectedLeague === 'NHL'
+					? lineState.nhlLines
+					: [];
+	
+	useSelector((state: RootState) => 
+		state.line[leagueMapping[selectedLeague as keyof typeof leagueMapping]] as Line[]
+	);
 
-	const fetchData = async () => {
-		try {
-			const response = await axios.get(apiRoutes.line.get + `?league=${selectedLeague}&date=${getToday()}`, {
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Authorization': `Token ${storageGetItem('token')}`
-				}
-			})
-			setLines(response.data)
-		} catch (error) {
-			console.error('Error fetching lines:', error)
-		} finally {
-			setLoading(false);
-		}
-	}
+	if (!lines) return (<></>);
 
-	useEffect(() => {
-		fetchData();
-	}, [selectedLeague])
-
-	if (loading) {
-		return (
-			<View>
-				<Text>Loading...</Text>
-			</View>
-		);
-	};
-
-	if (lines!.length == 0) {
+	if (lines.length == 0) {
 		return (
 			<View style={styles.noGameContainer}>
 				<Text style={styles.noGamesText}>No games left today</Text>
 			</View>
-		)
+		);
 	}
 
 	return (
@@ -64,7 +58,7 @@ const LinesList: React.FC<LinesListProps> = ({ }) => {
 				))}
 			</ScrollView>
 		</View>
-	)
+	);
 }
 
 const styles = StyleSheet.create({
