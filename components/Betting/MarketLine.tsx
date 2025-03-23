@@ -51,11 +51,11 @@ const MarketLine: React.FC<MarketLineProps> = ({ line, marketLine }) => {
 	}
 
 	const firstSelectionStyle = (selectedLine && selectedLine.id == marketLine.id && selectedLine.first_selection_picked)
-		? [styles.selectable, { backgroundColor: color.brand }]
+		? [styles.selectable, { backgroundColor: color.won }]
 		: [styles.selectable, { backgroundColor: color.background_3, borderColor: color.inactive_text }]
 
 	const secondSelectionStyle = (selectedLine && selectedLine.id == marketLine.id && !selectedLine.first_selection_picked)
-		? [styles.selectable, { backgroundColor: color.brand }]
+		? [styles.selectable, { backgroundColor: color.won }]
 		: [styles.selectable, { backgroundColor: color.background_3, borderColor: color.inactive_text }]
 
 	return (

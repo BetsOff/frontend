@@ -4,7 +4,7 @@ const tintColorDark = '#fff';
 export default {
   light: {
     text: '#000',
-    brand: "#2c5222",
+    brand: "#304f28",
     won: '#2f9647',
     loss: '#9C2B2B',
     background_1: '#fff',
@@ -18,7 +18,7 @@ export default {
   },
   dark: {
     text: '#fff',
-    brand: "#2c5222",
+    brand: "#304f28",
     won: '#228f3c',
     loss: '#b32222',
     background_1: '#171717',

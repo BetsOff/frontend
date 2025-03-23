@@ -29,8 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 10,
     paddingHorizontal: 100,
-    borderWidth: 1,
-
   },
   buttonText: {
     fontSize: 20,

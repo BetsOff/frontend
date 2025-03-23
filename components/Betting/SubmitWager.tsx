@@ -57,7 +57,7 @@ const SubmitWager: React.FC<SubmitWagerProps> = ({ marketLine }) => {
 					onChangeText={(text) => handleSetWager(text)}
 				/>
 				<Text style={styles.minorText}>to win</Text>
-				<Text style={[styles.pointsWon, { color: color.brand }]}>+{calcualtePointsWon(selectedLine.wager, selectedPrice)}</Text>
+				<Text style={[styles.pointsWon, { color: color.won }]}>+{calcualtePointsWon(selectedLine.wager, selectedPrice)}</Text>
 
 			</View>
 		</View>

@@ -24,7 +24,7 @@ const LeagueChoices: React.FC<LeagueChoicesProps> = ({ }) => {
               <Text style={[styles.text, { color: league == selectedLeague ? color.active_text : color.inactive_text }]}>{league}</Text>
             </View>
             {league == selectedLeague
-              ? <View style={[styles.selectionStatus, { backgroundColor: color.brand }]} />
+              ? <View style={[styles.selectionStatus, { backgroundColor: color.won }]} />
               : <View style={[styles.selectionStatus]} />
             }
           </View>
