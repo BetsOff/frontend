@@ -3,14 +3,21 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { View } from '@/components/Themed';
 
 import Match from './Match';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
 
 type MatchesProps = {
-  matches: Match[];
-  status: string;
-  starting_credits: number;
+
 }
 
-const MatchList: React.FC<MatchesProps> = ({ matches, status, starting_credits }) => {
+const MatchList: React.FC<MatchesProps> = ({ }) => {
+  const matchSet = useSelector((state: RootState) => state.match.matches);
+
+  if (!matchSet) return (<></>);
+
+  const matches = matchSet.matches;
+  const status = matchSet.status;
+
   return (
     <View style={styles.matchListContainer}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>

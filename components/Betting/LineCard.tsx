@@ -11,6 +11,8 @@ import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { resetSelectedLine } from '@/state/LineSlice';
+import { setPlayerOneBets } from '@/state/BetSlice';
+import { useCredits } from '@/state/MatchSlice';
 
 type LineProps = {
 	line: Line;
@@ -21,7 +23,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
-	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+	const currentMatch =  useSelector((state: RootState) => state.match.currentMatch);
 
 	if (!currentMatch) return (<></>)
 
@@ -36,26 +38,31 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 
 	const handleBetSubmit = async () => {
 		if (!selectedLine) return (<></>);
+		const userId = storageGetItem('user_id');
+		const token = storageGetItem('token');
 
-		try {
-			const response = await axios.post(apiRoutes.bet.create, {
-				user_id: storageGetItem('user_id'),
-				match_id: currentMatch.match_id,
-				line_id: selectedLine.id,
-				first_selection_picked: selectedLine.first_selection_picked,
-				wager: selectedLine.wager,
-			}, {
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Authorization': `Token ${storageGetItem('token')}`
-				}
+		axios.post(apiRoutes.bet.create, {
+			user_id: userId,
+			match_id: currentMatch.match_id,
+			line_id: selectedLine.id,
+			first_selection_picked: selectedLine.first_selection_picked,
+			wager: selectedLine.wager,
+		}, {
+			headers: {
+				'X-Authorization': `Token ${token}`
+			}
+		})
+			.then(response => {
+				dispatch(setPlayerOneBets(response.data));
+			})
+			.catch(error => {
+				console.error('Error creating bet', error);
+			})
+			.finally(() => {
+				dispatch(resetSelectedLine());
+				dispatch(useCredits(selectedLine.wager))
+				router.back();
 			});
-		} catch (error) {
-			console.error('Error creating bet', error);
-		} finally {
-			dispatch(resetSelectedLine());
-			router.back()
-		}
 
 	}
 
@@ -92,7 +99,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 					)))}
 			</View>
 
-			{line.lines.map((marketLine, index) => (
+			{line.lines.map((marketLine) => (
 				marketLine.id == (selectedLine && selectedLine.id) && (
 					<TouchableOpacity onPress={handleBetSubmit}>
 						<View style={[styles.button, { backgroundColor: buttonColor }]}>

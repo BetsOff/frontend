@@ -4,8 +4,9 @@ import BetListForLeague from './BetListForLeague';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import apiRoutes from '@/routes/apiRoutes';
-import { useDispatch } from 'react-redux';
-import { setPlayerOneBets, setPlayerTwoBets } from '@/state/BetSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetBets, setPlayerOneBets, setPlayerTwoBets } from '@/state/BetSlice';
+import { RootState } from '@/state/store';
 
 type PlayerBetListProps = {
 	match_id: number;
@@ -15,18 +16,20 @@ type PlayerBetListProps = {
 
 const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, participant_index }) => {
 	const [loading, setLoading] = useState(true);
-	const [bets, setBets] = useState([]);
 	const dispatch = useDispatch();
+	const bets = participant_index === 0
+		? useSelector((state: RootState) => state.bet.playerOneBetList)
+		: useSelector((state: RootState) => state.bet.playerTwoBetList);
 
 	const fetchData = async () => {
 		if (match_id == 0 || user_id == 0) {
-			setBets([]);
+			dispatch(resetBets());
 			return;
 		}
 		try {
 			const response = await axios.get(apiRoutes.bet.get + `?match_id=${match_id}&user_id=${user_id}`);
 
-			setBets(response.data);
+			console.log('bets:', response.data);
 			const _ = participant_index == 0
 				? dispatch(setPlayerOneBets(response.data))
 				: dispatch(setPlayerTwoBets(response.data))

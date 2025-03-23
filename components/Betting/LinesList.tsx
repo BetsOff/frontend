@@ -53,8 +53,8 @@ const LinesList: React.FC<LinesListProps> = ({ }) => {
 	return (
 		<View style={styles.lineListContainer}>
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 350 }}>
-				{lines!.map((line, index) => (
-					<LineCard line={line} key={index} />
+				{lines!.map((line) => (
+					<LineCard line={line} key={line.lines[0].id} />
 				))}
 			</ScrollView>
 		</View>

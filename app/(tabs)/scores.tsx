@@ -128,11 +128,7 @@ export default function ScoresScreen() {
       <LeagueHeader />
       <MatchHeader />
       <SteppingBar onGoForward={forwardMatch} onGoBack={backMatch} />
-      <MatchList
-        matches={matches.matches}
-        starting_credits={matches.starting_credits}
-        status={matches.status}
-      />
+      <MatchList/>
 
     </View>
   );

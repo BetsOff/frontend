@@ -14,9 +14,15 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
 	const { playerOneBetList, playerTwoBetList } = useSelector((state: RootState) => state.bet);
 
-	useEffect(() => { }, [matches]);
+	const creditsRemaining = playerOneBetList.reduce((leagueTotal, league) => {
+		return leagueTotal + league.games.reduce((gameTotal, game) => {
+			return gameTotal + game.wagers.reduce((wagerTotal, wager) => wagerTotal + wager.wager, 0);
+		}, 0);
+	}, 0);
 
-	if (!currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);
+	useEffect(() => { }, [matches, playerOneBetList]);
+
+	if (!matches || !currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);
 
 	const user_id: Number = Number(storageGetItem('user_id'))
 
@@ -35,7 +41,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 				player_color={participant1.color}
 				record={participant1.record}
 				score={participant1.score}
-				credits_remaining={participant1.credits_remaining}
+				credits_remaining={matches.starting_credits - creditsRemaining}
 				betList={playerOneBetList}
 			/>
 			<Text style={styles.versus}>VS</Text>
