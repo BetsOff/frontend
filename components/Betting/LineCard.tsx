@@ -77,11 +77,10 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 			</View>
 			<View style={[styles.lineCardContainer, { backgroundColor: color.background_2 }]}>
 				{line.lines.map((marketLine, index) => (
-					<View style={[{ backgroundColor: color.background_2, borderRadius: 10, }]}>
+					<View style={[{ backgroundColor: color.background_2, borderRadius: 10, }]} key={index}>
 						<MarketLine
 							line={line}
 							marketLine={marketLine}
-							key={index}
 						/>
 
 						{index !== line.lines.length - 1 && (
@@ -95,13 +94,13 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 
 				{line.lines.map((marketLine, index) => (
 					marketLine.id == (selectedLine && selectedLine.id) && (
-						<SubmitWager marketLine={line.lines[index]} />
+						<SubmitWager marketLine={line.lines[index]} key={index} />
 					)))}
 			</View>
 
-			{line.lines.map((marketLine) => (
+			{line.lines.map((marketLine, index) => (
 				marketLine.id == (selectedLine && selectedLine.id) && (
-					<TouchableOpacity onPress={handleBetSubmit}>
+					<TouchableOpacity onPress={handleBetSubmit} key={index}>
 						<View style={[styles.button, { backgroundColor: buttonColor }]}>
 							<Text style={styles.submit}>Submit</Text>
 						</View>

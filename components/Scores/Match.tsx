@@ -7,6 +7,7 @@ import PlayerScore from './PlayerScore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { setCurrentMatch } from '@/state/MatchSlice';
+import { resetBets } from '@/state/BetSlice';
 
 type MatchProps = {
   match: Match;
@@ -22,6 +23,7 @@ const Match: React.FC<MatchProps> = ({ match, status }) => {
   if (!matches) return (<></>);
 
   const handleMatchPressed = () => {
+    dispatch(resetBets());
     dispatch(setCurrentMatch(match));
     router.replace('/live-match' as Href);
   }

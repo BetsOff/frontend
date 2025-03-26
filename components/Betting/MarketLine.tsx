@@ -46,7 +46,7 @@ const MarketLine: React.FC<MarketLineProps> = ({ line, marketLine }) => {
 			market: marketLine.market,
 			id: marketLine.id,
 			first_selection_picked: first_selection_picked,
-			wager: 0,
+			wager: selectedLine ? selectedLine.wager : 0,
 		}));
 	}
 
