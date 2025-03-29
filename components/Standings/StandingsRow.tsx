@@ -32,7 +32,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
 
   const handleProfilePressed = () => {
     router.push('/other_profile');
-    dispatch(setUserId(standing.user_id))
+    dispatch(setUserId(standing.user_id));
   }
 
   return (

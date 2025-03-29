@@ -1,12 +1,15 @@
 import { Text, useColor, View } from '@/components/Themed';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { getLogoColor } from '@/util/getLogoColor';
 import calcualtePointsWon from '@/util/calculatePointsWon';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { useRouter } from 'expo-router';
+import { setUserId } from '@/state/ProfileSlice';
 
 type ScoreCardProps = {
+  user_id: number,
   name: string,
   player_color: string,
   record: string,
@@ -36,12 +39,19 @@ const getTotalPotentialPoints = (betList: LeagueBets[]): number => {
   return Math.round(result * 100) / 100
 }
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ name, player_color, record, score, credits_remaining, betList }) => {
+const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, player_color, record, score, credits_remaining, betList }) => {
   const color = useColor();
-	const matches =  useSelector((state: RootState) => state.match.matches);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const matches = useSelector((state: RootState) => state.match.matches);
   const logoColor = getLogoColor(player_color);
 
   const potentialPoints = getTotalPotentialPoints(betList);
+
+  const handleProfilePressed = () => {
+    router.push('/other_profile');
+    dispatch(setUserId(user_id));
+  }
 
   if (!matches) return (<></>);
 
@@ -59,16 +69,19 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ name, player_color, record, score
 
   return (
     <View style={[styles.scoreCardContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
-      <Text style={nameStyle}>{name}</Text>
-      <Text style={styles.record}>{record}</Text>
-      <View style={[styles.scoreContainer, { backgroundColor: logoColor }]}>
-        <Text style={[scoreStyle, { color: textColor }]}>{score}</Text>
-        {(score != potentialPoints) && (
-          <Text style={styles.potentialScore}>/ {potentialPoints}</Text>
-        )}
-
-      </View>
-      <Text style={[styles.remaining_credits, { color: textColor }]}>Credits: {credits_remaining}/{matches.starting_credits}</Text>
+      <TouchableOpacity onPress={handleProfilePressed}>
+        <View style={[styles.innerScoreCardContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
+          <Text style={nameStyle}>{name}</Text>
+          <Text style={styles.record}>{record}</Text>
+          <View style={[styles.scoreContainer, { backgroundColor: logoColor }]}>
+            <Text style={[scoreStyle, { color: textColor }]}>{score}</Text>
+            {(score != potentialPoints) && (
+              <Text style={styles.potentialScore}>/ {potentialPoints}</Text>
+            )}
+          </View>
+          <Text style={[styles.remaining_credits, { color: textColor }]}>Credits: {credits_remaining}/{matches.starting_credits}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -83,6 +96,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#fff',
     borderWidth: 1,
+  },
+  innerScoreCardContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scoreContainer: {
     flexDirection: 'row',

@@ -20,7 +20,7 @@ const BetAccuracy: React.FC<BetAccuracyProps> = ({ }) => {
       <Text style={styles.accuracyText}>{stats.bet_accuracy.total * 100} %</Text>
       <View style={styles.leaguesRow}>
       {stats.bet_accuracy.byLeague.map((league, index) => (
-        <View style={styles.leagueAccuracyContainer}>
+        <View style={styles.leagueAccuracyContainer} key={index}>
           <View style={styles.leaguesRow}>
             {getIcon(league.league, color.inactive_text, 20)}
             <Text style={[styles.leagueAccuracyText, { color: color.inactive_text }]}>{league.league}</Text>

@@ -37,6 +37,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 	return (
 		<View style={styles.container}>
 			<ScoreCard
+				user_id={participant1.user_id}
 				name={participant1.user}
 				player_color={participant1.color}
 				record={participant1.record}
@@ -46,6 +47,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 			/>
 			<Text style={styles.versus}>VS</Text>
 			<ScoreCard
+				user_id={participant2.user_id}
 				name={participant2.user}
 				player_color={participant2.color}
 				record={participant2.record}
