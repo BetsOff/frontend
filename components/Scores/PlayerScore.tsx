@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import { Text, useColor, View } from '@/components/Themed';
 
 import PlayerLogo from '../PlayerLogo';
+import { storageGetItem } from '@/util/Storage';
+
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 
 type PlayerScoreProps = {
   participant: MatchParticipant;
@@ -37,8 +41,14 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
 
       {/* Name and Record */}
       <View style={[styles.userContainer, { backgroundColor: color.background_2 }]}>
-        <Text style={[styles.userText, { color: userTextColor }]}>{participant.user}</Text>
-        <Text style={[styles.recordText, { color: color.inactive_text }]}>{participant.record}</Text>
+        <View style={[styles.recordContainer, { backgroundColor: color.background_2 }]}>
+          <Text style={[styles.userText, { color: userTextColor }]}>{participant.user}</Text>
+          <Text style={[styles.recordText, { color: color.inactive_text }]}>{participant.record}</Text>
+        </View>
+        {/* Profile Icon if it's user */}
+        {participant.user === storageGetItem('user') && (
+          <MaterialCommunityIcons name="account" size={28} color={color.inactive_text} />
+        )}
       </View>
 
       {/* Credits remaining or Final */}
@@ -76,10 +86,16 @@ const styles = StyleSheet.create({
     width: '13%',
   },
   userContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '42%',
+  },
+  recordContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingRight: 5,
   },
   creditsRemainingContainer: {
     flexDirection: 'column',

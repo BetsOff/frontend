@@ -5,6 +5,8 @@ import ClinchTag from './ClinchTag';
 import PlayerLogo from '../PlayerLogo';
 import { storageGetItem } from '@/util/Storage';
 
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 type StandingsRowProps = {
   standing: Standing;
   row: number;
@@ -20,41 +22,42 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
     ? [styles.cellTextMajor]
     : [styles.longCellTextMajor]
 
-  const rowBackgroundColor = standing.user == storageGetItem('user')
-    ? color.background_3
-    : background_color
+  // standing.user == storageGetItem('user')
 
   return (
-    <View style={[styles.tableRow, { backgroundColor: rowBackgroundColor }]} key={row} >
+    <View style={[styles.tableRow, { backgroundColor: background_color }]} key={row} >
       {/* Seed */}
-      <View style={[styles.seedCell, { backgroundColor: rowBackgroundColor }]}>
+      <View style={[styles.seedCell, { backgroundColor: background_color }]}>
         <Text style={styles.cellTextMinor}>{row + 1}</Text>
       </View>
 
       {/* Player Logo */}
-      <View style={[styles.logoCell, { backgroundColor: rowBackgroundColor }]}>
+      <View style={[styles.logoCell, { backgroundColor: background_color }]}>
         <PlayerLogo color={standing.color} diameter={24} />
       </View>
 
       {/* Player */}
-      <View style={[styles.playerCell, { backgroundColor: rowBackgroundColor }]}>
+      <View style={[styles.playerCell, { backgroundColor: background_color }]}>
         <Text style={userStyle}>{standing.user}</Text>
+        {standing.user == storageGetItem('user') &&(
+          <MaterialCommunityIcons name="account" size={28} color={color.inactive_text} />
+        )}
       </View>
 
       {/* Clinch Tag */}
-      <View style={[styles.clinchCell, { backgroundColor: rowBackgroundColor }]}>
-        <ClinchTag clinch={standing.clinch} row_background={rowBackgroundColor} />
+      <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
+        <ClinchTag clinch={standing.clinch} row_background={background_color} />
       </View>
 
       {/* Record */}
-      <View style={[styles.recordCell, { backgroundColor: rowBackgroundColor }]}>
+      <View style={[styles.recordCell, { backgroundColor: background_color }]}>
         <Text style={styles.cellTextMinor}>
           {standing.win}-{standing.loss}-{standing.draw}
         </Text>
       </View>
 
       {/* Points For */}
-      <View style={[styles.diffCell, { backgroundColor: rowBackgroundColor }]}>
+      <View style={[styles.diffCell, { backgroundColor: background_color }]}>
         <Text style={styles.cellTextMinor}>{standing.pf}</Text>
       </View>
     </View>
@@ -85,7 +88,9 @@ const styles = StyleSheet.create({
   playerCell: {
     ...baseStyles.cell,
     width: '32%',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
   },
   clinchCell: {
     ...baseStyles.cell,
@@ -102,11 +107,13 @@ const styles = StyleSheet.create({
   },
   cellTextMajor: {
     fontWeight: 500,
-    fontSize: 20
+    fontSize: 20,
+    paddingRight: 5,
   },
   longCellTextMajor: {
     fontWeight: 500,
     fontSize: 16,
+    padding: 3,
   },
   cellTextMinor: {
     fontSize: 16
