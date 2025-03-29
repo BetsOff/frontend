@@ -6,7 +6,6 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Feather from '@expo/vector-icons/Feather';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useThemeColor } from '@/components/Themed';
 
@@ -47,10 +46,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="feedback"
+        name="profile"
         options={{
-          title: 'Feedback',
-          tabBarIcon: ({ color }) => <Feather name="help-circle" size={24} color={color} />,
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={28} color={color} />,
         }}
       />
       <Tabs.Screen 

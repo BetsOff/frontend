@@ -53,10 +53,27 @@ function RootLayoutNav() {
     <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
-          <Stack.Screen name="create_account" options={{ headerShown: false, }} />
-          <Stack.Screen name="(tabs)" options={{ title: '', headerShown: false }} />
-          <Stack.Screen name="make_bet" options={{ title: 'Make Bet', headerShown: false, presentation: 'modal' }} />
+          <Stack.Screen name="login" options={{ 
+            title: 'Login', 
+            headerShown: false 
+          }} />
+          <Stack.Screen name="create_account" options={{ 
+            headerShown: false, 
+          }} />
+          <Stack.Screen name="(tabs)" options={{ 
+            title: '', 
+            headerShown: false,
+          }} />
+          <Stack.Screen name="make_bet" options={{
+            title: 'Make Bet', 
+            headerShown: false, 
+            presentation: 'modal' 
+          }} />
+          <Stack.Screen name="season_selector" options={{ 
+            title: 'Select Season', 
+            headerShown: false,
+            presentation: 'modal',             
+          }} />
         </Stack>
       </ThemeProvider>
     </Provider>

@@ -54,14 +54,12 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 		})
 			.then(response => {
 				dispatch(setPlayerOneBets(response.data));
-			})
-			.catch(error => {
-				console.error('Error creating bet', error);
-			})
-			.finally(() => {
 				dispatch(resetSelectedLine());
 				dispatch(useCredits(selectedLine.wager))
 				router.back();
+			})
+			.catch(error => {
+				console.error('Error creating bet', error);
 			});
 
 	}

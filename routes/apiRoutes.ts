@@ -16,6 +16,7 @@ const apiRoutes = {
       accept: apiUrl + '/users/friends/accept/',
       remove: apiUrl + '/users/friends/remove/'
     },
+    stats: apiUrl + '/users/stats/'
   },
   league: {
     get: apiUrl + '/leagues/get/',

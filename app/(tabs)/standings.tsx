@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { View } from '@/components/Themed';
 
@@ -9,18 +9,20 @@ import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
 import { RootState } from '@/state/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { storageGetItem } from '@/util/Storage';
 import axios from 'axios';
 import apiRoutes from '@/routes/apiRoutes';
 import { setLeagues } from '@/state/LeagueSlice';
 import { setSeason } from '@/state/SeasonSlice';
 import { setMatches } from '@/state/MatchSlice';
+import { useRouter } from 'expo-router';
 
 export default function StandingsScreen() {
   const dispatch = useDispatch();
   const league = useSelector((state: RootState) => state.league.currentLeague);
   const season = useSelector((state: RootState) => state.season.season);
+  const router = useRouter();
 
   useEffect(() => {
     const userId = storageGetItem('user_id');
@@ -107,11 +109,13 @@ export default function StandingsScreen() {
           </View>
           : <></>
         : <View>
-          <SeasonHeader
-            name={`Season ${season.season_number}`}
-            start_date={season.start_date}
-            end_date={season.end_date}
-          />
+          <TouchableOpacity onPress={() => router.push('/season_selector')}>
+            <SeasonHeader
+              name={`Season ${season.season_number}`}
+              start_date={season.start_date}
+              end_date={season.end_date}
+            />
+          </TouchableOpacity>
           <StandingsTable />
         </View>
       }
