@@ -29,8 +29,10 @@ type LeagueBets = {
 
 interface AccuracyRef {
   total: number;
-  NFL: number;
-  NBA: number;
-  MLB: number;
-  NHL: number;
+  byLeague: LeagueAccuracyRef[];
+}
+
+interface LeagueAccuracyRef {
+  league: string;
+  accuracy: number;
 }

@@ -6,5 +6,6 @@ type Standing = {
   diff: number;
   clinch: string | null;
   user: string;
+  user_id: number;
   color: string;
 }

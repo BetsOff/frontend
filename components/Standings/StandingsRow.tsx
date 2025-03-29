@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, useColor, View } from '@/components/Themed';
 
 import ClinchTag from './ClinchTag';
@@ -6,6 +6,9 @@ import PlayerLogo from '../PlayerLogo';
 import { storageGetItem } from '@/util/Storage';
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useRouter } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { setUserId } from '@/state/ProfileSlice';
 
 type StandingsRowProps = {
   standing: Standing;
@@ -14,6 +17,9 @@ type StandingsRowProps = {
 
 const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
   const color = useColor();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const background_color = row % 2 == 0
     ? color.background_2
     : color.background_1
@@ -24,43 +30,45 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
 
   // standing.user == storageGetItem('user')
 
+  const handleProfilePressed = () => {
+    router.push('/other_profile');
+    dispatch(setUserId(standing.user_id))
+  }
+
   return (
-    <View style={[styles.tableRow, { backgroundColor: background_color }]} key={row} >
-      {/* Seed */}
-      <View style={[styles.seedCell, { backgroundColor: background_color }]}>
-        <Text style={styles.cellTextMinor}>{row + 1}</Text>
+    <TouchableOpacity onPress={handleProfilePressed}>
+      <View style={[styles.tableRow, { backgroundColor: background_color }]} key={row} >
+        {/* Seed */}
+        <View style={[styles.seedCell, { backgroundColor: background_color }]}>
+          <Text style={styles.cellTextMinor}>{row + 1}</Text>
+        </View>
+        {/* Player Logo */}
+        <View style={[styles.logoCell, { backgroundColor: background_color }]}>
+          <PlayerLogo color={standing.color} diameter={24} />
+        </View>
+        {/* Player */}
+        <View style={[styles.playerCell, { backgroundColor: background_color }]}>
+          <Text style={userStyle}>{standing.user}</Text>
+          {standing.user == storageGetItem('user') &&(
+            <MaterialCommunityIcons name="account" size={28} color={color.inactive_text} />
+          )}
+        </View>
+        {/* Clinch Tag */}
+        <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
+          <ClinchTag clinch={standing.clinch} row_background={background_color} />
+        </View>
+        {/* Record */}
+        <View style={[styles.recordCell, { backgroundColor: background_color }]}>
+          <Text style={styles.cellTextMinor}>
+            {standing.win}-{standing.loss}-{standing.draw}
+          </Text>
+        </View>
+        {/* Points For */}
+        <View style={[styles.diffCell, { backgroundColor: background_color }]}>
+          <Text style={styles.cellTextMinor}>{standing.pf}</Text>
+        </View>
       </View>
-
-      {/* Player Logo */}
-      <View style={[styles.logoCell, { backgroundColor: background_color }]}>
-        <PlayerLogo color={standing.color} diameter={24} />
-      </View>
-
-      {/* Player */}
-      <View style={[styles.playerCell, { backgroundColor: background_color }]}>
-        <Text style={userStyle}>{standing.user}</Text>
-        {standing.user == storageGetItem('user') &&(
-          <MaterialCommunityIcons name="account" size={28} color={color.inactive_text} />
-        )}
-      </View>
-
-      {/* Clinch Tag */}
-      <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
-        <ClinchTag clinch={standing.clinch} row_background={background_color} />
-      </View>
-
-      {/* Record */}
-      <View style={[styles.recordCell, { backgroundColor: background_color }]}>
-        <Text style={styles.cellTextMinor}>
-          {standing.win}-{standing.loss}-{standing.draw}
-        </Text>
-      </View>
-
-      {/* Points For */}
-      <View style={[styles.diffCell, { backgroundColor: background_color }]}>
-        <Text style={styles.cellTextMinor}>{standing.pf}</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

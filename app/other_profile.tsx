@@ -1,8 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { Text, useColor, View } from '@/components/Themed';
+import { useColor, View } from '@/components/Themed';
 import { useRouter } from 'expo-router';
-import { logout } from '@/state/AuthSlice';
 import { useEffect } from 'react';
 import { storageGetItem } from '@/util/Storage';
 import axios from 'axios';
@@ -15,16 +14,11 @@ import LifetimeRecord from '@/components/Profile/LifetimeRecord';
 import BetAccuracy from '@/components/Profile/BetAccuracy';
 import BestGame from '@/components/Profile/BestGame';
 
-export default function ProfileScreen() {
+export default function OtherProfileScreen() {
   const color = useColor();
   const dispatch = useDispatch();
   const router = useRouter();
   const profile = useSelector((state: RootState) => state.profile);
-
-  const signout = async () => {
-    logout();
-    router.replace('/login');
-  }
 
   useEffect(() => {
     const token = storageGetItem('token');
@@ -32,7 +26,8 @@ export default function ProfileScreen() {
 
     const fetchStats = async () => {
       console.log('fetching stats');
-      await axios.get(apiRoutes.users.stats, {
+      const query = `?user_id=${profile.user_id}`
+      await axios.get(apiRoutes.users.stats + query, {
         headers: {
           'X-Authorization': `Token ${token}`,
         },
@@ -53,12 +48,6 @@ export default function ProfileScreen() {
       <LifetimeRecord />
       <BetAccuracy />
       <BestGame />
-
-      <TouchableOpacity onPress={signout}>
-        <View style={[styles.signoutButton, { backgroundColor: color.brand }]}>
-          <Text style={styles.signoutText}>Sign out</Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -69,12 +58,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
-  },
-  signoutButton: {
-    padding: 20,
-    borderRadius: 10,
-  },
-  signoutText: {
-    fontSize: 24,
   },
 });

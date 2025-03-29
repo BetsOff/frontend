@@ -67,7 +67,12 @@ function RootLayoutNav() {
           <Stack.Screen name="make_bet" options={{
             title: 'Make Bet', 
             headerShown: false, 
-            presentation: 'modal' 
+            presentation: 'modal',
+          }} />
+          <Stack.Screen name="other_profile" options={{
+            title: 'Profile',
+            headerShown: false,
+            presentation: 'modal',
           }} />
           <Stack.Screen name="season_selector" options={{ 
             title: 'Select Season', 

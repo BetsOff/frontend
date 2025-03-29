@@ -10,11 +10,6 @@ export default function MoreScreen() {
   const color = useColor();
   const pages = [
     {
-      title: "Profile",
-      icon: (<MaterialCommunityIcons name="account" size={28} color={color.active_text} />),
-      link: '/profile'
-    },
-    {
       title: "My Leagues",
       icon: (<FontAwesome name="group" size={24} color={color.active_text} />),
       link: '/leagues'
