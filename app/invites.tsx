@@ -85,10 +85,10 @@ export default function InvitesScreen() {
 				<View key={index} style={[styles.invite, { backgroundColor: index % 2 == 0 ? color.background_1 : color.background_2 }]}>
 					<Text style={styles.leagueText}>{invite.league_name}</Text>
 					<View style={styles.buttons}>
-						<TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={() => handleAccept(invite.league)}>
+						<TouchableOpacity style={[styles.button, { backgroundColor: color.won }]} onPress={() => handleAccept(invite.league)}>
 							<Text style={styles.buttonText}>Accept</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={[styles.button, { backgroundColor: color.red }]} onPress={() => handleDecline(invite.league)}>
+						<TouchableOpacity style={[styles.button, { backgroundColor: color.loss }]} onPress={() => handleDecline(invite.league)}>
 							<Text style={styles.buttonText}>Decline</Text>
 						</TouchableOpacity>
 					</View>

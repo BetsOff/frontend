@@ -9,17 +9,17 @@ import axios from 'axios';
 import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
-import { setProfile } from '@/state/ProfileSlice';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import LifetimeRecord from '@/components/Profile/LifetimeRecord';
 import BetAccuracy from '@/components/Profile/BetAccuracy';
 import BestGame from '@/components/Profile/BestGame';
+import { setProfile } from '@/state/profile/SelfSlice';
 
 export default function ProfileScreen() {
   const color = useColor();
   const dispatch = useDispatch();
   const router = useRouter();
-  const profile = useSelector((state: RootState) => state.profile);
+  const profile = useSelector((state: RootState) => state.self);
 
   const signout = async () => {
     logout();
@@ -39,20 +39,25 @@ export default function ProfileScreen() {
       })
       .then(response => {
         dispatch(setProfile(response.data));
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error)
       })
     }
 
     fetchStats();
-  }, [dispatch]);
+  }, []);
 
+  console.log(profile);
   if (!profile.stats) return (<></>);
 
   return (
     <View style={styles.container}>
-      <ProfileHeader />
-      <LifetimeRecord />
-      <BetAccuracy />
-      <BestGame />
+      <ProfileHeader color={profile.color} username={profile.username} />
+      <LifetimeRecord stats={profile.stats} />
+      <BetAccuracy stats={profile.stats} />
+      <BestGame stats={profile.stats} />
 
       <TouchableOpacity onPress={signout}>
         <View style={[styles.signoutButton, { backgroundColor: color.brand }]}>

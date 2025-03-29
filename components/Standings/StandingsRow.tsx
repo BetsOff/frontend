@@ -8,7 +8,7 @@ import { storageGetItem } from '@/util/Storage';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
-import { setUserId } from '@/state/ProfileSlice';
+import { setUserId } from '@/state/profile/ProfileSlice';
 
 type StandingsRowProps = {
   standing: Standing;

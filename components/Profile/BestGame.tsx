@@ -6,15 +6,15 @@ import PlayerScore from '../Scores/PlayerScore';
 import { resetBets } from '@/state/BetSlice';
 import { setCurrentMatch } from '@/state/MatchSlice';
 import { Href, router } from 'expo-router';
+import { Stats } from '@/state/profile/SelfSlice';
 
 type BestGameProps = {
-
+  stats: Stats;
 }
 
-const BestGame: React.FC<BestGameProps> = ({ }) => {
+const BestGame: React.FC<BestGameProps> = ({ stats }) => {
   const color = useColor();
   const dispatch = useDispatch();
-  const stats = useSelector((state: RootState) => state.profile.stats)
 
   if (!stats) return <></>
 

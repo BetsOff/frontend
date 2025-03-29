@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { View, Text, useColor } from '../Themed';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
+import { Stats } from '@/state/profile/SelfSlice';
 
 type LifetimeRecordProps = {
-
+  stats: Stats;
 }
 
-const LifetimeRecord: React.FC<LifetimeRecordProps> = ({ }) => {
+const LifetimeRecord: React.FC<LifetimeRecordProps> = ({ stats }) => {
   const color = useColor();
-  const stats = useSelector((state: RootState) => state.profile.stats)
 
   if (!stats) return <></>
 

@@ -71,24 +71,6 @@ const CreateSeasonScreen = () => {
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="Break Length"
-					placeholderTextColor={color.inactive_text}
-					value={breakLength}
-					onChangeText={setBreakLength}
-				/>
-			</View>
-			<View style={[styles.inputView, { borderColor: color.active_text }]}>
-				<TextInput
-					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="Credits Per Match"
-					placeholderTextColor={color.inactive_text}
-					value={creditsPerMatch}
-					onChangeText={setCreditsPerMatch}
-				/>
-			</View>
-			<View style={[styles.inputView, { borderColor: color.active_text }]}>
-				<TextInput
-					style={[styles.inputText, { color: color.active_text }]}
 					placeholder="Teams in Playoffs"
 					placeholderTextColor={color.inactive_text}
 					value={teamsInPlayoffs}

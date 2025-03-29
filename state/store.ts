@@ -5,7 +5,8 @@ import seasonReducer from "./SeasonSlice";
 import matchReducer from "./MatchSlice";
 import betReducer from "./BetSlice";
 import lineReducer from "./LineSlice";
-import profileReducer from "./ProfileSlice";
+import profileReducer from "./profile/ProfileSlice";
+import selfReducer from "./profile/SelfSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     match: matchReducer,
     bet: betReducer,
     line: lineReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    self: selfReducer,
   },
 });
 

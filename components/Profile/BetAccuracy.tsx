@@ -3,14 +3,14 @@ import { View, Text, useColor } from '../Themed';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import getIcon from '@/util/Icons';
+import { Stats } from '@/state/profile/SelfSlice';
 
 type BetAccuracyProps = {
-
+  stats: Stats
 }
 
-const BetAccuracy: React.FC<BetAccuracyProps> = ({ }) => {
+const BetAccuracy: React.FC<BetAccuracyProps> = ({ stats }) => {
   const color = useColor();
-  const stats = useSelector((state: RootState) => state.profile.stats)
 
   if (!stats) return <></>
 

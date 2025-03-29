@@ -23,7 +23,6 @@ const Match: React.FC<MatchProps> = ({ match, status }) => {
   if (!matches) return (<></>);
 
   const handleMatchPressed = () => {
-    dispatch(resetBets());
     dispatch(setCurrentMatch(match));
     router.replace('/live-match' as Href);
   }

@@ -6,7 +6,7 @@ import calcualtePointsWon from '@/util/calculatePointsWon';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { useRouter } from 'expo-router';
-import { setUserId } from '@/state/ProfileSlice';
+import { setUserId } from '@/state/profile/ProfileSlice';
 
 type ScoreCardProps = {
   user_id: number,
