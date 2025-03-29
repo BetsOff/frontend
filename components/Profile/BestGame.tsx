@@ -1,9 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View, Text, useColor } from '../Themed';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
 import PlayerScore from '../Scores/PlayerScore';
-import { resetBets } from '@/state/BetSlice';
 import { setCurrentMatch } from '@/state/MatchSlice';
 import { Href, router } from 'expo-router';
 import { Stats } from '@/state/profile/SelfSlice';
@@ -22,7 +20,6 @@ const BestGame: React.FC<BestGameProps> = ({ stats }) => {
   const match = best_game.match;
 
   const handleMatchPressed = () => {
-    dispatch(resetBets());
     dispatch(setCurrentMatch(match));
     router.replace('/live-match' as Href);
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useColor, View } from '@/components/Themed';
 import { Href, useRouter } from 'expo-router';
 
@@ -7,7 +7,6 @@ import PlayerScore from './PlayerScore';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { setCurrentMatch } from '@/state/MatchSlice';
-import { resetBets } from '@/state/BetSlice';
 
 type MatchProps = {
   match: Match;

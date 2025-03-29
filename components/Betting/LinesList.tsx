@@ -2,12 +2,7 @@ import { Text, View } from '@/components/Themed';
 
 import LineCard from './LineCard'
 import { StyleSheet, ScrollView } from 'react-native';
-import { useEffect, useState } from 'react';
 
-import getToday from '@/util/date/getToday';
-import axios from 'axios';
-import { storageGetItem } from '@/util/Storage';
-import apiRoutes from '@/routes/apiRoutes';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { LineState } from '@/state/LineSlice';

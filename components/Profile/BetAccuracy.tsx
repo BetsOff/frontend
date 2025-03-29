@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { View, Text, useColor } from '../Themed';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
 import getIcon from '@/util/Icons';
 import { Stats } from '@/state/profile/SelfSlice';
 
