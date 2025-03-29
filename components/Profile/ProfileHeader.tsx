@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    width: '50%',
+    justifyContent: 'center',
   },
   username: {
     paddingLeft: 10,
