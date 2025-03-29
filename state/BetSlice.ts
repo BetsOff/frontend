@@ -20,9 +20,7 @@ const betSlice = createSlice({
     setPlayerTwoBets: (state, action: PayloadAction<LeagueBets[]>) => {
       state.playerTwoBetList = action.payload;
     },
-    resetBets: (state) => {
-      state = initialBetState;
-    },
+    resetBets: () => initialBetState,
   },
 });
 
