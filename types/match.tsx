@@ -29,3 +29,9 @@ type MatchSet = {
   starting_credits: number;
   matches: Match[];
 }
+
+interface MatchRecord {
+  win: number;
+  loss: number;
+  draw: number
+}

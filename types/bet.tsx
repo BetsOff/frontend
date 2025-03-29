@@ -26,3 +26,11 @@ type LeagueBets = {
   league_name: string;
   games: Game[];
 }
+
+interface AccuracyRef {
+  total: number;
+  NFL: number;
+  NBA: number;
+  MLB: number;
+  NHL: number;
+}
