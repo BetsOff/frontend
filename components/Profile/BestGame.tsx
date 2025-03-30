@@ -35,13 +35,13 @@ const BestGame: React.FC<BestGameProps> = ({ stats }) => {
             participant={match.participants[0]}
             winner={match.winner}
             starting_credits={0}
-            status={'Final'}
+            status={'final'}
           />
           <PlayerScore
             participant={match.participants[1]}
             winner={match.winner}
             starting_credits={0}
-            status={'Final'}
+            status={'final'}
           />
         </View>
       </TouchableOpacity>
