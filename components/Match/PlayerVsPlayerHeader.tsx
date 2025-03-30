@@ -39,7 +39,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 			<ScoreCard
 				user_id={participant1.user_id}
 				name={participant1.user}
-				player_color={participant1.color}
+				logo={participant1.logo}
 				record={participant1.record}
 				score={participant1.score}
 				credits_remaining={matches.starting_credits - creditsRemaining}
@@ -49,7 +49,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 			<ScoreCard
 				user_id={participant2.user_id}
 				name={participant2.user}
-				player_color={participant2.color}
+				logo={participant2.logo}
 				record={participant2.record}
 				score={participant2.score}
 				credits_remaining={participant2.credits_remaining}

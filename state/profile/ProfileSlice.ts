@@ -14,14 +14,18 @@ interface Stats {
 
 interface ProfileState {
   user_id: number;
-  color: string;
+  logo: Logo;
   username: string;
   stats: Stats | null;
 }
 
 const initialProfileState: ProfileState = {
   user_id: 0,
-  color: '',
+  logo: {
+    color: '',
+    bg_color: '',
+    icon: '',
+  },
   username: '',
   stats: null,
 };
@@ -35,7 +39,7 @@ const ProfileSlice = createSlice({
     },
     setProfile: (state, action: PayloadAction<ProfileState>) => {
       state.user_id = action.payload.user_id;
-      state.color = action.payload.color;
+      state.logo = action.payload.logo;
       state.username = action.payload.username;
       state.stats = action.payload.stats;
       console.log(state);

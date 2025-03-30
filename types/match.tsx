@@ -1,7 +1,11 @@
 type MatchParticipant = {
   user_id: number;
   user: string;
-  color: string;
+  logo: {
+    color: string;
+    bg_color: string;
+    icon: string;
+  };
   record: string;
   credits_remaining: number;
   score: number;

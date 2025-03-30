@@ -11,7 +11,7 @@ import { setUserId } from '@/state/profile/ProfileSlice';
 type ScoreCardProps = {
   user_id: number,
   name: string,
-  player_color: string,
+  logo: Logo,
   record: string,
   score: number;
   credits_remaining: number;
@@ -39,12 +39,12 @@ const getTotalPotentialPoints = (betList: LeagueBets[]): number => {
   return Math.round(result * 100) / 100
 }
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, player_color, record, score, credits_remaining, betList }) => {
+const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, score, credits_remaining, betList }) => {
   const color = useColor();
   const router = useRouter();
   const dispatch = useDispatch();
   const matches = useSelector((state: RootState) => state.match.matches);
-  const logoColor = getLogoColor(player_color);
+  const logoColor = getLogoColor(logo.bg_color);
 
   const potentialPoints = getTotalPotentialPoints(betList);
 
@@ -59,7 +59,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, player_color, reco
     ? styles.smallScore
     : styles.score
 
-  const textColor = player_color == 'white'
+  const textColor = logo.bg_color == 'white'
     ? '#666666'
     : 'white'
 

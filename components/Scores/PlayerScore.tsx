@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, useColor, View } from '@/components/Themed';
 
-import PlayerLogo from '../PlayerLogo';
+import PlayerLogo from '../Logo/PlayerLogo';
 import { storageGetItem } from '@/util/Storage';
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -36,7 +36,7 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
     <View style={[styles.playerScoreContainer, { backgroundColor: color.background_2 }]}>
       {/* Team Logo */}
       <View style={[styles.logoContainer, { backgroundColor: color.background_2 }]}>
-        <PlayerLogo color={participant.color} diameter={32} />
+        <PlayerLogo logo={participant.logo} diameter={32} />
       </View>
 
       {/* Name and Record */}

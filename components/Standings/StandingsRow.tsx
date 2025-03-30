@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, useColor, View } from '@/components/Themed';
 
 import ClinchTag from './ClinchTag';
-import PlayerLogo from '../PlayerLogo';
+import PlayerLogo from '../Logo/PlayerLogo';
 import { storageGetItem } from '@/util/Storage';
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -44,7 +44,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
         </View>
         {/* Player Logo */}
         <View style={[styles.logoCell, { backgroundColor: background_color }]}>
-          <PlayerLogo color={standing.color} diameter={24} />
+          <PlayerLogo logo={standing.logo} diameter={24} />
         </View>
         {/* Player */}
         <View style={[styles.playerCell, { backgroundColor: background_color }]}>

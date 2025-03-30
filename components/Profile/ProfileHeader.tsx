@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { View, Text } from '../Themed';
-import PlayerLogo from '../PlayerLogo';
+import PlayerLogo from '../Logo/PlayerLogo';
 
 type ProfileHeaderProps = {
-  color: string;
+  logo: Logo;
   username: string;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ color, username }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ logo, username }) => {
   return (
     <View style={styles.container}>
-      <PlayerLogo color={color} diameter={40} />
+      <PlayerLogo logo={logo} diameter={40} />
       <View>
         <Text style={styles.username}>{username}</Text>
       </View>

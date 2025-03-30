@@ -44,7 +44,7 @@ export default function OtherProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <ProfileHeader color={profile.color} username={profile.username} />
+      <ProfileHeader logo={profile.logo} username={profile.username} />
       <LifetimeRecord stats={profile.stats} />
       <BetAccuracy stats={profile.stats} />
       <BestGame stats={profile.stats} />

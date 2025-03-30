@@ -7,5 +7,11 @@ type Standing = {
   clinch: string | null;
   user: string;
   user_id: number;
+  logo: Logo;
+}
+
+type Logo = {
   color: string;
+  bg_color: string;
+  icon: string;
 }
