@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
+import PlayerIcon from '../Logo/PlayerIcon';
 
 type ScoreCardProps = {
   user_id: number,
@@ -48,7 +49,8 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
 
   const potentialPoints = getTotalPotentialPoints(betList);
 
-  const roundScores = (score != potentialPoints) && (score >= 100 || potentialPoints >= 100)
+  const roundScores = (score != potentialPoints) && (score >= 100 || potentialPoints >= 100) && (score != 0)
+  
 
   const handleProfilePressed = () => {
     router.push('/other_profile');
@@ -73,8 +75,13 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
     <View style={[styles.scoreCardContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
       <TouchableOpacity onPress={handleProfilePressed}>
         <View style={[styles.innerScoreCardContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
-          <Text style={nameStyle}>{name}</Text>
-          <Text style={styles.record}>{record}</Text>
+          <View style={[styles.playerContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
+            <PlayerIcon color={logo.color} icon={logo.icon} size={24} />
+            <View style={[styles.nameAndScoreContainer, { backgroundColor: logoColor, borderColor: color.active_text }]}>
+              <Text style={nameStyle}>{name}</Text>
+              <Text style={styles.record}>{record}</Text>
+            </View>
+          </View>
           <View style={[styles.scoreContainer, { backgroundColor: logoColor }]}>
             <Text style={[scoreStyle, { color: textColor }]}>
               {roundScores
@@ -109,6 +116,16 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderWidth: 1,
   },
+  playerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nameAndScoreContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingLeft: 10,
+  },
   innerScoreCardContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -125,12 +142,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 500,
   },
   longName: {
     paddingVertical: 2,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 500,
   },
   record: {

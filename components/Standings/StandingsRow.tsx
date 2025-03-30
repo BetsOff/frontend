@@ -24,7 +24,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
     ? color.background_2
     : color.background_1
 
-  const userStyle = standing.user.length <= 11
+  const userStyle = standing.user.length <= 10
     ? [styles.cellTextMajor]
     : [styles.longCellTextMajor]
 
@@ -50,7 +50,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
         <View style={[styles.playerCell, { backgroundColor: background_color }]}>
           <Text style={userStyle}>{standing.user}</Text>
           {standing.user == storageGetItem('user') &&(
-            <MaterialCommunityIcons name="account" size={28} color={color.inactive_text} />
+            <MaterialCommunityIcons name="account" size={20} color={color.inactive_text} />
           )}
         </View>
         {/* Clinch Tag */}

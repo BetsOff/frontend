@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import Colors from '@/constants/Colors';
-import { useColor } from '../Themed';
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import PlayerIcon from './PlayerIcon';
@@ -13,11 +12,8 @@ type LogoProps = {
 }
 
 const PlayerLogo: React.FC<LogoProps> = ({ logo, diameter }) => {
-  // const backgroundColor = (Colors.logo as { [key: string]: string })[bgColor] || Colors.logo.black;
-  // const primaryColor = (Colors.logo as { [key: string]: string })[color] || Colors.logo.black;
   const icon = logo.icon
-  const backgroundColor = (Colors.logo as { [key: string]: string })[logo.bg_color]
-  const primaryColor = (Colors.logo as { [key: string]: string })[logo.color]
+  const backgroundColor = (Colors.logo as { [key: string]: string })[logo.bg_color] || Colors.logo.black
 
   return (
     <View
@@ -35,7 +31,7 @@ const PlayerLogo: React.FC<LogoProps> = ({ logo, diameter }) => {
         },
       ]}
     >
-      <PlayerIcon icon={icon} size={diameter-8} color={primaryColor} />
+      <PlayerIcon icon={icon} size={diameter-8} color={logo.color} />
     </View>
   );
 };
