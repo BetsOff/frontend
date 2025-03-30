@@ -11,7 +11,11 @@ type WagerProps = {
 const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 	const color = useColor();
 
-	var market_title = wager.market == 'totals'
+	const calculatePoints = calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price);
+
+	const roundScores = (league_name == 'NBA' && wager.market == 'totals') || calculatePoints >= 100
+
+	let market_title = wager.market == 'totals'
 		? league_name == 'MLB'
 			? 'Total Runs'
 			: 'Total Points'
@@ -23,29 +27,31 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 			: color.loss
 		: color.background_2
 
-	// var selectionStyle = [textStyles.selectionNotPicked, {}];
-	var selectionPicked = wager.first_selection_picked
+	let selectionPicked = wager.first_selection_picked
 		? wager.first_selection
 		: wager.second_selection
-	var selectionPriceNumber = wager.first_selection_picked
+	let selectionPriceNumber = wager.first_selection_picked
 		? wager.first_price
 		: wager.second_price
 
 	if (selectionPicked == 'over') {
-		selectionPicked = 'OVR'
+		selectionPicked = roundScores
+			? 'O'
+			: 'OVR'
 	} else if (selectionPicked == 'under') {
-		selectionPicked = 'UND'
+		selectionPicked = roundScores
+			? 'U'
+			: 'UND'
 	}
-
-	// const selectionStyle = status == "Final"
-	// 	? wager.points_earned > 0
-	// 		? [textStyles.selectionWon, { color: color.brand }]
-	// 		: [textStyles.selectionLost, { color: color.red }]
-	// 	: textStyles.selectionLive
 
 	const selectionPrice: string = selectionPriceNumber > 0
 		? `+${selectionPriceNumber}`
 		: `${selectionPriceNumber}`
+
+	const potentialPoints = roundScores
+		? calculatePoints.toFixed(1)
+		: calculatePoints
+
 
 	return (
 		<View style={[styles.container, { backgroundColor: color.background_2 }]}>
@@ -69,9 +75,16 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 						</View>
 						{/* Score */}
 						{status == "Final" ? (
-							<Text style={[textStyles.pointsEarned]}>{wager.points_earned}</Text>
+							<Text style={[textStyles.pointsEarned]}>
+								{roundScores
+									? wager.points_earned.toFixed(1)
+									: wager.points_earned
+								}
+							</Text>
 						) : (
-							<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>{calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price)}</Text>
+							<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>
+								{potentialPoints}
+							</Text>
 						)}
 					</View>
 				</View>

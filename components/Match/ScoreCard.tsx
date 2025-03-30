@@ -48,6 +48,8 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
 
   const potentialPoints = getTotalPotentialPoints(betList);
 
+  const roundScores = (score != potentialPoints) && (score >= 100 || potentialPoints >= 100)
+
   const handleProfilePressed = () => {
     router.push('/other_profile');
     dispatch(setUserId(user_id));
@@ -74,9 +76,19 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
           <Text style={nameStyle}>{name}</Text>
           <Text style={styles.record}>{record}</Text>
           <View style={[styles.scoreContainer, { backgroundColor: logoColor }]}>
-            <Text style={[scoreStyle, { color: textColor }]}>{score}</Text>
+            <Text style={[scoreStyle, { color: textColor }]}>
+              {roundScores
+                ? score.toFixed(1)
+                : score
+              }
+            </Text>
             {(score != potentialPoints) && (
-              <Text style={styles.potentialScore}>/ {potentialPoints}</Text>
+              <Text style={styles.potentialScore}> /  
+                {roundScores
+                  ? ' ' + potentialPoints.toFixed(1)
+                  : ' ' + potentialPoints
+                }
+              </Text>
             )}
           </View>
           <Text style={[styles.remaining_credits, { color: textColor }]}>Credits: {credits_remaining}/{matches.starting_credits}</Text>
