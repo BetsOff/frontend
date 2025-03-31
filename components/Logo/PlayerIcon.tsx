@@ -89,7 +89,7 @@ const PlayerIcon: React.FC<playerIconProps> = ({ color, icon, size }) => {
     case Icons.snowflake:
       return <FontAwesome name="snowflake-o" size={size} color={primaryColor} />
     case Icons.scale:
-      return <FontAwesome5 name="balance-scale" size={size-8} color={primaryColor} />
+      return <FontAwesome5 name="balance-scale" size={size-4} color={primaryColor} />
       default:
       <></>
   }

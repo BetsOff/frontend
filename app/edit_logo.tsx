@@ -45,14 +45,14 @@ export default function EditLogoScreen() {
   const handleUpdate = async () => {
     if (logo == currLogo) return;
 
-    const response = await axios.put(apiRoutes.users.update + storageGetItem('user_id'), {
+    await axios.put(apiRoutes.users.update + storageGetItem('user_id'), {
       logo: logo,
     }, {
       headers: {
         'X-Authorization': `Token ${storageGetItem('token')}`
       }
     })
-    .then(resopsne => {
+    .then(response => {
       dispatch(setLogo(logo));
       router.back();
     })
@@ -64,13 +64,16 @@ export default function EditLogoScreen() {
 
   return(
     <View style={styles.container}>
-      <ProfileHeader logo={logo} username={storageGetItem('user') || ''}/>
-      {/* Update */}
-      <TouchableOpacity onPress={handleUpdate}>
-        <View style={[styles.button, { backgroundColor: color.brand }]}>
-          <Text style={styles.text}>Done</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <ProfileHeader logo={logo} username={storageGetItem('user') || ''}/>
+        {/* Update */}
+        <TouchableOpacity onPress={handleUpdate}>
+          <View style={[styles.button, { backgroundColor: color.brand }]}>
+            <Text style={styles.text}>Confirm</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.fullSelectionContainer}>
         <View style={styles.selectionContainer}>
           {/* Primary */}
@@ -136,12 +139,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '80%'
+  },
   button: {
-    marginTop: 10,
+    marginHorizontal: 10,
     justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10,
 		padding: 10,
+    paddingHorizontal: 30
   },
   text: {
     fontSize: 16,
