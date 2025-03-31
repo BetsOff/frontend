@@ -15,7 +15,7 @@ const BetAccuracy: React.FC<BetAccuracyProps> = ({ stats }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bet Accuracy</Text>
-      <Text style={styles.accuracyText}>{stats.bet_accuracy.total * 100} %</Text>
+      <Text style={styles.accuracyText}>{Math.round(stats.bet_accuracy.total * 100)} %</Text>
       <View style={styles.leaguesRow}>
       {stats.bet_accuracy.byLeague.map((league, index) => (
         <View style={styles.leagueAccuracyContainer} key={index}>
@@ -23,7 +23,7 @@ const BetAccuracy: React.FC<BetAccuracyProps> = ({ stats }) => {
             {getIcon(league.league, color.inactive_text, 20)}
             <Text style={[styles.leagueAccuracyText, { color: color.inactive_text }]}>{league.league}</Text>
           </View>
-          <Text style={styles.accuracyText}>{league.accuracy * 100} %</Text>
+          <Text style={styles.accuracyText}>{Math.round(league.accuracy * 100)} %</Text>
         </View>
       ))}
       </View>
