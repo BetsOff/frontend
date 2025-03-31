@@ -31,7 +31,11 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
   // standing.user == storageGetItem('user')
 
   const handleProfilePressed = () => {
-    router.push('/other_profile');
+    if (String(standing.user_id) == storageGetItem('user_id')) {
+      router.replace('/(tabs)/profile');
+    } else {
+      router.push('/other_profile');
+    }
     dispatch(setUserId(standing.user_id));
   }
 

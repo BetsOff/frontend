@@ -8,6 +8,7 @@ import { RootState } from '@/state/store';
 import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
 import PlayerIcon from '../Logo/PlayerIcon';
+import { storageGetItem } from '@/util/Storage';
 
 type ScoreCardProps = {
   user_id: number,
@@ -53,7 +54,11 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
   
 
   const handleProfilePressed = () => {
-    router.push('/other_profile');
+    if (String(user_id) == storageGetItem('user_id')) {
+          router.replace('/(tabs)/profile');
+        } else {
+          router.push('/other_profile');
+        }
     dispatch(setUserId(user_id));
   }
 
