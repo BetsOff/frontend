@@ -14,13 +14,13 @@ const PlayerIcon: React.FC<playerIconProps> = ({ color, icon, size }) => {
 
   switch (icon) {
     case Icons.hockey:
-      return <MaterialIcons name="sports-hockey" size={size} color={primaryColor} />
+      return <MaterialIcons name="sports-hockey" size={size+1} color={primaryColor} />
     case Icons.baseball:
       return <FontAwesome5 name="baseball-ball" size={size} color={primaryColor} />
     case Icons.basketball:
       return <FontAwesome5 name="basketball-ball" size={size} color={primaryColor} />
     case Icons.football:
-      return <FontAwesome5 name="football-ball" size={size} color={primaryColor} />
+      return <FontAwesome5 name="football-ball" size={size-1} color={primaryColor} />
     case Icons.cake:
       return <MaterialIcons name="cake" size={size} color={primaryColor} />
     default:

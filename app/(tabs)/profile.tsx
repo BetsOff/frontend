@@ -54,7 +54,9 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <ProfileHeader logo={profile.logo} username={profile.username} />
+      <TouchableOpacity onPress={() => {router.push('/edit_logo')}}>
+        <ProfileHeader logo={profile.logo} username={profile.username} />
+      </TouchableOpacity>
       <LifetimeRecord stats={profile.stats} />
       <BetAccuracy stats={profile.stats} />
       <BestGame stats={profile.stats} />

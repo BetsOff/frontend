@@ -44,9 +44,12 @@ const SelfSlice = createSlice({
       state.stats = action.payload.stats;
       console.log(state);
     },
+    setLogo: (state, action: PayloadAction<Logo>) => {
+      state.logo = action.payload;
+    },
     resetProfile: () => initialProfileState
   },
 });
 
-export const { setUserId, setProfile, resetProfile } = SelfSlice.actions;
+export const { setUserId, setProfile, setLogo, resetProfile } = SelfSlice.actions;
 export default SelfSlice.reducer;
