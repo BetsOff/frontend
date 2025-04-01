@@ -10,6 +10,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { Provider } from 'react-redux';
 import { store } from '@/state/store';
 import { useThemeColor } from '@/components/Themed';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -50,70 +51,74 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const queryClient = new QueryClient();
+
   return (
-    <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="login" options={{ 
-            title: 'Login', 
-            headerShown: false,
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-          <Stack.Screen name="create_account" options={{ 
-            headerShown: false, 
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-          <Stack.Screen name="(tabs)" options={{ 
-            title: '', 
-            headerShown: false,
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-          <Stack.Screen name="make_bet" options={{
-            title: 'Make Bet', 
-            headerShown: false, 
-            presentation: 'modal',
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-          <Stack.Screen name="other_profile" options={{
-            title: 'Profile',
-            headerShown: false,
-            presentation: 'modal',
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-          <Stack.Screen name="season_selector" options={{ 
-            title: 'Select Season', 
-            headerShown: false,
-            presentation: 'modal',    
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),    
-          }} />
-          <Stack.Screen name="edit_logo" options={{
-            title: 'Update Logo',
-            presentation: 'modal',
-            headerStyle: {
-              backgroundColor: useThemeColor(undefined, 'brand'),
-            },
-            headerTintColor: useThemeColor(undefined, 'active_text'),
-          }} />
-        </Stack>
-      </ThemeProvider>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack>
+            <Stack.Screen name="login" options={{
+              title: 'Login',
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="create_account" options={{
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="(tabs)" options={{
+              title: '',
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="make_bet" options={{
+              title: 'Make Bet',
+              headerShown: false,
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="other_profile" options={{
+              title: 'Profile',
+              headerShown: false,
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="season_selector" options={{
+              title: 'Select Season',
+              headerShown: false,
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="edit_logo" options={{
+              title: 'Update Logo',
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+          </Stack>
+        </ThemeProvider>
+      </Provider>
+    </QueryClientProvider>
   );
 }
