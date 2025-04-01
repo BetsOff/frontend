@@ -29,7 +29,7 @@ const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, partic
 		try {
 			const response = await axios.get(apiRoutes.bet.get + `?match_id=${match_id}&user_id=${user_id}`);
 
-			console.log('bets:', response.data);
+			console.log('fetching bets: user:', user_id);
 			const _ = participant_index == 0
 				? dispatch(setPlayerOneBets(response.data))
 				: dispatch(setPlayerTwoBets(response.data))

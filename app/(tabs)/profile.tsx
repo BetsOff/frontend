@@ -13,7 +13,11 @@ import ProfileHeader from '@/components/Profile/ProfileHeader';
 import LifetimeRecord from '@/components/Profile/LifetimeRecord';
 import BetAccuracy from '@/components/Profile/BetAccuracy';
 import BestGame from '@/components/Profile/BestGame';
-import { setProfile } from '@/state/profile/SelfSlice';
+import { resetProfile, setProfile } from '@/state/profile/SelfSlice';
+import { resetLeagues } from '@/state/LeagueSlice';
+import { resetSeason } from '@/state/SeasonSlice';
+import { resetMatches } from '@/state/MatchSlice';
+import { resetBets } from '@/state/BetSlice';
 
 export default function ProfileScreen() {
   const color = useColor();
@@ -22,6 +26,11 @@ export default function ProfileScreen() {
   const profile = useSelector((state: RootState) => state.self);
 
   const signout = async () => {
+    dispatch(resetLeagues());
+    dispatch(resetSeason());
+    dispatch(resetMatches());
+    dispatch(resetBets());
+    dispatch(resetProfile());
     logout();
     router.replace('/login');
   }
@@ -31,7 +40,7 @@ export default function ProfileScreen() {
     if (!token) return;
 
     const fetchStats = async () => {
-      console.log('fetching stats');
+      console.log('fetching stats: self');
       await axios.get(apiRoutes.users.stats, {
         headers: {
           'X-Authorization': `Token ${token}`,
@@ -39,7 +48,6 @@ export default function ProfileScreen() {
       })
       .then(response => {
         dispatch(setProfile(response.data));
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error)

@@ -42,7 +42,6 @@ const ProfileSlice = createSlice({
       state.logo = action.payload.logo;
       state.username = action.payload.username;
       state.stats = action.payload.stats;
-      console.log(state);
     },
     resetProfile: () => initialProfileState
   },

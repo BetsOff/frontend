@@ -25,7 +25,7 @@ export default function OtherProfileScreen() {
     if (!token) return;
 
     const fetchStats = async () => {
-      console.log('fetching stats');
+      console.log('fetching stats: user:', profile.user_id);
       const query = `?user_id=${profile.user_id}`
       await axios.get(apiRoutes.users.stats + query, {
         headers: {
