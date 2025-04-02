@@ -13,11 +13,7 @@ import ProfileHeader from '@/components/Profile/ProfileHeader';
 import LifetimeRecord from '@/components/Profile/LifetimeRecord';
 import BetAccuracy from '@/components/Profile/BetAccuracy';
 import BestGame from '@/components/Profile/BestGame';
-import { resetProfile, setProfile } from '@/state/profile/SelfSlice';
-import { resetLeagues } from '@/state/LeagueSlice';
-import { resetSeason } from '@/state/SeasonSlice';
-import { resetMatches } from '@/state/MatchSlice';
-import { resetBets } from '@/state/BetSlice';
+import { setProfile } from '@/state/profile/SelfSlice';
 
 export default function ProfileScreen() {
   const color = useColor();

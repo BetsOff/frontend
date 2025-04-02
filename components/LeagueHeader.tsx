@@ -3,15 +3,16 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
+import { useSelectedLeague } from '@/api/leagueQueries';
 
 type LeagueProps = {
 
 }
 
 const LeagueHeader: React.FC<LeagueProps> = ({ }) => {
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const { data: league, isLoading, error } = useSelectedLeague();
 
-  if (!league) return (<></>);
+  if (isLoading) return (<></>);
 
   return (
     <View style={styles.leagueContainer}>

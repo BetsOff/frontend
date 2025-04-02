@@ -12,13 +12,14 @@ import todayInTimeFrame from '@/util/inTimeFrame';
 import MakeBetButton from '@/components/Match/MakeBetButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { useSelectedLeague } from '@/api/leagueQueries';
 
 export default function LiveMatchScreen() {
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const { data: league, isLoading, error } = useSelectedLeague();
   const season = useSelector((state: RootState) => state.season.season);
   const match = useSelector((state: RootState) => state.match.currentMatch);
 
-  if (!league) {
+  if (isLoading || error) {
     return (
       <NoDataScreen data='league'/>
     )

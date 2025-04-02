@@ -2,17 +2,16 @@ import PageRow from '@/components/More/PageRow';
 import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useDispatch } from 'react-redux';
-import { resetLeagues } from '@/state/LeagueSlice';
 import { resetSeason } from '@/state/SeasonSlice';
 import { resetMatches } from '@/state/MatchSlice';
 import { resetBets } from '@/state/BetSlice';
 import { resetProfile } from '@/state/profile/ProfileSlice';
 import { logout } from '@/state/AuthSlice';
 import { useRouter } from 'expo-router';
+import { invalidateLeagues } from '@/api/leagueQueries';
 
 export default function MoreScreen() {
   const color = useColor();
@@ -33,7 +32,7 @@ export default function MoreScreen() {
   ]
 
   const signout = async () => {
-      dispatch(resetLeagues());
+      invalidateLeagues();
       dispatch(resetSeason());
       dispatch(resetMatches());
       dispatch(resetBets());

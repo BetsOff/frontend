@@ -8,7 +8,7 @@ type ClinchTagProps = {
 
 const ClinchTag: React.FC<ClinchTagProps> = ({ clinch, row_background }) => {
   const color = useColor();
-  var tag_background = color.brand;
+  var tag_background = color.won;
   if (clinch == null) {
     tag_background = row_background
   } else if (clinch == 'E') {

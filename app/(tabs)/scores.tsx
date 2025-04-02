@@ -15,15 +15,16 @@ import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { setMatches } from '@/state/MatchSlice';
+import { useSelectedLeague } from '@/api/leagueQueries';
 
 export default function ScoresScreen() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const { data: league, isLoading, error } = useSelectedLeague();
   const season = useSelector((state: RootState) => state.season.season);
   const matches = useSelector((state: RootState) => state.match.matches);
 
-  if (!league) {
+  if (isLoading || error) {
     return (
       <NoDataScreen data='league' />
     )

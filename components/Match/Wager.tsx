@@ -13,7 +13,9 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 
 	const calculatePoints = calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price);
 
-	const roundScores = (league_name == 'NBA' && wager.market == 'totals') || calculatePoints >= 100
+	const roundScores = (league_name == 'NBA' && wager.market == 'totals') || calculatePoints >= 100;
+
+	const wagerLost = status === "Final" && wager.points_earned === 0;
 
 	let market_title = wager.market == 'totals'
 		? league_name == 'MLB'
@@ -76,7 +78,7 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 						{/* Score */}
 						{status == "Final" ? (
 							<Text style={[textStyles.pointsEarned]}>
-								{roundScores
+								{roundScores && !wagerLost
 									? wager.points_earned.toFixed(1)
 									: wager.points_earned
 								}

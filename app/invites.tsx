@@ -7,15 +7,14 @@ import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import apiRoutes from '@/routes/apiRoutes';
-import { setLeagues } from '@/state/LeagueSlice';
-import { fetchLeagues } from '@/util/fetch/fetchLeagues';
+import { invalidateLeagues, useSelectedLeague } from '@/api/leagueQueries';
 
 export default function InvitesScreen() {
 	const color = useColor();
 	const router = useRouter();
 	const [invites, setInvites] = useState<Invite[]>([]);
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-	const league = useSelector((state: RootState) => state.league.currentLeague);
+	const league = useSelectedLeague();
 
 	const fetchInvites = async () => {
 		const user_id = storageGetItem('user_id')
@@ -50,7 +49,7 @@ export default function InvitesScreen() {
 
 			if (response.status == 200) {
 				fetchInvites();
-				dispatch(setLeagues(await fetchLeagues()));
+				invalidateLeagues();
 				router.navigate('/(tabs)/standings')
 			}
 		} catch (error) {

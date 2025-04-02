@@ -5,12 +5,9 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
-import { fetchLeagues } from '../util/fetch/fetchLeagues';
-import { useDispatch } from 'react-redux';
-import { setLeagues } from '@/state/LeagueSlice';
+import { invalidateLeagues } from '@/api/leagueQueries';
 
 const CreateLeagueScreen = () => {
-	const dispatch = useDispatch();
 	const color = useColor();
 	const router = useRouter();
 	const [name, setName] = useState('');
@@ -29,7 +26,7 @@ const CreateLeagueScreen = () => {
 			});
 
 			if (response.status === 201) {
-				dispatch(setLeagues(await fetchLeagues()));
+				invalidateLeagues();
 				router.replace('/(tabs)/standings');
 			}
     } catch (error) {

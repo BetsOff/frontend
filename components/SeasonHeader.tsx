@@ -7,6 +7,7 @@ import CreateButton from './CreateButton';
 
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
+import { useSelectedLeague } from '@/api/leagueQueries';
 
 type SeasonProps = {
   name: string;
@@ -16,14 +17,14 @@ type SeasonProps = {
 
 const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => {
   const color = useColor();
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const { data: league, isLoading, error } = useSelectedLeague();
 
   const today = new Date();
   const startDate = new Date(start_date)
   const endDate = new Date(end_date)
   endDate.setDate(endDate.getDate() - 1);
 
-  if (!league) return (<></>);
+  if (isLoading) return (<></>);
 
   return (
     <View style={styles.container}>

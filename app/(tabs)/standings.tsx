@@ -13,14 +13,14 @@ import { useEffect, useState } from 'react';
 import { storageGetItem } from '@/util/Storage';
 import axios from 'axios';
 import apiRoutes from '@/routes/apiRoutes';
-import { setLeagues } from '@/state/LeagueSlice';
 import { setSeason } from '@/state/SeasonSlice';
 import { setMatches } from '@/state/MatchSlice';
 import { useRouter } from 'expo-router';
+import { useSelectedLeague } from '@/api/leagueQueries';
 
 export default function StandingsScreen() {
   const dispatch = useDispatch();
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const { data: league, isLoading, error } = useSelectedLeague();
   const season = useSelector((state: RootState) => state.season.season);
   const router = useRouter();
 
@@ -29,28 +29,6 @@ export default function StandingsScreen() {
     const token = storageGetItem('token');
     if (!userId || !token) return;
   
-    const fetchLeagues = async () => {
-      console.log('fetching leagues');
-      if (!userId) return;
-      await axios.get(apiRoutes.league.get + `?user_id=${userId}`, {
-        headers: {
-          'X-Authorization': `Token ${token}`,
-        },
-      })
-      .then(response => {
-        dispatch(setLeagues(response.data));
-        const firstLeague = response.data.length > 0 
-          ? response.data[0] 
-          : null;
-        if (!firstLeague) return;
-        fetchSeason(firstLeague.id);
-      })
-      .catch(error => {
-        console.error('Error fetching league:', error);
-        return;
-      });
-    }
-
     const fetchSeason = async (leagueId: number) => {
       console.log('fetching season: league:', leagueId);
       axios.get(apiRoutes.season.get + `?league_id=${leagueId}`, {
@@ -86,8 +64,10 @@ export default function StandingsScreen() {
       })
     }
 
-    fetchLeagues();
-  }, []);
+    if (league) fetchSeason(league.id);
+  }, [league]);
+
+  if (isLoading || error) return (<></>)
 
   if (!league) {
     return (
