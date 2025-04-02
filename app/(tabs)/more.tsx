@@ -1,13 +1,24 @@
 import PageRow from '@/components/More/PageRow';
 import { Text, useColor, View } from '@/components/Themed';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useDispatch } from 'react-redux';
+import { resetLeagues } from '@/state/LeagueSlice';
+import { resetSeason } from '@/state/SeasonSlice';
+import { resetMatches } from '@/state/MatchSlice';
+import { resetBets } from '@/state/BetSlice';
+import { resetProfile } from '@/state/profile/ProfileSlice';
+import { logout } from '@/state/AuthSlice';
+import { useRouter } from 'expo-router';
 
 export default function MoreScreen() {
   const color = useColor();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  
   const pages = [
     {
       title: "My Leagues",
@@ -20,6 +31,17 @@ export default function MoreScreen() {
       link: '/invites'
     }
   ]
+
+  const signout = async () => {
+      dispatch(resetLeagues());
+      dispatch(resetSeason());
+      dispatch(resetMatches());
+      dispatch(resetBets());
+      dispatch(resetProfile());
+      logout();
+      router.replace('/login');
+    }
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>More</Text>
@@ -32,6 +54,12 @@ export default function MoreScreen() {
           key={index}
         />
       ))}
+
+    <TouchableOpacity onPress={signout}>
+      <View style={[styles.signoutButton, { backgroundColor: color.brand }]}>
+        <Text style={styles.signoutText}>Sign out</Text>
+      </View>
+    </TouchableOpacity>
     </View>
   )
 }
@@ -40,12 +68,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'flex-start'
   },
   text: {
     fontSize: 32,
     fontWeight: 500,
     padding: 15,
-  }
+  },
+  signoutButton: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 10,
+    width: '100%',
+  },
+  signoutText: {
+    fontSize: 24,
+  },
 });

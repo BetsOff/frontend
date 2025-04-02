@@ -25,16 +25,6 @@ export default function ProfileScreen() {
   const router = useRouter();
   const profile = useSelector((state: RootState) => state.self);
 
-  const signout = async () => {
-    dispatch(resetLeagues());
-    dispatch(resetSeason());
-    dispatch(resetMatches());
-    dispatch(resetBets());
-    dispatch(resetProfile());
-    logout();
-    router.replace('/login');
-  }
-
   useEffect(() => {
     const token = storageGetItem('token');
     if (!token) return;
@@ -68,12 +58,6 @@ export default function ProfileScreen() {
       <LifetimeRecord stats={profile.stats} />
       <BetAccuracy stats={profile.stats} />
       <BestGame stats={profile.stats} />
-
-      <TouchableOpacity onPress={signout}>
-        <View style={[styles.signoutButton, { backgroundColor: color.brand }]}>
-          <Text style={styles.signoutText}>Sign out</Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -84,12 +68,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
-  },
-  signoutButton: {
-    padding: 20,
-    borderRadius: 10,
-  },
-  signoutText: {
-    fontSize: 24,
   },
 });
