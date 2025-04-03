@@ -13,8 +13,6 @@ import MakeBetButton from '@/components/Match/MakeBetButton';
 import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useSelectedMatch } from '@/api/matchQueries';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
 import { useMatchSelector } from '@/state/MatchSlice';
 
 export default function LiveMatchScreen() {
@@ -47,7 +45,7 @@ export default function LiveMatchScreen() {
       <NoDataScreen data='season' />
     )
   } else if (!matchInfo) {
-    return (<></>)
+    return (<View style={{flex: 1}} />)
   }
 
   const match = matchInfo.matches[0];

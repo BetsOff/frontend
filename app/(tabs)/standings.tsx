@@ -27,8 +27,8 @@ export default function StandingsScreen() {
 
   const router = useRouter();  
 
-  if (leagueIsLoading || leagueError) return (<></>);
-  if (seasonIsLoading || seasonError) return (<></>);
+  if (leagueIsLoading || leagueError) return (<View style={{flex: 1}} />);
+  if (seasonIsLoading || seasonError) return (<View style={{flex: 1}} />);
 
   if (!league) {
     return (

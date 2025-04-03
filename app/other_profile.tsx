@@ -40,7 +40,7 @@ export default function OtherProfileScreen() {
     fetchStats();
   }, [dispatch]);
 
-  if (!profile.stats) return (<></>);
+  if (!profile.stats) return (<View style={{flex: 1}} />);
 
   return (
     <View style={styles.container}>

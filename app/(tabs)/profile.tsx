@@ -43,7 +43,7 @@ export default function ProfileScreen() {
     fetchStats();
   }, []);
 
-  if (!profile.stats) return (<></>);
+  if (!profile.stats) return (<View style={{flex: 1}} />);
 
   return (
     <View style={styles.container}>

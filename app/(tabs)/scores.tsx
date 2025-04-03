@@ -12,7 +12,7 @@ import CreateButton from '@/components/CreateButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
-import { invalidateMatches, useMatches } from '@/api/matchQueries';
+import { useMatches } from '@/api/matchQueries';
 import { setMatchSet } from '@/state/MatchSlice';
 
 export default function ScoresScreen() {
@@ -53,7 +53,7 @@ export default function ScoresScreen() {
     )
   } else if (!matches) {
     return (
-      <></>
+      <View style={{flex: 1}} />
     )
   }
 
