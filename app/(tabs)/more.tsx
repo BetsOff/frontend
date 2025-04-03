@@ -12,11 +12,12 @@ import { resetProfile } from '@/state/profile/ProfileSlice';
 import { logout } from '@/state/AuthSlice';
 import { useRouter } from 'expo-router';
 import { invalidateLeagues } from '@/api/leagueQueries';
+import { useInvalidateAuth } from '@/api/authQueries';
 
 export default function MoreScreen() {
   const color = useColor();
   const router = useRouter();
-  const dispatch = useDispatch();
+  const invalidateAuth = useInvalidateAuth();
   
   const pages = [
     {
@@ -32,11 +33,7 @@ export default function MoreScreen() {
   ]
 
   const signout = async () => {
-      invalidateLeagues();
-      dispatch(resetSeason());
-      dispatch(resetMatches());
-      dispatch(resetBets());
-      dispatch(resetProfile());
+      await invalidateAuth();
       logout();
       router.replace('/login');
     }

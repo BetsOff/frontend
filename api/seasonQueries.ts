@@ -6,13 +6,14 @@ import { setSeason } from "@/state/SeasonSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/state/store"
 import { useSelectedLeague } from "./leagueQueries"
+import { authQueryKey } from "./authQueries"
 
 export const useSeasons = () => {
   const dispatch = useDispatch();
   const { data: league } = useSelectedLeague();
 
   return useQuery({
-    queryKey: [queryKeys.seasons],
+    queryKey: [authQueryKey, queryKeys.seasons],
     queryFn: () => getSeasons(league?.id),
     staleTime: 1000 * 60 * 5,
     enabled: !!league?.id,
@@ -34,7 +35,7 @@ export const useStandings = () => {
   const { data: season } = useSelectedSeason();
 
   return useQuery({
-    queryKey: [queryKeys.seasons, queryKeys.standings, season?.id],
+    queryKey: [authQueryKey, queryKeys.seasons, queryKeys.standings, season?.id],
     queryFn: () => getStandings(season?.id),
     staleTime: 1000 * 60 * 5,
     enabled: !!season?.id,

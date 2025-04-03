@@ -6,6 +6,7 @@ import { getRequest } from "./methods";
 import apiRoutes from "@/routes/apiRoutes";
 import { RootState } from "@/state/store";
 import { useSelectedSeason } from "./seasonQueries";
+import { authQueryKey } from "./authQueries";
 
 export const useMatches = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export const useMatches = () => {
   const { data: season } = useSelectedSeason();
 
   return useQuery({
-    queryKey: [queryKeys.matches, matchNumber, playoff],
+    queryKey: [authQueryKey, queryKeys.matches, matchNumber, playoff],
     queryFn: () => getMatches(undefined, season?.id, matchNumber, playoff),
     staleTime: 1000 * 60 * 5,
     enabled: !!season?.id,
@@ -33,7 +34,7 @@ export const useSelectedMatch = (
   const dispatch = useDispatch();
   
   return useQuery({
-    queryKey: [queryKeys.matches, matchId],
+    queryKey: [authQueryKey, queryKeys.matches, matchId],
     queryFn: () => getMatches(matchId),
     staleTime: 1000 * 60 * 5,
     enabled: !!matchId,

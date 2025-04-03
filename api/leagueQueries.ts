@@ -8,13 +8,14 @@ import { RootState } from "@/state/store";
 import { setSelectedLeague } from "@/state/LineSlice";
 import { useEffect, useMemo } from "react";
 import { setLeague } from "@/state/leagueSlice";
+import { authQueryKey } from "./authQueries";
 
 export const useLeagues = () => {
   const userId = storageGetItem('user_id') || '';
   const dispatch = useDispatch();
 
   return useQuery({
-    queryKey: [queryKeys.leagues, userId],
+    queryKey: [authQueryKey, queryKeys.leagues, userId],
     queryFn: () => getLeagues(userId),
     staleTime: 1000 * 60 * 5,
     onSuccess: (leagues) => {

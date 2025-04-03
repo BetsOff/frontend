@@ -5,6 +5,7 @@ import { useQuery } from "react-query"
 import queryKeys from "./queryKeys"
 import { getRequest } from "./methods"
 import apiRoutes from "@/routes/apiRoutes"
+import { authQueryKey } from "./authQueries"
 
 export type PlayerIndex = 0 | 1
 
@@ -15,7 +16,7 @@ export const useBets = (playerIndex: PlayerIndex) => {
   const userId = match?.matches[0].participants[playerIndex].user_id;
 
   return useQuery({
-    queryKey: [queryKeys.bets, matchId, playerIndex],
+    queryKey: [authQueryKey, queryKeys.bets, matchId, playerIndex],
     queryFn: () => getBets(matchId, userId),
     staleTime: 1000 * 60 * 5,
     enabled: !!matchId && !!userId,
