@@ -7,6 +7,7 @@ import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
 import { useMatches, useSelectedMatch } from '@/api/matchQueries';
 import { useMatchSelector } from '@/state/MatchSlice';
+import { useBets } from '@/api/betQueries';
 
 type PlayerVsPlayerProps = {
 
@@ -16,17 +17,18 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 	const { data: matches } = useMatches();
 	const { matchId } = useMatchSelector();
 	const { data: matchInfo} = useSelectedMatch(matchId);
-	const { playerOneBetList, playerTwoBetList } = useSelector((state: RootState) => state.bet);
+	const { data: playerOneBetList } = useBets(0);
+	const { data: playerTwoBetList } = useBets(1);
+
+	useEffect(() => { }, [matches, playerOneBetList]);
+
+	if (!matches || !matchInfo || !playerOneBetList || !playerTwoBetList) return (<></>);
 
 	const creditsRemaining = playerOneBetList.reduce((leagueTotal, league) => {
 		return leagueTotal + league.games.reduce((gameTotal, game) => {
 			return gameTotal + game.wagers.reduce((wagerTotal, wager) => wagerTotal + wager.wager, 0);
 		}, 0);
 	}, 0);
-
-	useEffect(() => { }, [matches, playerOneBetList]);
-
-	if (!matches) return;
 
 	const currentMatch = matchInfo.matches[0];
 	if (!currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);

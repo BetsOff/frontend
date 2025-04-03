@@ -28,19 +28,19 @@ export const useMatches = () => {
 }
 
 export const useSelectedMatch = (
-  match_id: number | undefined,
+  matchId: number | undefined,
 ) => {
   const dispatch = useDispatch();
   
   return useQuery({
-    queryKey: [queryKeys.matches, match_id],
-    queryFn: () => getMatches(match_id),
+    queryKey: [queryKeys.matches, matchId],
+    queryFn: () => getMatches(matchId),
     staleTime: 1000 * 60 * 5,
-    enabled: !!match_id,
-    onSuccess: (matches) => {
+    enabled: !!matchId,
+    onSuccess: (matches: MatchSet) => {
 
-    }
-  })
+    },
+  });
 }
 
 export const getMatches = (

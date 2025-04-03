@@ -42,7 +42,15 @@ const getTotalPotentialPoints = (betList: LeagueBets[]): number => {
   return Math.round(result * 100) / 100
 }
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, score, credits_remaining, betList }) => {
+const ScoreCard: React.FC<ScoreCardProps> = ({ 
+  user_id, 
+  name, 
+  logo, 
+  record, 
+  score, 
+  credits_remaining, 
+  betList 
+}) => {
   const color = useColor();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -56,10 +64,10 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
 
   const handleProfilePressed = () => {
     if (String(user_id) == storageGetItem('user_id')) {
-          router.replace('/(tabs)/profile');
-        } else {
-          router.push('/other_profile');
-        }
+      router.replace('/(tabs)/profile');
+    } else {
+      router.push('/other_profile');
+    }
     dispatch(setUserId(user_id));
   }
 

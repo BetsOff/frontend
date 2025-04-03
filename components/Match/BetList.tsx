@@ -28,31 +28,15 @@ const BetList: React.FC<BetListProps> = ({ }) => {
 		? 150
 		: 100
 
-	const participant1 = user_id == match.participants[1].user_id
-		? match.participants[1].user_id
-		: match.participants[0].user_id
-
-	const participant1index = user_id == match.participants[1].user_id
-		? 1
-		: 0
-
-	const participant2 = user_id == match.participants[1].user_id
-		? match.participants[0].user_id
-		: match.participants[1].user_id
-
-	const participant2index = user_id == match.participants[1].user_id
-		? 0
-		: 1
-
 	return (
 		<View style={[styles.betListContainer, { height: listHeight }]}>
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: listPadding }}>
 				<View style={styles.playerBetListContainer}>
 					{/* Player 1 */}
-					<PlayerBetList match_id={match.match_id} user_id={participant1} participant_index={participant1index} />
+					<PlayerBetList participant_index={0} />
 
 					{/* Player 2 */}
-					<PlayerBetList match_id={match.match_id} user_id={participant2} participant_index={participant2index} />
+					<PlayerBetList participant_index={1} />
 				</View>
 			</ScrollView>
 		</View>

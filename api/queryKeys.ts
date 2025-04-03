@@ -3,4 +3,5 @@ export default {
   seasons: 'seasons',
   standings: 'standings',
   matches: 'matches',
+  bets: 'bets',
 }

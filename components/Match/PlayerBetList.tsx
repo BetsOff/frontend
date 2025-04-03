@@ -7,50 +7,19 @@ import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetBets, setPlayerOneBets, setPlayerTwoBets } from '@/state/BetSlice';
 import { RootState } from '@/state/store';
+import { PlayerIndex, useBets } from '@/api/betQueries';
 
 type PlayerBetListProps = {
-	match_id: number;
-	user_id: number;
-	participant_index: number;
+	participant_index: PlayerIndex;
 }
 
-const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, participant_index }) => {
-	const [loading, setLoading] = useState(true);
+const PlayerBetList: React.FC<PlayerBetListProps> = ({ participant_index }) => {
 	const dispatch = useDispatch();
-	const bets = participant_index === 0
-		? useSelector((state: RootState) => state.bet.playerOneBetList)
-		: useSelector((state: RootState) => state.bet.playerTwoBetList);
+	const { data: bets, isLoading } = useBets(participant_index);
 
-	const fetchData = async () => {
-		if (match_id == 0 || user_id == 0) {
-			dispatch(resetBets());
-			return;
-		}
-		try {
-			const response = await axios.get(apiRoutes.bet.get + `?match_id=${match_id}&user_id=${user_id}`);
+	if (!bets) return (<></>)
 
-			console.log('fetching bets: user:', user_id);
-			const _ = participant_index == 0
-				? dispatch(setPlayerOneBets(response.data))
-				: dispatch(setPlayerTwoBets(response.data))
-
-		} catch (error) {
-			console.error('Error fetching data:', error);
-			return (
-				<View>
-					<Text>Not Found</Text>
-				</View>
-			)
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	useEffect(() => {
-		fetchData();
-	}, [match_id])
-
-	if (loading) {
+	if (isLoading) {
 		return (
 			<View>
 				<Text>Loading...</Text>
@@ -60,7 +29,8 @@ const PlayerBetList: React.FC<PlayerBetListProps> = ({ match_id, user_id, partic
 
 	return (
 		<View style={styles.playerBetListContainer}>
-			{bets.map((bet, index) => (
+
+			{bets!.map((bet, index) => (
 				<BetListForLeague bets={bet} key={index} />
 			))}
 		</View>

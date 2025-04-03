@@ -8,6 +8,7 @@ type BetListForLeagueProps = {
 }
 
 const BetListForLeague: React.FC<BetListForLeagueProps> = ({ bets }) => {
+	console.log(bets);
 	return (
 		<View>
 			<BetLeagueName league_name={bets.league_name} />
