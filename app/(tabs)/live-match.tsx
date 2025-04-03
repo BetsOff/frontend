@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { View } from '@/components/Themed';
 import PlayerVsPlayerHeader from '@/components/Match/PlayerVsPlayerHeader';
-import MatchHeader from '@/components/Scores/MatchHeader';
+import MatchHeader from '@/components/Match/MatchHeader';
 import BetList from '@/components/Match/BetList';
 import NoDataScreen from '../no_data';
 import LeagueHeader from '@/components/LeagueHeader';
@@ -10,32 +10,53 @@ import CreateButton from '@/components/CreateButton';
 import { storageGetItem } from '@/util/Storage';
 import todayInTimeFrame from '@/util/inTimeFrame';
 import MakeBetButton from '@/components/Match/MakeBetButton';
+import { useSelectedLeague } from '@/api/leagueQueries';
+import { useSelectedSeason } from '@/api/seasonQueries';
+import { useSelectedMatch } from '@/api/matchQueries';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
-import { useSelectedLeague } from '@/api/leagueQueries';
 
 export default function LiveMatchScreen() {
-  const { data: league, isLoading, error } = useSelectedLeague();
-  const season = useSelector((state: RootState) => state.season.season);
-  const match = useSelector((state: RootState) => state.match.currentMatch);
+  const { matchId } = useSelector((state: RootState) => state.match);
 
-  if (isLoading || error) {
+  const { 
+    data: league, 
+    isLoading: leagueIsLoading,
+    error: leagueError,
+  } = useSelectedLeague();
+  
+  const {
+    data: season,
+    isLoading: seasonIsLoading,
+    error: seasonError,
+  } = useSelectedSeason();
+  
+  const {
+    data: matchInfo,
+    isLoading: matchIsLoading,
+    error: matchError,
+  } = useSelectedMatch(matchId);
+
+  if (leagueIsLoading || leagueError) {
     return (
       <NoDataScreen data='league'/>
     )
-  } else if (!season) {
+  } else if (seasonIsLoading || seasonError) {
     return (
       <NoDataScreen data='season' />
     )
-  } else if (!match) {
+  } else if (!matchInfo) {
     return (<></>)
   }
 
-  if (season.season_number == 0 || !season.season_number) {
+  const match = matchInfo.matches[0];
+  console.log(match);
+
+  if (season!.season_number == 0 || !season!.season_number) {
     return (
       <View style={[styles.container, {alignItems: 'flex-start'}]}>
         <LeagueHeader />
-        {league.commissioner
+        {league!.commissioner
           ? <View style={styles.seasonButtonContainer}>
               <CreateButton object='Season' link='/create_season' />
             </View>

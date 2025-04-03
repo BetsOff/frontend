@@ -3,17 +3,21 @@ import { StyleSheet, ScrollView } from 'react-native';
 import PlayerBetList from './PlayerBetList';
 import { storageGetItem } from '@/util/Storage';
 import todayInTimeFrame from '@/util/inTimeFrame';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
+import { useSelectedMatch } from '@/api/matchQueries';
+import { useMatchSelector } from '@/state/MatchSlice';
 
 type BetListProps = {
 
 }
 
 const BetList: React.FC<BetListProps> = ({ }) => {
-	const match =  useSelector((state: RootState) => state.match.currentMatch);
-
-	if (!match || !match.participants[0] || !match.participants[1]) return (<></>);
+	const { matchId } = useMatchSelector();
+	const { data: matchInfo } = useSelectedMatch(matchId);
+	
+	if (!matchInfo) return (<></>);
+	
+	const match = matchInfo.matches[0];
+	if (!match.participants[0] || !match.participants[1]) return (<></>);
 
 	const user_id: Number = Number(storageGetItem('user_id'))
 

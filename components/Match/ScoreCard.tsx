@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
 import PlayerIcon from '../Logo/PlayerIcon';
 import { storageGetItem } from '@/util/Storage';
+import { useMatches } from '@/api/matchQueries';
 
 type ScoreCardProps = {
   user_id: number,
@@ -45,7 +46,7 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ user_id, name, logo, record, scor
   const color = useColor();
   const router = useRouter();
   const dispatch = useDispatch();
-  const matches = useSelector((state: RootState) => state.match.matches);
+  const { data: matches } = useMatches();
   const logoColor = getLogoColor(logo.bg_color);
 
   const potentialPoints = getTotalPotentialPoints(betList);

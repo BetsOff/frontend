@@ -1,34 +1,53 @@
 import { StyleSheet } from 'react-native';
-import { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import LeagueHeader from '@/components/LeagueHeader';
 import MatchHeader from '@/components/Scores/MatchHeader';
 import MatchList from '@/components/Scores/MatchList';
 
 import SteppingBar from '@/components/SteppingBar';
-import { storageGetItem } from '@/util/Storage';
 import NoDataScreen from '../no_data';
 import CreateButton from '@/components/CreateButton';
-import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
-import { setMatches } from '@/state/MatchSlice';
 import { useSelectedLeague } from '@/api/leagueQueries';
+import { useSelectedSeason } from '@/api/seasonQueries';
+import { invalidateMatches, useMatches } from '@/api/matchQueries';
+import { setMatchSet } from '@/state/MatchSlice';
 
 export default function ScoresScreen() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const { data: league, isLoading, error } = useSelectedLeague();
-  const season = useSelector((state: RootState) => state.season.season);
-  const matches = useSelector((state: RootState) => state.match.matches);
+  const [matchNumber, setMatchNumber] = useState<number | undefined>();
+  const [playoff, setPlayoff] = useState<boolean | undefined>();
 
-  if (isLoading || error) {
+  const { 
+    data: league, 
+    isLoading: leagueIsLoading,
+    error: leagueError,
+  } = useSelectedLeague();
+
+  const {
+    data: season,
+    isLoading: seasonIsLoading,
+    error: seasonError,
+  } = useSelectedSeason();
+
+  const {
+    data: matches,
+    isLoading: matchIsLoading,
+    error: matchError,
+    refetch: refetchMatches,
+  } = useMatches();
+
+  useEffect(() => {
+    refetchMatches();
+  }, [matchNumber, playoff, refetchMatches]);
+
+  if (leagueIsLoading || leagueError) {
     return (
       <NoDataScreen data='league' />
     )
-  } else if (!season) {
+  } else if (seasonIsLoading || seasonError) {
     return (
       <NoDataScreen data='season' />
     )
@@ -55,7 +74,9 @@ export default function ScoresScreen() {
         next_match = matches.match_number - 1;
       }
     }
-    fetchData(next_match, playoff)
+    dispatch(setMatchSet([next_match, playoff]))
+    setMatchNumber(next_match);
+    setPlayoff(playoff);
   }
 
   const forwardMatch = () => {
@@ -78,43 +99,16 @@ export default function ScoresScreen() {
         next_match = matches.match_number + 1;
       }
     }
-    fetchData(next_match, playoff)
+    dispatch(setMatchSet([next_match, playoff]));
+    setMatchNumber(next_match);
+    setPlayoff(playoff);
   }
 
-  const fetchData = async (matchNumber: number, playoff: boolean) => {
-    try {
-      var p = 'False'
-      if (playoff) {
-        p = 'True'
-      }
-      const queryParams: string = `?season_id=${season.id}&match_number=${matchNumber}&playoff=${p}`
-
-      const response = await axios.get(apiRoutes.match.get + queryParams, {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Authorization': `Token ${storageGetItem('token')}`,
-        },
-      });
-
-      dispatch(setMatches(response.data));
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return (
-        <View>
-          <Text>Not Found</Text>
-        </View>
-      )
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (season.season_number == 0 || season.season_number == undefined) {
+  if (season!.season_number == 0 || season!.season_number == undefined) {
     return (
       <View style={styles.container}>
         <LeagueHeader />
-        {league.commissioner
+        {league!.commissioner
           ? <View style={styles.seasonButtonContainer}>
             <CreateButton object='Season' link='/create_season' />
           </View>

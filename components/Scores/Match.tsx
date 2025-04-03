@@ -5,8 +5,8 @@ import { Href, useRouter } from 'expo-router';
 
 import PlayerScore from './PlayerScore';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
-import { setCurrentMatch } from '@/state/MatchSlice';
+import { useMatches } from '@/api/matchQueries';
+import { setMatch } from '@/state/MatchSlice';
 
 type MatchProps = {
   match: Match;
@@ -17,12 +17,12 @@ const Match: React.FC<MatchProps> = ({ match, status }) => {
   const color = useColor();
   const router = useRouter();
   const dispatch = useDispatch();
-	const matches =  useSelector((state: RootState) => state.match.matches);
+  const { data: matches } = useMatches();
 
   if (!matches) return (<></>);
 
   const handleMatchPressed = () => {
-    dispatch(setCurrentMatch(match));
+    dispatch(setMatch(match.match_id));
     router.replace('/live-match' as Href);
   }
 

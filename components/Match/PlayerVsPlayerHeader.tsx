@@ -5,13 +5,17 @@ import { storageGetItem } from '@/util/Storage';
 import { useEffect } from 'react';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
+import { useMatches, useSelectedMatch } from '@/api/matchQueries';
+import { useMatchSelector } from '@/state/MatchSlice';
 
 type PlayerVsPlayerProps = {
 
 }
 
 const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
-	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+	const { data: matches } = useMatches();
+	const { matchId } = useMatchSelector();
+	const { data: matchInfo} = useSelectedMatch(matchId);
 	const { playerOneBetList, playerTwoBetList } = useSelector((state: RootState) => state.bet);
 
 	const creditsRemaining = playerOneBetList.reduce((leagueTotal, league) => {
@@ -22,7 +26,10 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 
 	useEffect(() => { }, [matches, playerOneBetList]);
 
-	if (!matches || !currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);
+	if (!matches) return;
+
+	const currentMatch = matchInfo.matches[0];
+	if (!currentMatch || !currentMatch.participants || !currentMatch.participants[0] || !currentMatch.participants[1]) return (<></>);
 
 	const user_id: Number = Number(storageGetItem('user_id'))
 

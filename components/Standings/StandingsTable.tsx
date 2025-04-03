@@ -6,11 +6,12 @@ import axios from 'axios';
 
 import StandingsRow from './StandingsRow'
 import apiRoutes from '@/routes/apiRoutes';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
+import { useSelectedLeague } from '@/api/leagueQueries';
+import { useSelectedSeason } from '@/api/seasonQueries';
 
 const StandingsTable = () => {
-  const season = useSelector((state: RootState) => state.season.season);
+  const { data: league } = useSelectedLeague();
+  const { data: season } = useSelectedSeason(league?.id);
   const [standings, setStandings] = useState<Standing[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);

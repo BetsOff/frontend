@@ -1,35 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 interface MatchState {
-  matches: MatchSet | null;
-  currentMatch: Match | null;
+  matchId: number | undefined;
+  matchNumber: number | undefined;
+  playoff: boolean | undefined
 }
 
 const initialMatchState: MatchState = {
-  matches: null,
-  currentMatch: null,
+  matchId: undefined,
+  matchNumber: undefined,
+  playoff: undefined,
 };
 
 const matchSlice = createSlice({
   name: 'match',
   initialState: initialMatchState,
   reducers: {
-    setMatches: (state, action: PayloadAction<MatchSet>) => {
-      state.matches = action.payload
-      if (state.matches.matches.length > 0) state.currentMatch = state.matches.matches[0];
+    setMatch: (state, action: PayloadAction<number>) => {
+      state.matchId = action.payload;
     },
-    setCurrentMatch: (state, action: PayloadAction<Match>) => {
-      state.currentMatch = action.payload;
+    setMatchSet: (state, action: PayloadAction<[number, boolean]>) => {
+      const [matchNumber, playoff] = action.payload;
+      state.matchNumber = matchNumber;
+      state.playoff = playoff;
     },
-    useCredits: (state, action: PayloadAction<number>) => {
-      if (!state.currentMatch) return;
-      state.currentMatch.participants[0].credits_remaining -= action.payload;
-    },
-    resetMatches: (state) => {
-      state = initialMatchState;
-    },
+    resetMatches: (state) => initialMatchState,
   },
 });
 
-export const { setMatches, setCurrentMatch, resetMatches, useCredits } = matchSlice.actions;
+export const useMatchSelector = () => {
+  return useSelector((state: RootState) => state.match)
+}
+
+export const { setMatch, setMatchSet, resetMatches } = matchSlice.actions;
 export default matchSlice.reducer;

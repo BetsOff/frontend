@@ -5,13 +5,14 @@ import { View } from '@/components/Themed';
 import Match from './Match';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { useMatches } from '@/api/matchQueries';
 
 type MatchesProps = {
 
 }
 
 const MatchList: React.FC<MatchesProps> = ({ }) => {
-  const matchSet = useSelector((state: RootState) => state.match.matches);
+  const { data: matchSet } = useMatches();
 
   if (!matchSet) return (<></>);
 
@@ -21,7 +22,7 @@ const MatchList: React.FC<MatchesProps> = ({ }) => {
   return (
     <View style={styles.matchListContainer}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
-        {matches.map((match, index) => (
+        {matches.map((match: Match, index: number) => (
           <Match
             match={match}
             key={index}

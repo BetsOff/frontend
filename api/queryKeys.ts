@@ -1,3 +1,5 @@
 export default {
-  leagues: 'leagues'
+  leagues: 'leagues',
+  seasons: 'seasons',
+  matches: 'matches',
 }

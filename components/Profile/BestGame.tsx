@@ -1,10 +1,10 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View, Text, useColor } from '../Themed';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PlayerScore from '../Scores/PlayerScore';
-import { setCurrentMatch } from '@/state/MatchSlice';
 import { Href, router } from 'expo-router';
 import { Stats } from '@/state/profile/SelfSlice';
+import { setMatch } from '@/state/MatchSlice';
 
 type BestGameProps = {
   stats: Stats;
@@ -20,7 +20,7 @@ const BestGame: React.FC<BestGameProps> = ({ stats }) => {
   const match = best_game.match;
 
   const handleMatchPressed = () => {
-    dispatch(setCurrentMatch(match));
+    dispatch(setMatch(match.match_id));
     router.replace('/live-match' as Href);
   }
 
@@ -80,3 +80,7 @@ const styles = StyleSheet.create({
 })
 
 export default BestGame
+function setSelectedMatch(match: Match): any {
+  throw new Error('Function not implemented.');
+}
+

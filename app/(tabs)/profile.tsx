@@ -43,7 +43,6 @@ export default function ProfileScreen() {
     fetchStats();
   }, []);
 
-  console.log(profile);
   if (!profile.stats) return (<></>);
 
   return (

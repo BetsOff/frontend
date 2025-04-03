@@ -6,7 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { useLeagues, useSelectedLeague } from '@/api/leagueQueries';
-import { setSelectedLeague } from '@/state/SelectedLeagueSlice';
+import { setLeague } from '@/state/leagueSlice';
 
 
 export default function LeaguesScreen() {
@@ -14,10 +14,9 @@ export default function LeaguesScreen() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: leagues, isLoading, error } = useLeagues();
-  const currentLeague = useSelectedLeague();
 
   const handleLeaguePressed = (league: League) => {
-    dispatch(setSelectedLeague(league));
+    dispatch(setLeague(league));
     router.push('/league')
   }
 

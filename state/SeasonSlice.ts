@@ -15,9 +15,7 @@ const seasonSlice = createSlice({
     setSeason: (state, action: PayloadAction<Season>) => {
       state.season = action.payload;
     },
-    resetSeason: (state) => {
-      state = initialSeasonState;
-    },
+    resetSeason: (state) => initialSeasonState,
   },
 });
 

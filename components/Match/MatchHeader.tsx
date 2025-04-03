@@ -5,7 +5,8 @@ import { Text, useColor, View } from '@/components/Themed';
 import formatDateWithDay from '@/util/date/formatDateWithDay';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
-import { useMatches } from '@/api/matchQueries';
+import { useMatches, useSelectedMatch } from '@/api/matchQueries';
+import { useMatchSelector } from '@/state/MatchSlice';
 
 type MatchHeaderProps = {
 
@@ -13,13 +14,13 @@ type MatchHeaderProps = {
 
 const MatchHeader: React.FC<MatchHeaderProps> = ({ }) => {
   const color = useColor();
-	const { data: matches } = useMatches();
-  
+  const { matchId } = useMatchSelector();
+  const { data: matchInfo } = useSelectedMatch(matchId);
 
-  if (!matches) return (<></>);
+  if (!matchInfo) return (<></>);
 
-  let startDate = new Date(matches.start_date);
-  let endDate = new Date(matches.end_date);
+  let startDate = new Date(matchInfo.start_date);
+  let endDate = new Date(matchInfo.end_date);
   endDate.setDate(endDate.getDate() - 1);
 
   const oneDayMatch = startDate.getDate() == endDate.getDate();
@@ -28,12 +29,12 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ }) => {
     ? `${formatDateWithDay(startDate)}`
     : `${formatDateWithDay(startDate)} - ${formatDateWithDay(endDate)}`
 
-  const title = matches.playoff
-    ? matches.round_name
-    : `Match ${matches.match_number}`
+  const title = matchInfo.playoff
+    ? matchInfo.round_name
+    : `Match ${matchInfo.match_number}`
 
-  const textStyle = matches.playoff
-    ? matches.round_name == 'Final'
+  const textStyle = matchInfo.playoff
+    ? matchInfo.round_name == 'Final'
       ? styles.final
       : styles.playoff
     : styles.matchText
