@@ -20,7 +20,7 @@ export const useMatches = () => {
     onSuccess: (matches) => {
       if (matches?.matches.length || 0 > 0) {
         const currentMatch = matches.matches[0];
-        dispatch(setMatch(currentMatch.id));
+        dispatch(setMatch(currentMatch.match_id));
         dispatch(setMatchSet([currentMatch.match_number, currentMatch.playoff]))
       }
     }
@@ -43,17 +43,6 @@ export const useSelectedMatch = (
   })
 }
 
-// export const useSelectedMatch = () => {
-//   const { data: matches, isLoading, error } = useMatches();
-//   const dispatch = useDispatch();
-//   const selectedMatch = useSelector((state: RootState) => state.match.match);
-//   if (matches && !selectedMatch) {
-//     dispatch(setMatch(matches.matches[0]));
-//   }
-//   console.log(selectedMatch);
-//   return { data: selectedMatch, isLoading, error };
-// }
-
 export const getMatches = (
   matchId: number | undefined = undefined,
   seasonId: number | undefined = undefined,
@@ -69,10 +58,13 @@ export const getMatches = (
   return getRequest(apiRoutes.match.get, queryParams);
 }
 
-export const invalidateMatches = () => {
+export const useInvalidateMatches = () => {
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({
-    queryKey: [queryKeys.matches],
-    exact: false,
-  })
+  
+  return async () => {
+    await queryClient.invalidateQueries({
+      queryKey: [queryKeys.matches],
+      exact: false,
+    });
+  }
 }

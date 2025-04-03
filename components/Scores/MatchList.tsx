@@ -1,18 +1,27 @@
-import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { View } from '@/components/Themed';
 
 import Match from './Match';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
-import { useMatches } from '@/api/matchQueries';
+import { useInvalidateMatches, useMatches } from '@/api/matchQueries';
 
 type MatchesProps = {
 
 }
 
 const MatchList: React.FC<MatchesProps> = ({ }) => {
-  const { data: matchSet } = useMatches();
+  const [refreshing, setRefreshing] = useState(false);
+  const { data: matchSet, refetch } = useMatches();
+  const invalidateMatches = useInvalidateMatches();
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await invalidateMatches();
+    await refetch();
+    setRefreshing(false);
+  }, [invalidateMatches, refetch]);
 
   if (!matchSet) return (<></>);
 
@@ -21,7 +30,13 @@ const MatchList: React.FC<MatchesProps> = ({ }) => {
 
   return (
     <View style={styles.matchListContainer}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        contentContainerStyle={{ paddingBottom: 20 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {matches.map((match: Match, index: number) => (
           <Match
             match={match}

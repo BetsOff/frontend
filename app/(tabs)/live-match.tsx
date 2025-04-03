@@ -15,9 +15,10 @@ import { useSelectedSeason } from '@/api/seasonQueries';
 import { useSelectedMatch } from '@/api/matchQueries';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { useMatchSelector } from '@/state/MatchSlice';
 
 export default function LiveMatchScreen() {
-  const { matchId } = useSelector((state: RootState) => state.match);
+  const { matchId } = useMatchSelector();
 
   const { 
     data: league, 
@@ -50,7 +51,6 @@ export default function LiveMatchScreen() {
   }
 
   const match = matchInfo.matches[0];
-  console.log(match);
 
   if (season!.season_number == 0 || !season!.season_number) {
     return (

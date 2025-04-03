@@ -1,55 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
+import { useState, useCallback } from 'react';
 
 import StandingsRow from './StandingsRow'
-import apiRoutes from '@/routes/apiRoutes';
-import { useSelectedLeague } from '@/api/leagueQueries';
-import { useSelectedSeason } from '@/api/seasonQueries';
+import { useInvalidateStandings, useStandings } from '@/api/seasonQueries';
 
 const StandingsTable = () => {
-  const { data: league } = useSelectedLeague();
-  const { data: season } = useSelectedSeason(league?.id);
-  const [standings, setStandings] = useState<Standing[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: standings, refetch } = useStandings();
   const [refreshing, setRefreshing] = useState(false);
-
-  if (!season) return (<></>);
+  const invalidateStandings = useInvalidateStandings();
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await fetchData();
+    await invalidateStandings();
+    await refetch();
     setRefreshing(false);
-  }, [])
-
-  const fetchData = async () => {
-    if (season.id == 0 || season.id == undefined) {
-      return;
-    }
-    try {
-      const response = await axios.get(apiRoutes.season.standings + `?season_id=${season.id}`);
-      setStandings(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setStandings([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [season]);
-
-  if (loading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  }, [invalidateStandings, refetch]);
 
   return (
     <View style={styles.table}>
@@ -77,13 +44,19 @@ const StandingsTable = () => {
         }
       >
         {/* Data Row */}
-        {standings.map((standing, index) => (
-          <StandingsRow
-            standing={standing}
-            row={index}
-            key={index}
-          />
-        ))}
+        {!standings ? (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        ) : (
+          standings.map((standing, index) => (
+            <StandingsRow
+              standing={standing}
+              row={index}
+              key={index}
+            />
+          ))
+        )}
       </ScrollView>
     </View>
   );
