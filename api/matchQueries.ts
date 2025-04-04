@@ -31,13 +31,13 @@ export const useMatches = () => {
 export const useSelectedMatch = (
   matchId: number | undefined,
 ) => {
-  const dispatch = useDispatch();
-  
+  const { data: matches } = useMatches();
+
   return useQuery({
     queryKey: [authQueryKey, queryKeys.matches, matchId],
     queryFn: () => getMatches(matchId),
     staleTime: 1000 * 60 * 5,
-    enabled: !!matchId,
+    enabled: !!matchId && !!matches,
     onSuccess: (matches: MatchSet) => {
 
     },

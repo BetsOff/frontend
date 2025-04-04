@@ -94,7 +94,7 @@ const matchSlice = createSlice({
 });
 
 export const useMatchSelector = () => {
-  return useSelector((state: RootState) => state.match)
+  return useSelector((state: RootState) => state.match);
 }
 
 export const { setMatch, setMatchSet, resetMatches, addPlayerScore, removePlayerScore, resetScenario } = matchSlice.actions;
