@@ -14,6 +14,9 @@ import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useSelectedMatch } from '@/api/matchQueries';
 import { useMatchSelector } from '@/state/MatchSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
+import ScenarioInfo from '@/components/Match/ScenarioInfo';
 
 export default function LiveMatchScreen() {
   const { matchId } = useMatchSelector();
@@ -82,6 +85,7 @@ export default function LiveMatchScreen() {
     <View style={styles.container}>
       <MatchHeader />
       <PlayerVsPlayerHeader />
+      <ScenarioInfo />
       <BetList />
       {loadMakeBets && (
         <View style={styles.makeBetContainer}>

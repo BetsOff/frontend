@@ -1,4 +1,5 @@
 type Wager = {
+  id: number;
   market: string;
   first_selection: string;
   second_selection: string;

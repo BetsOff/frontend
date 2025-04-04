@@ -11,8 +11,6 @@ import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { resetSelectedLine } from '@/state/LineSlice';
-import { setPlayerOneBets } from '@/state/BetSlice';
-import { useCredits } from '@/state/MatchSlice';
 
 type LineProps = {
 	line: Line;
@@ -23,9 +21,9 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
-	const currentMatch =  useSelector((state: RootState) => state.match.currentMatch);
+	const matchId =  useSelector((state: RootState) => state.match.matchId);
 
-	if (!currentMatch) return (<></>)
+	if (!matchId) return (<></>)
 
 	const startTime: Date = new Date(line.start_time);
 
@@ -43,7 +41,7 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 
 		axios.post(apiRoutes.bet.create, {
 			user_id: userId,
-			match_id: currentMatch.match_id,
+			match_id: matchId,
 			line_id: selectedLine.id,
 			first_selection_picked: selectedLine.first_selection_picked,
 			wager: selectedLine.wager,
@@ -53,9 +51,9 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 			}
 		})
 			.then(response => {
-				dispatch(setPlayerOneBets(response.data));
-				dispatch(resetSelectedLine());
-				dispatch(useCredits(selectedLine.wager))
+				// dispatch(setPlayerOneBets(response.data));
+				// dispatch(resetSelectedLine());
+				// dispatch(useCredits(selectedLine.wager))
 				router.back();
 			})
 			.catch(error => {

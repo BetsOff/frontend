@@ -3,7 +3,6 @@ import authReducer from "./AuthSlice";
 import leagueReducer from "./leagueSlice";
 import seasonReducer from "./SeasonSlice";
 import matchReducer from "./MatchSlice";
-import betReducer from "./BetSlice";
 import lineReducer from "./LineSlice";
 import profileReducer from "./profile/ProfileSlice";
 import selfReducer from "./profile/SelfSlice";
@@ -15,7 +14,6 @@ export const store = configureStore({
     league: leagueReducer,
     season: seasonReducer,
     match: matchReducer,
-    bet: betReducer,
     line: lineReducer,
     profile: profileReducer,
     self: selfReducer,

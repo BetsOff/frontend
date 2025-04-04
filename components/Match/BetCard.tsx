@@ -2,13 +2,17 @@ import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 import Wager from './Wager'
 import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store';
+import { useEffect } from 'react';
 
 type BetCardProps = {
 	league_name: string;
 	game: Game;
+	participant_index: 0 | 1;
 }
 
-const BetCard: React.FC<BetCardProps> = ({ league_name, game }) => {
+const BetCard: React.FC<BetCardProps> = ({ participant_index, league_name, game }) => {
 	const color = useColor();
 	const startTime: Date = new Date(game.start_time);
 	const statusStyle = game.status == 'Upcoming'
@@ -20,6 +24,7 @@ const BetCard: React.FC<BetCardProps> = ({ league_name, game }) => {
 	const status = game.status == 'Upcoming'
 		? `Today, ${formatDateWithTime(startTime)}`
 		: game.status
+
 
 	return (
 		<View style={styles.container}>
@@ -35,7 +40,7 @@ const BetCard: React.FC<BetCardProps> = ({ league_name, game }) => {
 				</View>
 				<Text style={statusStyle}>{status}</Text>
 				{game.wagers.map((wager, index) => (
-					<Wager league_name={league_name} wager={wager} status={game.status} key={index} />
+					<Wager participant_index={participant_index} league_name={league_name} wager={wager} status={game.status} key={index} />
 				))}
 			</View>
 		</View>

@@ -1,23 +1,48 @@
 import { Text, useColor, View } from '@/components/Themed';
+import { addPlayerScore, removePlayerScore } from '@/state/MatchSlice';
+import { RootState } from '@/state/store';
 import calcualtePointsWon from '@/util/calculatePointsWon';
-import { StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 type WagerProps = {
 	league_name: string;
 	status: string;
 	wager: Wager;
+	participant_index: 0 | 1;
 }
 
-const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
+const Wager: React.FC<WagerProps> = ({ league_name, status, wager, participant_index }) => {
+	const [expanded, setExpanded] = useState<boolean>(false);
+	const [scenario, setScenario] = useState<'won' | 'lost' | null>(null);
 	const color = useColor();
-
+	const resetKey = useSelector((state: RootState) => state.match.resetKey);
+	const dispatch = useDispatch();
 	const calculatePoints = calcualtePointsWon(wager.wager, wager.first_selection_picked ? wager.first_price : wager.second_price);
-
 	const roundScores = (league_name == 'NBA' && wager.market == 'totals') || calculatePoints >= 100;
-
 	const wagerLost = status === "Final" && wager.points_earned === 0;
 
-	let market_title = wager.market == 'totals'
+	const handleWagerPressed = () => {
+		setExpanded(!expanded)
+	}
+
+	const handleScenarioWon = () => {
+		setScenario('won');
+		dispatch(addPlayerScore({ playerIndex: participant_index, betId: wager.id, value: calculatePoints }));
+	}
+
+	const handleScenarioLost = () => {
+		setScenario('lost');
+		dispatch(addPlayerScore({ playerIndex: participant_index, betId: wager.id, value: -1 * calculatePoints }));
+	}
+
+	const handleScenarioReset = () => {
+		setScenario(null);
+		dispatch(removePlayerScore({ playerIndex: participant_index, betId: wager.id, value: calculatePoints }))
+	}
+
+	const market_title = wager.market == 'totals'
 		? league_name == 'MLB'
 			? 'Total Runs'
 			: 'Total Points'
@@ -27,7 +52,11 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 		? wager.points_earned > 0
 			? color.won
 			: color.loss
-		: color.background_2
+		: scenario == 'won'
+			? color.scenarioWon
+			: scenario == 'lost'
+				? color.scenarioLoss
+				: color.background_2
 
 	let selectionPicked = wager.first_selection_picked
 		? wager.first_selection
@@ -54,44 +83,61 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager }) => {
 		? calculatePoints.toFixed(1)
 		: calculatePoints
 
+	
+	useEffect(() => {
+		setScenario(null);
+	}, [resetKey]);
 
 	return (
-		<View style={[styles.container, { backgroundColor: color.background_2 }]}>
-			<View style={[styles.separatorPadding, { backgroundColor: color.background_2 }]}>
-				<View style={[styles.separator, { backgroundColor: color.inactive_text }]} />
-			</View>
-			<View style={[styles.wagerContainer, { backgroundColor: bgColor }]}>
-				{/* Wager Header */}
-				<View style={[styles.flexRow, { backgroundColor: bgColor }]}>
-					<View style={[styles.wagerHeader, { backgroundColor: bgColor }]}>
-						<Text style={textStyles.header}>{market_title}</Text>
-						<Text style={textStyles.header}>{wager.wager}</Text>
-					</View>
+			<View style={[styles.container, { backgroundColor: color.background_2 }]}>
+				<View style={[styles.separatorPadding, { backgroundColor: color.background_2 }]}>
+					<View style={[styles.separator, { backgroundColor: color.inactive_text }]} />
 				</View>
-				{/* Selections and Score */}
-				<View style={[styles.flexRow, { backgroundColor: bgColor }]}>
-					<View style={[styles.selectionsAndScoreContainer, { backgroundColor: bgColor }]}>
-						{/* Selections */}
-						<View style={[styles.selectionsContainer, { backgroundColor: bgColor }]}>
-							<Text style={styles.defaultText}>{selectionPrice} {selectionPicked} {wager.point}</Text>
+				<TouchableOpacity onPress={handleWagerPressed} style={[styles.wagerContainer, { backgroundColor: bgColor }]}>
+					{/* Wager Header */}
+					<View style={[styles.flexRow, { backgroundColor: color.transparent }]}>
+						<View style={[styles.wagerHeader, { backgroundColor: color.transparent }]}>
+							<Text style={textStyles.header}>{market_title}</Text>
+							<Text style={textStyles.header}>{wager.wager}</Text>
 						</View>
-						{/* Score */}
-						{status == "Final" ? (
-							<Text style={[textStyles.pointsEarned]}>
-								{roundScores && !wagerLost
-									? wager.points_earned.toFixed(1)
-									: wager.points_earned
-								}
-							</Text>
-						) : (
-							<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>
-								{potentialPoints}
-							</Text>
-						)}
 					</View>
-				</View>
+					{/* Selections and Score */}
+					<View style={[styles.flexRow, { backgroundColor: color.transparent }]}>
+						<View style={[styles.selectionsAndScoreContainer, { backgroundColor: color.transparent }]}>
+							{/* Selections */}
+							<View style={[styles.selectionsContainer, { backgroundColor: color.transparent }]}>
+								<Text style={styles.defaultText}>{selectionPrice} {selectionPicked} {wager.point}</Text>
+							</View>
+							{/* Score */}
+							{status == "Final" ? (
+								<Text style={[textStyles.pointsEarned]}>
+									{roundScores && !wagerLost
+										? wager.points_earned.toFixed(1)
+										: wager.points_earned
+									}
+								</Text>
+							) : (
+								<Text style={[textStyles.potentialPointsEarned, { color: color.inactive_text }]}>
+									{potentialPoints}
+								</Text>
+							)}
+						</View>
+					</View>
+				</TouchableOpacity>
+				{expanded && status !== "Final" && (
+					<View style={[styles.flexRow, { backgroundColor: color.transparent, marginTop: 5 }]}>
+						<TouchableOpacity onPress={handleScenarioWon} style={[styles.scenarioButton, { backgroundColor: color.scenarioWon }]}>
+							<Text>Won</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={handleScenarioReset} style={[styles.scenarioButton, { backgroundColor: color.background_3 }]}>
+							<Text>Reset</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={handleScenarioLost} style={[styles.scenarioButton, { backgroundColor: color.scenarioLoss }]}>
+							<Text>Lost</Text>
+						</TouchableOpacity>
+					</View>
+				)}
 			</View>
-		</View>
 	)
 }
 
@@ -138,6 +184,15 @@ const styles = StyleSheet.create({
 	defaultText: {
 		fontSize: 18,
 	},
+	scenarioButton: {
+		width: '30%',
+		height: 24,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 5,
+		marginHorizontal: 5,
+		marginVertical: 2,
+	}
 })
 
 const textStyles = StyleSheet.create({

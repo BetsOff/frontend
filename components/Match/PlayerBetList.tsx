@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetBets, setPlayerOneBets, setPlayerTwoBets } from '@/state/BetSlice';
 import { RootState } from '@/state/store';
 import { PlayerIndex, useBets } from '@/api/betQueries';
 
@@ -31,7 +30,7 @@ const PlayerBetList: React.FC<PlayerBetListProps> = ({ participant_index }) => {
 		<View style={styles.playerBetListContainer}>
 
 			{bets!.map((bet, index) => (
-				<BetListForLeague bets={bet} key={index} />
+				<BetListForLeague participant_index={participant_index} bets={bet} key={index} />
 			))}
 		</View>
 	)

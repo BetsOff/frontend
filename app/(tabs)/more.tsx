@@ -7,7 +7,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useDispatch } from 'react-redux';
 import { resetSeason } from '@/state/SeasonSlice';
 import { resetMatches } from '@/state/MatchSlice';
-import { resetBets } from '@/state/BetSlice';
+import { resetBets } from '@/state/Scenario';
 import { resetProfile } from '@/state/profile/ProfileSlice';
 import { logout } from '@/state/AuthSlice';
 import { useRouter } from 'expo-router';

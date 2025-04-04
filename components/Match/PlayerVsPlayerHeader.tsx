@@ -51,6 +51,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 				logo={participant1.logo}
 				record={participant1.record}
 				score={participant1.score}
+				playerIndex={0}
 				credits_remaining={matches.starting_credits - creditsRemaining}
 				betList={playerOneBetList}
 			/>
@@ -61,6 +62,7 @@ const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 				logo={participant2.logo}
 				record={participant2.record}
 				score={participant2.score}
+				playerIndex={1}
 				credits_remaining={participant2.credits_remaining}
 				betList={playerTwoBetList}
 			/>

@@ -17,6 +17,7 @@ type ScoreCardProps = {
   logo: Logo,
   record: string,
   score: number;
+  playerIndex: 0 | 1;
   credits_remaining: number;
   betList: LeagueBets[];
 }
@@ -42,12 +43,17 @@ const getTotalPotentialPoints = (betList: LeagueBets[]): number => {
   return Math.round(result * 100) / 100
 }
 
+const formatScore = (score: number) => {
+  return score % 1 === 0 ? score.toString() : parseFloat(score.toFixed(2)).toString();
+}
+
 const ScoreCard: React.FC<ScoreCardProps> = ({ 
   user_id, 
   name, 
   logo, 
   record, 
   score, 
+  playerIndex,
   credits_remaining, 
   betList 
 }) => {
@@ -55,12 +61,23 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: matches } = useMatches();
+  const scenario = useSelector((state: RootState) => state.match.scenario);
   const logoColor = getLogoColor(logo.bg_color);
 
-  const potentialPoints = getTotalPotentialPoints(betList);
+  const scenarioWin = playerIndex === 0
+    ? Object.values(scenario.playerOneWins).reduce((sum, value) => sum + value, 0)
+    : Object.values(scenario.playerTwoWins).reduce((sum, value) => sum + value, 0)
+
+  const scenarioLoss = playerIndex === 0
+    ? Object.values(scenario.playerOneLosses).reduce((sum, value) => sum + value, 0)
+    : Object.values(scenario.playerTwoLosses).reduce((sum, value) => sum + value, 0)
+
+  const potentialPoints = getTotalPotentialPoints(betList) + scenarioLoss;
+  score = score + scenarioWin;
 
   const roundScores = (score != potentialPoints) && (score >= 100 || potentialPoints >= 100) && (score != 0)
-  
+
+  const isScenario = scenarioWin > 0 || scenarioLoss < 0;
 
   const handleProfilePressed = () => {
     if (String(user_id) == storageGetItem('user_id')) {
@@ -97,17 +114,24 @@ const ScoreCard: React.FC<ScoreCardProps> = ({
             </View>
           </View>
           <View style={[styles.scoreContainer, { backgroundColor: logoColor }]}>
-            <Text style={[scoreStyle, { color: textColor }]}>
+            <Text style={[
+              scoreStyle, 
+              { color: textColor },
+              isScenario && { fontStyle: 'italic' }
+            ]}>
               {roundScores
                 ? score.toFixed(1)
-                : score
+                : formatScore(score)
               }
             </Text>
             {(score != potentialPoints) && (
-              <Text style={styles.potentialScore}> /  
-                {roundScores
+              <Text style={[
+                styles.potentialScore,
+                isScenario && { fontStyle: 'italic' }
+              ]}> 
+                /{roundScores
                   ? ' ' + potentialPoints.toFixed(1)
-                  : ' ' + potentialPoints
+                  : ' ' + formatScore(potentialPoints)
                 }
               </Text>
             )}
