@@ -16,7 +16,7 @@ export const useBets = (playerIndex: PlayerIndex) => {
   const userId = match?.matches[0].participants[playerIndex].user_id;
 
   return useQuery({
-    queryKey: [authQueryKey, queryKeys.bets, matchId, playerIndex],
+    queryKey: [authQueryKey, queryKeys.leagues, queryKeys.seasons, queryKeys.matches, queryKeys.bets, matchId, playerIndex],
     queryFn: () => getBets(matchId, userId),
     staleTime: 1000 * 60 * 5,
     enabled: !!matchId && !!userId,

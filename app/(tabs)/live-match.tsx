@@ -56,7 +56,10 @@ export default function LiveMatchScreen() {
   if (season!.season_number == 0 || !season!.season_number) {
     return (
       <View style={[styles.container, {alignItems: 'flex-start'}]}>
-        <LeagueHeader />
+        <LeagueHeader 
+          leagueName={league!.name}
+          isLoading={leagueIsLoading}
+        />
         {league!.commissioner
           ? <View style={styles.seasonButtonContainer}>
               <CreateButton object='Season' link='/create_season' />
@@ -70,7 +73,10 @@ export default function LiveMatchScreen() {
   if (match.participants.length == 0) {
     return (
       <View style={[styles.container, {alignItems: 'flex-start'}]}>
-        <LeagueHeader />
+        <LeagueHeader
+          leagueName={league!.name}
+          isLoading={leagueIsLoading}
+        />
         <MatchHeader />
       </View>
     )

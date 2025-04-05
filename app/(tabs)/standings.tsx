@@ -42,7 +42,12 @@ export default function StandingsScreen() {
 
   return (
     <View style={styles.container}>
-      <LeagueHeader />
+      <TouchableOpacity onPress={() => router.push('/league_selector')}>
+        <LeagueHeader 
+          leagueName={league.name} 
+          isLoading={leagueIsLoading} 
+        />
+      </TouchableOpacity>
       {season.season_number == 0 || season.season_number == undefined
         ? league.commissioner
           ? <View style={styles.seasonButtonContainer}>

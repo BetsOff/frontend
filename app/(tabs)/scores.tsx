@@ -107,7 +107,10 @@ export default function ScoresScreen() {
   if (season!.season_number == 0 || season!.season_number == undefined) {
     return (
       <View style={styles.container}>
-        <LeagueHeader />
+        <LeagueHeader 
+          leagueName={league!.name}
+          isLoading={leagueIsLoading}
+        />
         {league!.commissioner
           ? <View style={styles.seasonButtonContainer}>
             <CreateButton object='Season' link='/create_season' />
@@ -120,7 +123,10 @@ export default function ScoresScreen() {
 
   return (
     <View style={styles.container}>
-      <LeagueHeader />
+      <LeagueHeader 
+        leagueName={league!.name}
+        isLoading={leagueIsLoading}
+      />
       <MatchHeader />
       <SteppingBar onGoForward={forwardMatch} onGoBack={backMatch} />
       <MatchList/>

@@ -6,17 +6,20 @@ import { useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
 
 type LeagueProps = {
-
+  leagueName: string;
+  isLoading?: boolean;
 }
 
-const LeagueHeader: React.FC<LeagueProps> = ({ }) => {
-  const { data: league, isLoading, error } = useSelectedLeague();
+const LeagueHeader: React.FC<LeagueProps> = ({ 
+  leagueName,
+  isLoading = false,
+}) => {
 
   if (isLoading) return (<></>);
 
   return (
     <View style={styles.leagueContainer}>
-      <Text style={styles.leagueText}>{league.name}</Text>
+      <Text style={styles.leagueText}>{leagueName}</Text>
     </View>
 
   );

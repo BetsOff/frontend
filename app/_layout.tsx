@@ -101,7 +101,14 @@ function RootLayoutNav() {
             }} />
             <Stack.Screen name="season_selector" options={{
               title: 'Select Season',
-              headerShown: false,
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="league_selector" options={{
+              title: 'Select League',
               presentation: 'modal',
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),

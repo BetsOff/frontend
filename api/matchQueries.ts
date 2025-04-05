@@ -14,7 +14,7 @@ export const useMatches = () => {
   const { data: season } = useSelectedSeason();
 
   return useQuery({
-    queryKey: [authQueryKey, queryKeys.matches, matchNumber, playoff],
+    queryKey: [authQueryKey, queryKeys.leagues, queryKeys.seasons, queryKeys.matches, matchNumber, playoff],
     queryFn: () => getMatches(undefined, season?.id, matchNumber, playoff),
     staleTime: 1000 * 60 * 5,
     enabled: !!season?.id,
@@ -34,7 +34,7 @@ export const useSelectedMatch = (
   const { data: matches } = useMatches();
 
   return useQuery({
-    queryKey: [authQueryKey, queryKeys.matches, matchId],
+    queryKey: [authQueryKey, queryKeys.leagues, queryKeys.seasons, queryKeys.matches, matchId],
     queryFn: () => getMatches(matchId),
     staleTime: 1000 * 60 * 5,
     enabled: !!matchId && !!matches,

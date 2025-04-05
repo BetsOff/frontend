@@ -15,7 +15,7 @@ export const useLeagues = () => {
   const dispatch = useDispatch();
 
   return useQuery({
-    queryKey: [authQueryKey, queryKeys.leagues, userId],
+    queryKey: [authQueryKey, queryKeys.leagues],
     queryFn: () => getLeagues(userId),
     staleTime: 1000 * 60 * 5,
     onSuccess: (leagues) => {
@@ -36,9 +36,22 @@ export const getLeagues = (userId: string) => {
   return getRequest(apiRoutes.league.get, { user_id: userId });
 }
 
-export const invalidateLeagues = () => {
+export const useInvalidateLeagues = () => {
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({
-    queryKey: [queryKeys.leagues, storageGetItem('user_id')]
-  });
+  return async () => {
+    queryClient.invalidateQueries({
+      queryKey: [queryKeys.leagues],
+      exact: false,
+    });
+  }
+}
+
+export const useInvalidateSelectedLeague = () => {
+  const queryClient = useQueryClient();
+  return async () => {
+    queryClient.invalidateQueries({
+      queryKey: [queryKeys.seasons],
+      exact: false,
+    });
+  }
 }
