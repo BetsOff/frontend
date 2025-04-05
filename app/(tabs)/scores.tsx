@@ -13,10 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useMatches } from '@/api/matchQueries';
-import { setMatchSet } from '@/state/MatchSlice';
+import { RootState } from '@/state/store';
+import { back, forward, setMatchDate } from '@/state/MatchSlice';
+import getToday from '@/util/date/getToday';
 
 export default function ScoresScreen() {
   const dispatch = useDispatch();
+  const date = useSelector((state: RootState) => state.match.matchDate)
 
   const { 
     data: league, 
@@ -68,7 +71,7 @@ export default function ScoresScreen() {
         next_match = matches.match_number - 1;
       }
     }
-    dispatch(setMatchSet([next_match, playoff]));
+    dispatch(back([date || getToday(), season?.matchup_length || 0]));
   }
 
   const forwardMatch = () => {
@@ -91,7 +94,7 @@ export default function ScoresScreen() {
         next_match = matches.match_number + 1;
       }
     }
-    dispatch(setMatchSet([next_match, playoff]));
+    dispatch(forward([date || getToday(), season?.matchup_length || 0]));
   }
 
   if (season!.season_number == 0 || season!.season_number == undefined) {

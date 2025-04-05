@@ -17,17 +17,13 @@ export default function SeasonSelectorScreen() {
   const match = useMatchSelector();
   const invalidateMatches = useInvalidateMatches();
 
-  useEffect(() => {
-    console.log('hello');
-    console.log(match.matchNumber);
-    invalidateMatches();
-    // router.back();
-  }, [match.matchNumber])
+  //  
 
   const handlePress = async (season: Season) => {
     if (season !== selectedSeason) {
       dispatch(setSeason(season));
       dispatch(resetMatches());
+      router.back();
     }
   }
 

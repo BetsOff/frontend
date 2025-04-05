@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import { adjustDate } from "@/util/date/adjustDate";
 
 interface Scenario {
   playerIndex: 0 | 1;
@@ -16,8 +17,7 @@ interface ScenarioState {
 }
 interface MatchState {
   matchId: number | undefined;
-  matchNumber: number | undefined;
-  playoff: boolean | undefined;
+  matchDate: string | undefined;
   scenario: ScenarioState;
   resetKey: number;
 }
@@ -31,8 +31,7 @@ const initialScenarioState: ScenarioState = {
 
 const initialMatchState: MatchState = {
   matchId: undefined,
-  matchNumber: undefined,
-  playoff: undefined,
+  matchDate: undefined,
   scenario: initialScenarioState,
   resetKey: 0,
 };
@@ -45,10 +44,16 @@ const matchSlice = createSlice({
       state.matchId = action.payload;
       state.scenario = initialScenarioState;
     },
-    setMatchSet: (state, action: PayloadAction<[number, boolean]>) => {
-      const [matchNumber, playoff] = action.payload;
-      state.matchNumber = matchNumber;
-      state.playoff = playoff;
+    setMatchDate: (state, action: PayloadAction<string>) => {
+      state.matchDate = action.payload;
+    },
+    forward: (state, action: PayloadAction<[string, number]>) => {
+      const [oldDate, increment] = action.payload;
+      state.matchDate = adjustDate(oldDate, increment);
+    },
+    back: (state, action: PayloadAction<[string, number]>) => {
+      const [oldDate, increment] = action.payload;
+      state.matchDate = adjustDate(oldDate, -1*increment);
     },
     resetMatches: (state) => {
       state = initialMatchState;
@@ -97,5 +102,5 @@ export const useMatchSelector = () => {
   return useSelector((state: RootState) => state.match);
 }
 
-export const { setMatch, setMatchSet, resetMatches, addPlayerScore, removePlayerScore, resetScenario } = matchSlice.actions;
+export const { setMatch, setMatchDate, forward, back, resetMatches, addPlayerScore, removePlayerScore, resetScenario } = matchSlice.actions;
 export default matchSlice.reducer;
