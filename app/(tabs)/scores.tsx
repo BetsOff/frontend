@@ -97,6 +97,9 @@ export default function ScoresScreen() {
     dispatch(forward([date || getToday(), season?.matchup_length || 0]));
   }
 
+  const firstMatch = !matches.playoff && matches.match_number == 1;
+  const lastMatch = matches.playoff && matches.match_number == matches.num_playoff_matches;
+
   if (season!.season_number == 0 || season!.season_number == undefined) {
     return (
       <View style={styles.container}>
@@ -121,7 +124,12 @@ export default function ScoresScreen() {
         isLoading={leagueIsLoading}
       />
       <MatchHeader />
-      <SteppingBar onGoForward={forwardMatch} onGoBack={backMatch} />
+      <SteppingBar 
+        onGoForward={forwardMatch} 
+        onGoBack={backMatch} 
+        forwardDisabled={lastMatch}
+        backDisabled={firstMatch}
+      />
       <MatchList/>
 
     </View>
