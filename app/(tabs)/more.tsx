@@ -4,14 +4,8 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useDispatch } from 'react-redux';
-import { resetSeason } from '@/state/SeasonSlice';
-import { resetMatches } from '@/state/MatchSlice';
-import { resetBets } from '@/state/Scenario';
-import { resetProfile } from '@/state/profile/ProfileSlice';
 import { logout } from '@/state/AuthSlice';
 import { useRouter } from 'expo-router';
-import { invalidateLeagues } from '@/api/leagueQueries';
 import { useInvalidateAuth } from '@/api/authQueries';
 
 export default function MoreScreen() {

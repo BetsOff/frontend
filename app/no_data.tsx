@@ -21,7 +21,7 @@ const NoDataScreen: React.FC<NoDataScreenProps> = ({ data }) => {
       {data == 'league'
         ? <CreateButton object='league' link='/create_league' />
         : data == 'season'
-          ? <CreateButton object='league' link='/create_season' />
+          ? <CreateButton object='season' link='/create_season' />
           : <></>
       }
     </View>

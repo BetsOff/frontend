@@ -17,8 +17,6 @@ import { setMatchSet } from '@/state/MatchSlice';
 
 export default function ScoresScreen() {
   const dispatch = useDispatch();
-  const [matchNumber, setMatchNumber] = useState<number | undefined>();
-  const [playoff, setPlayoff] = useState<boolean | undefined>();
 
   const { 
     data: league, 
@@ -38,10 +36,6 @@ export default function ScoresScreen() {
     error: matchError,
     refetch: refetchMatches,
   } = useMatches();
-
-  useEffect(() => {
-    refetchMatches();
-  }, [matchNumber, playoff, refetchMatches]);
 
   if (leagueIsLoading || leagueError) {
     return (
@@ -74,9 +68,7 @@ export default function ScoresScreen() {
         next_match = matches.match_number - 1;
       }
     }
-    dispatch(setMatchSet([next_match, playoff]))
-    setMatchNumber(next_match);
-    setPlayoff(playoff);
+    dispatch(setMatchSet([next_match, playoff]));
   }
 
   const forwardMatch = () => {
@@ -100,8 +92,6 @@ export default function ScoresScreen() {
       }
     }
     dispatch(setMatchSet([next_match, playoff]));
-    setMatchNumber(next_match);
-    setPlayoff(playoff);
   }
 
   if (season!.season_number == 0 || season!.season_number == undefined) {

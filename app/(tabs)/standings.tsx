@@ -6,11 +6,10 @@ import LeagueHeader from '@/components/LeagueHeader';
 import SeasonHeader from '@/components/SeasonHeader';
 import StandingsTable from '@/components/Standings/StandingsTable';
 import NoDataScreen from '../no_data';
-import CreateButton from '@/components/CreateButton';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'expo-router';
 import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
+import { useEffect } from 'react';
 
 export default function StandingsScreen() {
   const { 
@@ -27,44 +26,52 @@ export default function StandingsScreen() {
 
   const router = useRouter();  
 
-  if (leagueIsLoading || leagueError) return (<View style={{flex: 1}} />);
-  if (seasonIsLoading || seasonError) return (<View style={{flex: 1}} />);
-
-  if (!league) {
+  useEffect(() => {}, [league]);
+  
+  if (leagueIsLoading || leagueError) {
     return (
       <NoDataScreen data='league' />
     );
-  } else if (!season) {
+  } else if (seasonIsLoading || seasonError) {
     return (
       <NoDataScreen data='season' />
     );
   }
 
+  if (!league) return (<NoDataScreen data='league' />);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.push('/league_selector')}>
-        <LeagueHeader 
-          leagueName={league.name} 
-          isLoading={leagueIsLoading} 
-        />
-      </TouchableOpacity>
-      {season.season_number == 0 || season.season_number == undefined
-        ? league.commissioner
-          ? <View style={styles.seasonButtonContainer}>
-            <CreateButton object='Season' link='/create_season' />
-          </View>
-          : <></>
-        : <View>
+      {(!!league || leagueIsLoading) && (
+        <TouchableOpacity onPress={() => router.push('/league_selector')}>
+          <LeagueHeader 
+            leagueName={league!.name} 
+            isLoading={leagueIsLoading} 
+          />
+        </TouchableOpacity>
+      )}
+
+      {(!season) && (
+        <NoDataScreen data='season' />
+      )}
+
+      {(!!season) && (
+        <View>
+          {/* {(league!.commissioner) && (
+            <View style={styles.seasonButtonContainer}>
+              <CreateButton object='Season' link='/create_season' />
+            </View>
+          )} */}
           <TouchableOpacity onPress={() => router.push('/season_selector')}>
             <SeasonHeader
-              name={`Season ${season.season_number}`}
-              start_date={season.start_date}
-              end_date={season.end_date}
+              name={`Season ${season!.season_number}`}
+              start_date={season!.start_date}
+              end_date={season!.end_date}
             />
           </TouchableOpacity>
           <StandingsTable />
         </View>
-      }
+      )}
     </View>
   );
 }

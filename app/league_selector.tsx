@@ -1,4 +1,5 @@
 import { useLeagues } from '@/api/leagueQueries';
+import { useinvalidateSeasons, useSeasons } from '@/api/seasonQueries';
 import LeagueHeader from '@/components/LeagueHeader';
 import { View, Text } from '@/components/Themed';
 import { setLeague } from '@/state/leagueSlice';
@@ -9,12 +10,14 @@ import { useDispatch } from 'react-redux';
 export default function LeagueSelectorScreen() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const invalidateSeasons = useinvalidateSeasons();
   const { data: leagues, isLoading } = useLeagues();
-  console.log(leagues);
+  const { refetch } = useSeasons();
 
   const handlePress = (league: League) => {
     dispatch(setLeague(league));
-    console.log(league);
+    invalidateSeasons();
+    refetch();
     router.back();
   }
 

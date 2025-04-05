@@ -5,13 +5,14 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
-import { invalidateLeagues } from '@/api/leagueQueries';
+import { useInvalidateLeagues } from '@/api/leagueQueries';
 
 const CreateLeagueScreen = () => {
 	const color = useColor();
 	const router = useRouter();
 	const [name, setName] = useState('');
 	const [maxPlayers, setMaxPlayers] = useState('');
+	const invalidateLeagues = useInvalidateLeagues();
 
 	const handleCreateLeague = async () => {
     try {

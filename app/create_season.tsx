@@ -9,17 +9,20 @@ import { RootState } from '@/state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSeason } from '@/state/SeasonSlice';
 import { fetchSeason } from '@/util/fetch/fetchSeasons';
+import { useSelectedLeague } from '@/api/leagueQueries';
+import { useSeasons } from '@/api/seasonQueries';
 
 const CreateSeasonScreen = () => {
 	const color = useColor();
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const league = useSelector((state: RootState) => state.league.currentLeague);
+	const { data: league } = useSelectedLeague();
 	const [numMatches, setNumMatches] = useState('');
 	const [matchupLength, setMatchupLength] = useState('');
 	const [breakLength, setBreakLength] = useState('');
 	const [creditsPerMatch, setCreditsPerMatch] = useState('');
 	const [teamsInPlayoffs, setTeamsInPlayoffs] = useState('');
+	const { refetch } = useSeasons();
 
 	const handleCreateSeason = async () => {
 		if (!league) return;
@@ -41,7 +44,8 @@ const CreateSeasonScreen = () => {
 
 			if (response.status === 201) {
 				dispatch(setSeason(await fetchSeason(league)));
-				router.replace('/(tabs)/standings')
+				refetch();
+				router.back();
 			}
 		} catch (error) {
 			console.error('Error creating season: ', error)
@@ -50,31 +54,39 @@ const CreateSeasonScreen = () => {
 
 	return (
 		<View style={styles.container}>
+			<Text>Number of Matches</Text>
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="Number of Matches"
+					placeholder="10"
 					placeholderTextColor={color.inactive_text}
 					value={numMatches}
 					onChangeText={setNumMatches}
+					keyboardType='numeric'
 				/>
 			</View>
+
+			<Text>Matchup Length in Days</Text>
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="Matchup Length"
+					placeholder="1"
 					placeholderTextColor={color.inactive_text}
 					value={matchupLength}
 					onChangeText={setMatchupLength}
+					keyboardType='numeric'
 				/>
 			</View>
+
+			<Text>Number of Teams in Playoffs</Text>
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="Teams in Playoffs"
+					placeholder="4"
 					placeholderTextColor={color.inactive_text}
 					value={teamsInPlayoffs}
 					onChangeText={setTeamsInPlayoffs}
+					keyboardType='numeric'
 				/>
 			</View>
 			<TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={handleCreateSeason}>

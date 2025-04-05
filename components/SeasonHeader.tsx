@@ -8,6 +8,7 @@ import CreateButton from './CreateButton';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
+import { useSeasons, useSelectedSeason } from '@/api/seasonQueries';
 
 type SeasonProps = {
   name: string;
@@ -18,11 +19,15 @@ type SeasonProps = {
 const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => {
   const color = useColor();
   const { data: league, isLoading, error } = useSelectedLeague();
+  const { data: seasons } = useSeasons();
+  const { data: currentSeason } = useSelectedSeason()
 
   const today = new Date();
-  const startDate = new Date(start_date)
-  const endDate = new Date(end_date)
+  const startDate = new Date(start_date);
+  const endDate = new Date(end_date);
   endDate.setDate(endDate.getDate() - 1);
+
+  const mostRecentSeason = seasons[seasons.length - 1] === currentSeason;
 
   if (isLoading) return (<></>);
 
@@ -35,7 +40,7 @@ const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => 
           : <></>
         }
       </View>
-      {(endDate.getTime() < today.getTime() || start_date == undefined) && league.commissioner
+      {(endDate.getTime() < today.getTime() || start_date == undefined) && league!.commissioner && mostRecentSeason
         ? <CreateButton object='Season' link='/create_season' />
         : <></>
       }
