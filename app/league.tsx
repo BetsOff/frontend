@@ -8,6 +8,7 @@ import { useSelectedLeague } from '@/api/leagueQueries';
 import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
 import { useDispatch } from 'react-redux';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function LeagueScreen() {
   const dispatch = useDispatch();
@@ -76,20 +77,14 @@ export default function LeagueScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{league.name}</Text>
-      <View style={styles.members}>
-        {members.map((member, index) => (
-          <TouchableOpacity 
-            onPress={() => handleUserPressed(member.id)}
-            key={index}
-            style={[styles.memberRow, { backgroundColor: index % 2 == 0 ? color.background_2 : color.background_1 }]}
-          >
-            <Text style={styles.memberText}>{member.username}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
 
       {league.commissioner && (
-        <View style={styles.container}>
+        <View style={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}>
           <View style={styles.inputView}>
             <TextInput
               style={styles.inputText}
@@ -104,6 +99,25 @@ export default function LeagueScreen() {
           </TouchableOpacity>
         </View>
       )}
+
+      <View style={styles.members}>
+        {members.map((member, index) => (
+          <TouchableOpacity 
+            onPress={() => handleUserPressed(member.id)}
+            key={index}
+            style={[styles.memberRow, { backgroundColor: index % 2 == 0 ? color.background_2 : color.background_1 }]}
+          >
+            
+            <Text style={styles.memberText}>{member.username}</Text>
+            {member.commissioner && (
+              <FontAwesome5 style={[{ paddingRight: 5 }]} name="crown" size={18} color={color.inactive_text} />
+            )}
+            {String(member.id) === storageGetItem('user_id') && (
+              <MaterialCommunityIcons name="account" size={24} color={color.inactive_text} />
+            )}
+          </TouchableOpacity>
+        ))}
+      </View>
 
     </View>
   )
@@ -125,22 +139,26 @@ const styles = StyleSheet.create({
   },
   memberText: {
     fontSize: 20,
+    fontWeight: 500,
+    paddingHorizontal: 10,
   },
   memberRow: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     padding: 5,
+    paddingVertical: 10,
   },
   text: {
     fontSize: 32,
     padding: 10,
+    fontWeight: 700,
   },
   inputView: {
-    width: '80%',
-    borderRadius: 25,
+    width: '40%',
+    borderRadius: 10,
     height: 50,
-    marginBottom: 20,
     justifyContent: 'center',
     padding: 20,
     borderColor: '#fff',
@@ -151,7 +169,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    width: '80%',
+    width: '40%',
     borderRadius: 25,
     height: 50,
     alignItems: 'center',
@@ -160,6 +178,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontSize: 20,
+    fontWeight: 600,
   },
 })
 
