@@ -4,18 +4,20 @@ import formatDateWithDay from '@/util/date/formatDateWithDay';
 import LeagueChoices from './LeagueChoices';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
+import { useMatches, useSelectedMatch } from '@/api/matchQueries';
+import { useMatchSelector } from '@/state/MatchSlice';
 
 type LineListHeaderProps = {
 
 }
 
 const LineListHeader: React.FC<LineListHeaderProps> = ({ }) => {
-	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+	const { data: match } = useSelectedMatch();
 	const date = formatDateWithDay(new Date());
 
-	if (!currentMatch || !matches || !currentMatch.participants[0].credits_remaining) {
-		return (<></>)
-	}
+	if (!match) return (<></>)
+	const currentMatch = match.matches[0]
+	if (!currentMatch.participants[0].credits_remaining) return (<></>)
 
 	const credits_remaining = currentMatch.participants[0].credits_remaining
 
@@ -24,7 +26,7 @@ const LineListHeader: React.FC<LineListHeaderProps> = ({ }) => {
 			<View style={styles.row}>
 				<Text style={styles.title}>{date}</Text>
 				<View style={styles.creditsRemainingContainer}>
-					<Text style={styles.credits}>{credits_remaining} / {matches.starting_credits}</Text>
+					<Text style={styles.credits}>{credits_remaining} / {match.starting_credits}</Text>
 					<Text style={styles.remainingText}>credits remaining</Text>
 				</View>
 			</View>

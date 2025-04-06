@@ -131,6 +131,20 @@ function RootLayoutNav() {
               },
               headerTintColor: useThemeColor(undefined, 'active_text'),
             }} />
+            <Stack.Screen name="leagues" options={{
+              title: 'My Leagues',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
+            <Stack.Screen name="league" options={{
+              title: 'League',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
           </Stack>
         </ThemeProvider>
       </Provider>

@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import queryKeys from "./queryKeys";
-import { setMatch, setMatchDate } from "@/state/MatchSlice";
+import { setMatch, setMatchDate, useMatchSelector } from "@/state/MatchSlice";
 import { getRequest } from "./methods";
 import apiRoutes from "@/routes/apiRoutes";
 import { RootState } from "@/state/store";
@@ -32,10 +32,10 @@ export const useMatches = () => {
   });
 }
 
-export const useSelectedMatch = (
-  matchId: number | undefined,
-) => {
+export const useSelectedMatch = () => {
   const { data: matches } = useMatches();
+  const match = useMatchSelector();
+  const matchId = match.matchId;
 
   return useQuery({
     queryKey: [authQueryKey, queryKeys.leagues, queryKeys.seasons, queryKeys.matches, matchId],

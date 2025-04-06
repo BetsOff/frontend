@@ -10,7 +10,8 @@ import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
 import apiRoutes from '@/routes/apiRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
-import { resetSelectedLine } from '@/state/LineSlice';
+import { useBets, useInvalidateBets } from '@/api/betQueries';
+import { useSelectedMatch } from '@/api/matchQueries';
 
 type LineProps = {
 	line: Line;
@@ -19,9 +20,11 @@ type LineProps = {
 const LineCard: React.FC<LineProps> = ({ line }) => {
 	const color = useColor();
 	const router = useRouter();
-	const dispatch = useDispatch();
 	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 	const matchId =  useSelector((state: RootState) => state.match.matchId);
+	const { data: bets, refetch: refetchBet } = useBets(0);
+	const { refetch: refetchMatch } = useSelectedMatch();
+	const invalidateBets = useInvalidateBets();
 
 	if (!matchId) return (<></>)
 
@@ -51,9 +54,9 @@ const LineCard: React.FC<LineProps> = ({ line }) => {
 			}
 		})
 			.then(response => {
-				// dispatch(setPlayerOneBets(response.data));
-				// dispatch(resetSelectedLine());
-				// dispatch(useCredits(selectedLine.wager))
+				invalidateBets(0);
+				refetchBet();
+				refetchMatch();
 				router.back();
 			})
 			.catch(error => {

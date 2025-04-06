@@ -3,10 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Text, useColor, View } from '@/components/Themed';
 
 import formatDateWithDay from '@/util/date/formatDateWithDay';
-import { RootState } from '@/state/store';
-import { useSelector } from 'react-redux';
-import { useMatches, useSelectedMatch } from '@/api/matchQueries';
-import { useMatchSelector } from '@/state/MatchSlice';
+import { useSelectedMatch } from '@/api/matchQueries';
 
 type MatchHeaderProps = {
 
@@ -14,8 +11,7 @@ type MatchHeaderProps = {
 
 const MatchHeader: React.FC<MatchHeaderProps> = ({ }) => {
   const color = useColor();
-  const { matchId } = useMatchSelector();
-  const { data: matchInfo } = useSelectedMatch(matchId);
+  const { data: matchInfo } = useSelectedMatch();
 
   if (!matchInfo) return (<></>);
 

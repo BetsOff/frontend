@@ -4,12 +4,16 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { storageGetItem } from '@/util/Storage';
 import apiRoutes from '@/routes/apiRoutes';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
+import { useSelectedLeague } from '@/api/leagueQueries';
+import { useRouter } from 'expo-router';
+import { setUserId } from '@/state/profile/ProfileSlice';
+import { useDispatch } from 'react-redux';
 
 export default function LeagueScreen() {
+  const dispatch = useDispatch();
   const color = useColor();
-  const league = useSelector((state: RootState) => state.league.currentLeague);
+  const router = useRouter();
+  const { data: league } = useSelectedLeague();
   const [user, setUser] = useState('');
   const [members, setMembers] = useState<Member[]>([])
 
@@ -57,21 +61,30 @@ export default function LeagueScreen() {
     }
   }
 
+  const handleUserPressed = (userId: number) => {
+    dispatch(setUserId(userId));
+    router.push('/other_profile')
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       setMembers(await fetchMembers());
     }
     fetchData();
-  }, [league])
+  }, [league]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{league.name}</Text>
       <View style={styles.members}>
         {members.map((member, index) => (
-          <View key={index} style={[styles.memberRow, { backgroundColor: index % 2 == 0 ? color.background_2 : color.background_1 }]}>
+          <TouchableOpacity 
+            onPress={() => handleUserPressed(member.id)}
+            key={index}
+            style={[styles.memberRow, { backgroundColor: index % 2 == 0 ? color.background_2 : color.background_1 }]}
+          >
             <Text style={styles.memberText}>{member.username}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
 
@@ -149,3 +162,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 })
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}

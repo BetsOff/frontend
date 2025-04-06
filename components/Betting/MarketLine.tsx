@@ -103,8 +103,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		marginHorizontal: 10,
-		paddingTop: 5,
+		margin: 10,
+		marginLeft: 20,
+		// paddingVertical: 5,
 	},
 	marketTitleAndButton: {
 		flexDirection: 'row',
@@ -140,7 +141,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		flexDirection: 'row',
-		padding: 10,
+		paddingHorizontal: 10,
+		marginBottom: 10,
 		borderRadius: 10,
 	},
 	selectable: {

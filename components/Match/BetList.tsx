@@ -11,8 +11,7 @@ type BetListProps = {
 }
 
 const BetList: React.FC<BetListProps> = ({ }) => {
-	const { matchId } = useMatchSelector();
-	const { data: matchInfo } = useSelectedMatch(matchId);
+	const { data: matchInfo } = useSelectedMatch();
 	
 	if (!matchInfo) return (<></>);
 	

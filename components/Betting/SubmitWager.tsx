@@ -5,6 +5,7 @@ import calcualtePointsWon from '@/util/calculatePointsWon';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import { setWager } from '@/state/LineSlice';
+import { useSelectedMatch } from '@/api/matchQueries';
 
 type SubmitWagerProps = {
 	marketLine: MarketLine | null;
@@ -13,19 +14,21 @@ type SubmitWagerProps = {
 const SubmitWager: React.FC<SubmitWagerProps> = ({ marketLine }) => {
 	const color = useColor();
 	const dispatch = useDispatch();
-	const { currentMatch, matches } =  useSelector((state: RootState) => state.match);
+	const { data: match } = useSelectedMatch();
 	const selectedLine = useSelector((state: RootState) => state.line.selectedLine);
 
 	if (!marketLine) return (<></>);
 
-	if (!matches || !currentMatch) return (<></>);
+	if (!match) return (<></>);
 
 	if (!selectedLine) return (<></>);
+
+	const currentMatch = match.matches[0];
 
 	const handleSetWager = (text: string) => {
 		const input = Number(text)
 		const credits_remaining = currentMatch.participants[0].credits_remaining
-		const maxCredits = matches.starting_credits
+		const maxCredits = match.starting_credits
 		const wager = input <= credits_remaining
 			? input <= maxCredits / 2
 				? input

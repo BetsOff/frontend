@@ -15,8 +15,7 @@ type PlayerVsPlayerProps = {
 
 const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
 	const { data: matches } = useMatches();
-	const { matchId } = useMatchSelector();
-	const { data: matchInfo} = useSelectedMatch(matchId);
+	const { data: matchInfo} = useSelectedMatch();
 	const { data: playerOneBetList } = useBets(0);
 	const { data: playerTwoBetList } = useBets(1);
 
