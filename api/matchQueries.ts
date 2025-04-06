@@ -23,8 +23,7 @@ export const useMatches = () => {
       if (matches?.matches.length || 0 > 0) {
         const date = matches.start_date.split('T')[0]
         const [year, month, day] = date.split('-');  // Split the string by '-'
-        const formattedDate = `${day}-${month}-${year}`;  // Reformat it to "DD-MM-YYYY"
-        
+        const formattedDate = `${day}-${month}-${year}`;  // Reformat it to "DD-MM-YYYY"        
         const currentMatch = matches.matches[0];
         dispatch(setMatch(currentMatch.match_id));
         dispatch(setMatchDate(formattedDate));
