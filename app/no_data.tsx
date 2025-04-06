@@ -1,20 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import { useColor, View } from '@/components/Themed';
-import { useRouter } from 'expo-router';
+import { View } from '@/components/Themed';
 import CreateButton from '@/components/CreateButton';
+import { useMembers, useSelectedLeague } from '@/api/leagueQueries';
+import { useEffect } from 'react';
 
 type NoDataScreenProps = {
   data: string;
 }
 
 const NoDataScreen: React.FC<NoDataScreenProps> = ({ data }) => {
-  const color = useColor();
-  const router = useRouter();
+  const { data: members } = useMembers();
 
-  const handleCreateLeague = () => {
-    router.push('/create_league');
-  }
+  useEffect(() => {
+
+  }, [members]);
 
   return (
     <View style={styles.container}>

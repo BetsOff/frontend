@@ -5,10 +5,9 @@ import { getRequest } from "./methods";
 import apiRoutes from "@/routes/apiRoutes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/state/store";
-import { setSelectedLeague } from "@/state/LineSlice";
-import { useEffect, useMemo } from "react";
 import { setLeague } from "@/state/leagueSlice";
 import { authQueryKey } from "./authQueries";
+import { resetSeason } from "@/state/SeasonSlice";
 
 export const useLeagues = () => {
   const userId = storageGetItem('user_id') || '';
@@ -32,8 +31,26 @@ export const useSelectedLeague = () => {
   return { data: selectedLeague, isLoading, error };
 }
 
+export const useMembers = () => {
+  const { data: league } = useSelectedLeague();
+
+  return useQuery({
+    queryKey: [authQueryKey, queryKeys.leagues, queryKeys.members],
+    queryFn: () => getMembers(league!.id),
+    staleTime: 1000 * 60 * 5,
+    enabled: !!league?.id,
+    onSuccess: () => {
+
+    },
+  })
+}
+
 export const getLeagues = (userId: string) => {
   return getRequest(apiRoutes.league.get, { user_id: userId });
+}
+
+export const getMembers = (leagueId: number) => {
+  return getRequest(apiRoutes.league.getUsers, { league_id: leagueId })
 }
 
 export const useInvalidateLeagues = () => {
@@ -48,10 +65,12 @@ export const useInvalidateLeagues = () => {
 
 export const useInvalidateSelectedLeague = () => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   return async () => {
     queryClient.invalidateQueries({
-      queryKey: [queryKeys.seasons],
+      queryKey: [queryKeys.seasons, queryKeys.members],
       exact: false,
     });
+    dispatch(resetSeason());
   }
 }

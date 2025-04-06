@@ -53,7 +53,7 @@ export const getStandings = (seasonId: number | undefined) => {
   return getRequest(apiRoutes.season.standings, { season_id: seasonId });
 }
 
-export const useinvalidateSeasons = () => {
+export const useInvalidateSeasons = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 

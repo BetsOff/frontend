@@ -4,4 +4,5 @@ export default {
   standings: 'standings',
   matches: 'matches',
   bets: 'bets',
+  members: 'members',
 }
