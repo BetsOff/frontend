@@ -25,7 +25,7 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
       marginBottom: 10,
     }}>
       <TouchableOpacity 
-        style={{
+        style={[{
           width: '45%',
           justifyContent: 'center',
           alignItems: 'center',
@@ -33,7 +33,10 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
           paddingVertical: 10,
           borderRadius: 10,
           marginHorizontal: 10,
-        }}
+        },
+        backDisabled && {
+          backgroundColor: color.background_3,
+        }]}
         onPress={onGoBack}
         disabled={backDisabled}
       >
@@ -47,7 +50,7 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
         </Text>
       </TouchableOpacity>
       <TouchableOpacity 
-        style={{
+        style={[{
           width: '45%',
           justifyContent: 'center',
           alignItems: 'center',
@@ -55,7 +58,10 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
           paddingVertical: 10,
           borderRadius: 10,
           marginHorizontal: 10,
-        }}
+        },
+        forwardDisabled && {
+          backgroundColor: color.background_3,
+        }]}
         onPress={onGoForward}
         disabled={forwardDisabled}
       >

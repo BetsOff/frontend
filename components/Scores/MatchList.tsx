@@ -1,17 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import { View } from '@/components/Themed';
+import { Text, View } from '@/components/Themed';
 
 import Match from './Match';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
 import { useInvalidateMatches, useMatches } from '@/api/matchQueries';
+import EmptyMatch from './EmptyMatch';
 
 type MatchesProps = {
-
+  isLoading: boolean;
 }
 
-const MatchList: React.FC<MatchesProps> = ({ }) => {
+const MatchList: React.FC<MatchesProps> = ({ 
+  isLoading = false,
+}) => {
   const [refreshing, setRefreshing] = useState(false);
   const { data: matchSet, refetch } = useMatches();
   const invalidateMatches = useInvalidateMatches();
@@ -22,6 +23,20 @@ const MatchList: React.FC<MatchesProps> = ({ }) => {
     await refetch();
     setRefreshing(false);
   }, [invalidateMatches, refetch]);
+
+  if (isLoading) return (
+    <View style={{
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '55%',
+    }}>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <EmptyMatch key={i}/>
+        ))}
+    </View>
+  );
 
   if (!matchSet) return (<></>);
 

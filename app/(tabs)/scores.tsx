@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import { View } from '@/components/Themed';
+import { Text, View } from '@/components/Themed';
 import LeagueHeader from '@/components/LeagueHeader';
 import MatchHeader from '@/components/Scores/MatchHeader';
 import MatchList from '@/components/Scores/MatchList';
@@ -39,20 +39,6 @@ export default function ScoresScreen() {
     error: matchError,
     refetch: refetchMatches,
   } = useMatches();
-
-  if (leagueIsLoading || leagueError) {
-    return (
-      <NoDataScreen data='league' />
-    )
-  } else if (seasonIsLoading || seasonError) {
-    return (
-      <NoDataScreen data='season' />
-    )
-  } else if (!matches) {
-    return (
-      <View style={{flex: 1}} />
-    )
-  }
 
   const backMatch = () => {
     var next_match = 1;
@@ -97,57 +83,72 @@ export default function ScoresScreen() {
     dispatch(forward([date || getToday(), season?.matchup_length || 0]));
   }
 
-  const firstMatch = !matches.playoff && matches.match_number == 1;
-  const lastMatch = matches.playoff && matches.match_number == matches.num_playoff_matches;
-
-  if (season!.season_number == 0 || season!.season_number == undefined) {
-    return (
-      <View style={styles.container}>
-        <LeagueHeader 
-          leagueName={league!.name}
-          isLoading={leagueIsLoading}
-        />
-        {league!.commissioner
-          ? <View style={styles.seasonButtonContainer}>
-            <CreateButton object='Season' link='/create_season' />
-          </View>
-          : <></>
-        }
-      </View>
-    )
-  }
+  const firstMatch = matches
+    ? !matches.playoff && matches.match_number == 1
+    : false
+  const lastMatch = matches
+    ? matches.playoff && matches.match_number == matches.num_playoff_matches
+    : false
+  const backDisabled = firstMatch || !matches;
+  const forwardDisabled = lastMatch || !matches;
 
   return (
-    <View style={styles.container}>
+    <View style={{
+      flex: 1,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      width: '100%',
+    }}>
+      <>
+        {(leagueError || (!league && !leagueIsLoading)) && (
+          <NoDataScreen data='league' />
+        )}
+      </>
       <LeagueHeader 
-        leagueName={league!.name}
+        leagueName={league?.name || ''}
         isLoading={leagueIsLoading}
       />
-      <MatchHeader />
-      <SteppingBar 
-        onGoForward={forwardMatch} 
-        onGoBack={backMatch} 
-        forwardDisabled={lastMatch}
-        backDisabled={firstMatch}
-      />
-      <MatchList/>
-
+        {(seasonError || (!season && !seasonIsLoading)) && (
+          <>
+            {league!.commissioner
+              ? (
+                <View style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}>
+                  <CreateButton object='Season' link='/create_season' />
+                </View>
+              )
+              : (
+                <View style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                }}>
+                  <Text>
+                    Ask commissioner to start a season
+                  </Text>
+                </View>
+              )
+            }
+          </>
+        )}
+      {!matchError && season && (
+        <>
+          <MatchHeader isLoading={matchIsLoading} />
+          <SteppingBar 
+            onGoForward={forwardMatch} 
+            onGoBack={backMatch} 
+            forwardDisabled={forwardDisabled}
+            backDisabled={backDisabled}
+          />
+          <MatchList isLoading={matchIsLoading} />
+        </>
+      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    width: '100%',
-  },
-  seasonButtonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-  }
-});

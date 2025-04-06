@@ -15,13 +15,16 @@ const LeagueHeader: React.FC<LeagueProps> = ({
   isLoading = false,
 }) => {
 
-  if (isLoading) return (<></>);
+  if (isLoading) return (
+    <View style={styles.leagueContainer}>
+      <Text style={styles.leagueText}>' '</Text>
+    </View>
+  );
 
   return (
     <View style={styles.leagueContainer}>
       <Text style={styles.leagueText}>{leagueName}</Text>
     </View>
-
   );
 }
 
