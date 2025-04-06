@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import { useLeagues, useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useEffect } from 'react';
+import SeasonChampion from '@/components/Standings/SeasonChampion';
 
 export default function StandingsScreen() {
   const { 
@@ -67,6 +68,9 @@ export default function StandingsScreen() {
               end_date={season!.end_date}
             />
           </TouchableOpacity>
+          {season.champion && (
+            <SeasonChampion champion={season.champion} />
+          )}
           <StandingsTable />
         </View>
       )}

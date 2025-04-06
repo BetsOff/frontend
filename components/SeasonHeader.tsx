@@ -27,9 +27,11 @@ const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => 
   const endDate = new Date(end_date);
   endDate.setDate(endDate.getDate() - 1);
 
-  const mostRecentSeason = seasons[seasons.length - 1] === currentSeason;
-
+  const mostRecentSeason = seasons[0] === currentSeason;
   const currentSeasonSelected = String(currentSeason?.season_number) === name[name.length - 1]
+  const noCurrentSeason = (endDate.getTime() < today.getTime() || start_date == undefined)
+
+  const showCreateSeason =  noCurrentSeason && mostRecentSeason && currentSeasonSelected && league!.commissioner
 
   if (isLoading) return (<></>);
 
@@ -42,10 +44,9 @@ const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => 
           : <></>
         }
       </View>
-      {(endDate.getTime() < today.getTime() || start_date == undefined) && league!.commissioner && mostRecentSeason && currentSeasonSelected
-        ? <CreateButton object='Season' link='/create_season' />
-        : <></>
-      }
+      {showCreateSeason && (
+        <CreateButton object='Season' link='/create_season' />
+      )}
     </View>
 
   );

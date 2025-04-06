@@ -1,5 +1,6 @@
 type Season = {
   id: number;
+  champion: string | null;
   league: number;
   season_number: number;
   start_date: string;
