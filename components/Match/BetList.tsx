@@ -7,12 +7,14 @@ import { useSelectedMatch } from '@/api/matchQueries';
 import { useMatchSelector } from '@/state/MatchSlice';
 
 type BetListProps = {
-
+	isLoading?: boolean;
 }
 
-const BetList: React.FC<BetListProps> = ({ }) => {
+const BetList: React.FC<BetListProps> = ({
+	isLoading = false,
+}) => {
 	const { data: matchInfo } = useSelectedMatch();
-	
+
 	if (!matchInfo) return (<></>);
 	
 	const match = matchInfo.matches[0];

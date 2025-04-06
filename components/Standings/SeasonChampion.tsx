@@ -19,8 +19,7 @@ const SeasonChampion: React.FC<SeasonChampionProps> = ({ champion }) => {
     <View style={{
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
-      marginHorizontal: 10,
+      justifyContent: 'center',
       marginVertical: 5,
     }}>
       <FontAwesome5 name="trophy" size={32} color={"#ccb118"} />

@@ -7,7 +7,7 @@ import SeasonHeader from '@/components/SeasonHeader';
 import StandingsTable from '@/components/Standings/StandingsTable';
 import NoDataScreen from '../no_data';
 import { useRouter } from 'expo-router';
-import { useLeagues, useSelectedLeague } from '@/api/leagueQueries';
+import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useEffect } from 'react';
 import SeasonChampion from '@/components/Standings/SeasonChampion';

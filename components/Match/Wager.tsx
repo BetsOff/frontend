@@ -24,22 +24,25 @@ const Wager: React.FC<WagerProps> = ({ league_name, status, wager, participant_i
 	const wagerLost = status === "Final" && wager.points_earned === 0;
 
 	const handleWagerPressed = () => {
-		setExpanded(!expanded)
+		setExpanded(!expanded);
 	}
 
 	const handleScenarioWon = () => {
 		setScenario('won');
 		dispatch(addPlayerScore({ playerIndex: participant_index, betId: wager.id, value: calculatePoints }));
+		setExpanded(!expanded);
 	}
 
 	const handleScenarioLost = () => {
 		setScenario('lost');
 		dispatch(addPlayerScore({ playerIndex: participant_index, betId: wager.id, value: -1 * calculatePoints }));
+		setExpanded(!expanded);
 	}
 
 	const handleScenarioReset = () => {
 		setScenario(null);
 		dispatch(removePlayerScore({ playerIndex: participant_index, betId: wager.id, value: calculatePoints }))
+		setExpanded(!expanded);
 	}
 
 	const market_title = wager.market == 'totals'

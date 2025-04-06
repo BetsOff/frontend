@@ -100,43 +100,41 @@ export default function ScoresScreen() {
       justifyContent: 'flex-start',
       width: '100%',
     }}>
-      <>
-        {(leagueError || (!league && !leagueIsLoading)) && (
+      {(leagueError || (!league && !leagueIsLoading)) && (
+        <>
           <NoDataScreen data='league' />
-        )}
-      </>
+        </>
+      )}
       <LeagueHeader 
         leagueName={league?.name || ''}
         isLoading={leagueIsLoading}
       />
-        {(seasonError || (!season && !seasonIsLoading)) && (
-          <>
-            {league!.commissioner
-              ? (
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%',
-                  height: '100%',
-                }}>
-                  <CreateButton object='Season' link='/create_season' />
-                </View>
-              )
-              : (
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%',
-                  height: '100%',
-                }}>
-                  <Text>
-                    Ask commissioner to start a season
-                  </Text>
-                </View>
-              )
-            }
-          </>
-        )}
+      {(seasonError || (!season && !seasonIsLoading)) && (
+        <>
+          {league!.commissioner
+            ? (
+              <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+                <CreateButton object='Season' link='/create_season' />
+              </View>
+            ) : (
+              <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+                <Text>
+                  Ask commissioner to start a season
+                </Text>
+              </View>
+          )}
+        </>
+      )}
       {!matchError && season && (
         <>
           <MatchHeader isLoading={matchIsLoading} />

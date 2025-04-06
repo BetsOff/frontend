@@ -31,8 +31,7 @@ export default {
   meh: 'meh',
   male: 'male',
   female: 'female',
-  secret: 'secret',
-  castle: 'castle',
   snowflake: 'snowflake',
   scale: 'scale',
+  shark: 'shark',
 }

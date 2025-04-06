@@ -8,18 +8,29 @@ import { useSelector } from 'react-redux';
 import { useMatches, useSelectedMatch } from '@/api/matchQueries';
 import { useMatchSelector } from '@/state/MatchSlice';
 import { useBets } from '@/api/betQueries';
+import EmptyScoreCard from './EmptyScoreCard';
 
 type PlayerVsPlayerProps = {
-
+	isLoading?: boolean,
 }
 
-const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({ }) => {
+const PlayerVsPlayerHeader: React.FC<PlayerVsPlayerProps> = ({
+	isLoading = false,
+}) => {
 	const { data: matches } = useMatches();
 	const { data: matchInfo} = useSelectedMatch();
 	const { data: playerOneBetList } = useBets(0);
 	const { data: playerTwoBetList } = useBets(1);
 
 	useEffect(() => { }, [matches, playerOneBetList]);
+
+	if (isLoading) return (
+		<View style={styles.container}>
+			<EmptyScoreCard />
+			<Text style={styles.versus}>VS</Text>
+			<EmptyScoreCard />
+		</View>
+	);
 
 	if (!matches || !matchInfo || !playerOneBetList || !playerTwoBetList) return (<></>);
 

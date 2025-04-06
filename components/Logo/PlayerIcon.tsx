@@ -82,15 +82,13 @@ const PlayerIcon: React.FC<playerIconProps> = ({ color, icon, size }) => {
       return <FontAwesome name="male" size={size} color={primaryColor} />
     case Icons.male: 
       return <FontAwesome name="female" size={size} color={primaryColor} />
-    case Icons.secret:
-      return <FontAwesome name="user-secret" size={size-2} color={primaryColor} />
-    case Icons.castle:
-      return <FontAwesome name="fort-awesome" size={size-8} color={primaryColor} />
     case Icons.snowflake:
       return <FontAwesome name="snowflake-o" size={size} color={primaryColor} />
     case Icons.scale:
       return <FontAwesome5 name="balance-scale" size={size-4} color={primaryColor} />
-      default:
+    case Icons.shark:
+      return <Entypo name="grooveshark" size={size+2} color={primaryColor} />
+    default:
       <></>
   }
 }

@@ -43,7 +43,7 @@ export default {
     green: '#175e0d',
     blue: '#1725a1',
     purple: '#49148f',
-    cyan: '#148a80',
+    cyan: '#0d5953',
     pink: '#ae19ac',
     brown: '#3a1f08',
     black: '#000',

@@ -27,11 +27,12 @@ const PlayerLogo: React.FC<LogoProps> = ({ logo, diameter }) => {
           height: diameter,
           borderRadius: diameter / 2,
           borderColor: backgroundColor,
-          // borderColor: colorScheme.active_text
         },
       ]}
     >
-      <PlayerIcon icon={icon} size={diameter-8} color={logo.color} />
+      {icon && (
+        <PlayerIcon icon={icon} size={diameter-8} color={logo.color} />
+      )}
     </View>
   );
 };
