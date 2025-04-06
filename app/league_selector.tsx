@@ -12,12 +12,11 @@ export default function LeagueSelectorScreen() {
   const router = useRouter();
   const invalidateSeasons = useinvalidateSeasons();
   const { data: leagues, isLoading } = useLeagues();
-  const { refetch } = useSeasons();
 
   const handlePress = (league: League) => {
+    console.log("SELECTING LEAUGE", league.name, league.id)
     dispatch(setLeague(league));
     invalidateSeasons();
-    refetch();
     router.back();
   }
 

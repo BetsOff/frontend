@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "react-query"
 import queryKeys from "./queryKeys"
 import { getRequest } from "./methods"
 import apiRoutes from "@/routes/apiRoutes"
-import { setSeason } from "@/state/SeasonSlice"
+import { resetSeason, setSeason } from "@/state/SeasonSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/state/store"
 import { useSelectedLeague } from "./leagueQueries"
@@ -14,7 +14,7 @@ export const useSeasons = () => {
 
   return useQuery({
     queryKey: [authQueryKey, queryKeys.leagues, queryKeys.seasons],
-    queryFn: () => getSeasons(league?.id),
+    queryFn: () => getSeasons(league!.id),
     staleTime: 1000 * 60 * 5,
     enabled: !!league?.id,
     onSuccess: (seasons) => {
@@ -26,9 +26,9 @@ export const useSeasons = () => {
 }
 
 export const useSelectedSeason = () => {
-  const { isLoading, error } = useSeasons();
+  const { isLoading, error, refetch } = useSeasons();
   const selectedSeason = useSelector((state: RootState) => state.season.season);
-  return { data: selectedSeason, isLoading, error };
+  return { data: selectedSeason, isLoading, error, refetch };
 }
 
 export const useStandings = () => {
@@ -45,8 +45,8 @@ export const useStandings = () => {
   })
 }
 
-export const getSeasons = (leagueId: number | undefined) => {
-  return getRequest(apiRoutes.season.get, { league_id: leagueId || 0 });
+export const getSeasons = (leagueId: number ) => {
+  return getRequest(apiRoutes.season.get, { league_id: leagueId });
 }
 
 export const getStandings = (seasonId: number | undefined) => {
@@ -55,12 +55,14 @@ export const getStandings = (seasonId: number | undefined) => {
 
 export const useinvalidateSeasons = () => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   return async () => {
     queryClient.invalidateQueries({
       queryKey: [queryKeys.seasons],
       exact: false,
     });
+    dispatch(resetSeason());
   }
 }
 

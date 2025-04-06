@@ -7,7 +7,7 @@ import SeasonHeader from '@/components/SeasonHeader';
 import StandingsTable from '@/components/Standings/StandingsTable';
 import NoDataScreen from '../no_data';
 import { useRouter } from 'expo-router';
-import { useSelectedLeague } from '@/api/leagueQueries';
+import { useLeagues, useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useEffect } from 'react';
 
@@ -22,11 +22,14 @@ export default function StandingsScreen() {
     data: season,
     isLoading: seasonIsLoading,
     error: seasonError,
+    refetch,
   } = useSelectedSeason();
 
-  const router = useRouter();  
-
-  useEffect(() => {}, [league]);
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (league) refetch();
+  }, [league]);
   
   if (leagueIsLoading || leagueError) {
     return (
@@ -57,11 +60,6 @@ export default function StandingsScreen() {
 
       {(!!season) && (
         <View>
-          {/* {(league!.commissioner) && (
-            <View style={styles.seasonButtonContainer}>
-              <CreateButton object='Season' link='/create_season' />
-            </View>
-          )} */}
           <TouchableOpacity onPress={() => router.push('/season_selector')}>
             <SeasonHeader
               name={`Season ${season!.season_number}`}
