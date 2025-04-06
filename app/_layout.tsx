@@ -115,6 +115,14 @@ function RootLayoutNav() {
               },
               headerTintColor: useThemeColor(undefined, 'active_text'),
             }} />
+            <Stack.Screen name="create_season" options={{
+              title: 'Create Season',
+              presentation: 'modal',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
             <Stack.Screen name="edit_logo" options={{
               title: 'Update Logo',
               presentation: 'modal',

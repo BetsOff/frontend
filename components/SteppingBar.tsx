@@ -22,6 +22,7 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginBottom: 10,
     }}>
       <TouchableOpacity 
         style={{
