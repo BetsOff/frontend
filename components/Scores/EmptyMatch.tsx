@@ -1,12 +1,7 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, useColor, View } from '@/components/Themed';
-import { Href, useRouter } from 'expo-router';
+import { useColor, View } from '@/components/Themed';
 
-import PlayerScore from './PlayerScore';
-import { useDispatch, useSelector } from 'react-redux';
 import { useMatches } from '@/api/matchQueries';
-import { setMatch } from '@/state/MatchSlice';
 
 type EmptyMatchProps = {
   

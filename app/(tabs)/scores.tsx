@@ -16,6 +16,7 @@ import { useMatches } from '@/api/matchQueries';
 import { RootState } from '@/state/store';
 import { back, forward, setMatchDate } from '@/state/MatchSlice';
 import getToday from '@/util/date/getToday';
+import StartSeasonOrInviteUser from '@/components/StartSeasonOrInviteUser';
 
 export default function ScoresScreen() {
   const dispatch = useDispatch();
@@ -109,17 +110,17 @@ export default function ScoresScreen() {
         leagueName={league?.name || ''}
         isLoading={leagueIsLoading}
       />
-      {(seasonError || (!season && !seasonIsLoading)) && (
+      {(league && (seasonError || (!season && !seasonIsLoading))) && (
         <>
           {league!.commissioner
             ? (
               <View style={{
+                width: '100%',
+                marginTop: 20,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%',
-                height: '100%',
               }}>
-                <CreateButton object='Season' link='/create_season' />
+                <StartSeasonOrInviteUser />
               </View>
             ) : (
               <View style={{
@@ -128,14 +129,17 @@ export default function ScoresScreen() {
                 width: '100%',
                 height: '100%',
               }}>
-                <Text>
+                <Text style={{
+                  fontSize: 24,
+                  fontWeight: 500,
+                }}>
                   Ask commissioner to start a season
                 </Text>
               </View>
           )}
         </>
       )}
-      {!matchError && season && (
+      {!matchError && season && league && (
         <>
           <MatchHeader isLoading={matchIsLoading} />
           <SteppingBar 

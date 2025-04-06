@@ -18,9 +18,12 @@ type SeasonProps = {
 
 const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => {
   const color = useColor();
-  const { data: league, isLoading, error } = useSelectedLeague();
-  const { data: seasons } = useSeasons();
-  const { data: currentSeason } = useSelectedSeason()
+  const { data: league, isLoading: leagueLoading, error: leagueError } = useSelectedLeague();
+  const { data: seasons, isLoading: seasonLoading, error: seasonError } = useSeasons();
+  const { data: currentSeason } = useSelectedSeason();
+
+  if (leagueLoading || seasonLoading) return (<></>);
+  if (!league || !seasons) return (<></>);
 
   const today = new Date();
   const startDate = new Date(start_date);
@@ -32,8 +35,6 @@ const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => 
   const noCurrentSeason = (endDate.getTime() < today.getTime() || start_date == undefined)
 
   const showCreateSeason =  noCurrentSeason && mostRecentSeason && currentSeasonSelected && league!.commissioner
-
-  if (isLoading) return (<></>);
 
   return (
     <View style={styles.container}>

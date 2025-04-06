@@ -5,7 +5,7 @@ import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
-import { useInvalidateLeagues } from '@/api/leagueQueries';
+import { useInvalidateLeagues, useLeagues } from '@/api/leagueQueries';
 
 const CreateLeagueScreen = () => {
 	const color = useColor();
@@ -13,6 +13,7 @@ const CreateLeagueScreen = () => {
 	const [name, setName] = useState('');
 	const [maxPlayers, setMaxPlayers] = useState('');
 	const invalidateLeagues = useInvalidateLeagues();
+	const { refetch } = useLeagues();
 
 	const handleCreateLeague = async () => {
     try {
@@ -29,6 +30,7 @@ const CreateLeagueScreen = () => {
 			if (response.status === 201) {
 				invalidateLeagues();
 				router.replace('/(tabs)/standings');
+				refetch();
 			}
     } catch (error) {
 			console.error('Error creating league: ', error);

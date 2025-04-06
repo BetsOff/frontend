@@ -73,6 +73,12 @@ function RootLayoutNav() {
               },
               headerTintColor: useThemeColor(undefined, 'active_text'),
             }} />
+            <Stack.Screen name="create_league" options={{
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
             <Stack.Screen name="(tabs)" options={{
               title: '',
               headerShown: false,

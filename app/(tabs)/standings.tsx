@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { View } from '@/components/Themed';
+import { Text, View } from '@/components/Themed';
 
 import LeagueHeader from '@/components/LeagueHeader';
 import SeasonHeader from '@/components/SeasonHeader';
@@ -11,10 +11,11 @@ import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSelectedSeason } from '@/api/seasonQueries';
 import { useEffect } from 'react';
 import SeasonChampion from '@/components/Standings/SeasonChampion';
+import StartSeasonOrInviteUser from '@/components/StartSeasonOrInviteUser';
 
 export default function StandingsScreen() {
-  const { 
-    data: league, 
+  const {
+    data: league,
     isLoading: leagueIsLoading,
     error: leagueError,
   } = useSelectedLeague();
@@ -27,11 +28,11 @@ export default function StandingsScreen() {
   } = useSelectedSeason();
 
   const router = useRouter();
-  
+
   useEffect(() => {
     if (league) refetch();
   }, [league]);
-  
+
   if (leagueIsLoading || leagueError) {
     return (
       <NoDataScreen data='league' />
@@ -45,18 +46,49 @@ export default function StandingsScreen() {
   if (!league) return (<NoDataScreen data='league' />);
 
   return (
-    <View style={styles.container}>
+    <View style={{
+      flex: 1,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start'
+    }}>
       {(!!league || leagueIsLoading) && (
         <TouchableOpacity onPress={() => router.push('/league_selector')}>
-          <LeagueHeader 
-            leagueName={league!.name} 
-            isLoading={leagueIsLoading} 
+          <LeagueHeader
+            leagueName={league!.name}
+            isLoading={leagueIsLoading}
           />
         </TouchableOpacity>
       )}
 
       {(!season) && (
-        <NoDataScreen data='season' />
+        <>
+          {league!.commissioner
+            ? (
+              <View style={{
+                width: '100%',
+                marginTop: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                <StartSeasonOrInviteUser />
+              </View>
+            ) : (
+              <View style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}>
+                <Text style={{
+                  fontSize: 24,
+                  fontWeight: 500,
+                }}>
+                  Ask commissioner to start a season
+                </Text>
+              </View>
+          )}
+        </>
       )}
 
       {(!!season) && (
@@ -77,18 +109,3 @@ export default function StandingsScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  seasonButtonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-  }
-});

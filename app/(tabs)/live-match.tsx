@@ -37,7 +37,9 @@ export default function LiveMatchScreen() {
   const match = matchInfo?.matches[0];
   
   const currentUser = match
-    ? match.participants[0].user_id == Number(storageGetItem('user_id'))
+    ? match.participants
+      ? match.participants[0].user_id == Number(storageGetItem('user_id'))
+      : false
     : false
 
   const isToday = match
@@ -62,7 +64,7 @@ export default function LiveMatchScreen() {
           <NoDataScreen data='league' />
         </>
       )}
-      {(seasonError || (!season && !seasonIsLoading)) && (
+      {(league && (seasonError || (!season && !seasonIsLoading))) && (
         <>
           {league!.commissioner
             ? (

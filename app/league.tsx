@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
 import { useDispatch } from 'react-redux';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import InviteUser from '@/components/inviteUser';
 
 export default function LeagueScreen() {
   const dispatch = useDispatch();
@@ -41,27 +42,6 @@ export default function LeagueScreen() {
     }
   }
 
-  const handleInvite = async () => {
-    try {
-      const response = await axios.post(apiRoutes.league.invite, {
-        league_id: league.id,
-        user: user,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Authorization': `Token ${storageGetItem('token')}`
-        }
-      })
-
-      if (response.status === 201) {
-        setUser('')
-      }
-    } catch (error) {
-      setUser('')
-      console.error(`Error inviting ${user}: `, error)
-    }
-  }
-
   const handleUserPressed = (userId: number) => {
     dispatch(setUserId(userId));
     router.push('/other_profile')
@@ -79,25 +59,7 @@ export default function LeagueScreen() {
       <Text style={styles.text}>{league.name}</Text>
 
       {league.commissioner && (
-        <View style={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.inputText}
-              placeholder="Username"
-              placeholderTextColor="666"
-              value={user}
-              onChangeText={setUser}
-            />
-          </View>
-          <TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={handleInvite}>
-            <Text style={styles.buttonText}>Invite User</Text>
-          </TouchableOpacity>
-        </View>
+        <InviteUser />
       )}
 
       <View style={styles.members}>

@@ -7,9 +7,7 @@ export const useInvalidateAuth = () => {
   const queryClient = useQueryClient();
 
   return async () => {
-    await queryClient.invalidateQueries({
-      queryKey: [authQueryKey],
-      exact: false,
-    })
+    queryClient.clear();
+    await queryClient.invalidateQueries()
   }
 }
