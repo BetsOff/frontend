@@ -38,7 +38,9 @@ export default function LiveMatchScreen() {
   
   const currentUser = match
     ? match.participants
-      ? match.participants[0].user_id == Number(storageGetItem('user_id'))
+      ? match.participants[0]
+        ? match.participants[0].user_id == Number(storageGetItem('user_id'))
+        : false
       : false
     : false
 
@@ -47,7 +49,9 @@ export default function LiveMatchScreen() {
     : false
 
   const creditsRemaining = match
-    ? match.participants[0].credits_remaining > 0
+    ? match.participants[0]
+      ? match.participants[0].credits_remaining > 0
+      : false
     : false
 
   const showMakeBets = currentUser && isToday && creditsRemaining
@@ -91,9 +95,13 @@ export default function LiveMatchScreen() {
         </>
       )}
       <MatchHeader isLoading={matchIsLoading}/>
-      <PlayerVsPlayerHeader isLoading={matchIsLoading} />
+      {(matchIsLoading || currentUser) && (
+        <PlayerVsPlayerHeader isLoading={matchIsLoading} />
+      )}
       {match && <ScenarioInfo />}
-      <BetList isLoading={matchIsLoading}/> 
+      {(matchIsLoading || currentUser) && (
+        <BetList isLoading={matchIsLoading}/>
+      )} 
       {showMakeBets && (
         <View style={{
           justifyContent: 'center',
