@@ -17,7 +17,7 @@ const LeagueHeader: React.FC<LeagueProps> = ({
 
   if (isLoading) return (
     <View style={styles.leagueContainer}>
-      <Text style={styles.leagueText}>' '</Text>
+      <Text style={styles.leagueText}> </Text>
     </View>
   );
 

@@ -18,9 +18,12 @@ export const useLeagues = () => {
     queryFn: () => getLeagues(userId),
     staleTime: 1000 * 60 * 5,
     onSuccess: (leagues) => {
-      if (leagues.length > 0) {
+      if (leagues && leagues.length > 0) {
         dispatch(setLeague(leagues[0]));
       }
+    },
+    onError: () => {
+      console.log('error');
     },
   });
 }

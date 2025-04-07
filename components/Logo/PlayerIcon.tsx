@@ -17,7 +17,7 @@ const PlayerIcon: React.FC<playerIconProps> = ({ color, icon, size }) => {
 
   switch (icon) {
     case 'bot':
-      return <FontAwesome5 name="robot" size={size} color={primaryColor} /> 
+      return <FontAwesome5 name="robot" size={size-2} color={primaryColor} /> 
     case Icons.hockey:
       return <MaterialIcons name="sports-hockey" size={size+1} color={primaryColor} />
     case Icons.baseball:

@@ -22,6 +22,7 @@ const CreateSeasonScreen = () => {
 	const [breakLength, setBreakLength] = useState('');
 	const [creditsPerMatch, setCreditsPerMatch] = useState('');
 	const [teamsInPlayoffs, setTeamsInPlayoffs] = useState('');
+	const [numBots, setNumBots] = useState('');
 	const { refetch } = useSeasons();
 
 	const handleCreateSeason = async () => {
@@ -35,6 +36,7 @@ const CreateSeasonScreen = () => {
 				break_length: Number(breakLength),
 				credits_per_match: Number(creditsPerMatch),
 				teams_in_playoffs: Number(teamsInPlayoffs),
+				num_bots: Number(numBots),
 			}, {
 				headers: {
 					'Content-Type': 'application/json',
@@ -89,6 +91,19 @@ const CreateSeasonScreen = () => {
 					keyboardType='numeric'
 				/>
 			</View>
+
+			<Text>Number of Bots</Text>
+			<View style={[styles.inputView, { borderColor: color.active_text }]}>
+				<TextInput
+					style={[styles.inputText, { color: color.active_text }]}
+					placeholder="0"
+					placeholderTextColor={color.inactive_text}
+					value={numBots}
+					onChangeText={setNumBots}
+					keyboardType='numeric'
+				/>
+			</View>
+
 			<TouchableOpacity style={[styles.button, { backgroundColor: color.brand }]} onPress={handleCreateSeason}>
 				<Text style={styles.buttonText}>Create Season</Text>
 			</TouchableOpacity>

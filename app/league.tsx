@@ -9,7 +9,7 @@ import { useRouter } from 'expo-router';
 import { setUserId } from '@/state/profile/ProfileSlice';
 import { useDispatch } from 'react-redux';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import InviteUser from '@/components/inviteUser';
+import InviteUser from '@/components/InviteUser';
 
 export default function LeagueScreen() {
   const dispatch = useDispatch();
