@@ -12,6 +12,41 @@ import { store } from '@/state/store';
 import { useThemeColor } from '@/components/Themed';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+
+const registerForPushNotificationsAsync = async () => {
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+};
+
+const scheduleDailyNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Odds are in!",
+      body: 'Make your bets now',
+    },
+    trigger: {
+      hour: 9,
+      minute: 0,
+      repeats: true,
+      type: 'calendar',
+    } as Notifications.CalendarTriggerInput,
+  });
+};
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -52,6 +87,11 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const queryClient = new QueryClient();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+    scheduleDailyNotification();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
