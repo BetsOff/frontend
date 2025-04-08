@@ -191,6 +191,13 @@ function RootLayoutNav() {
               },
               headerTintColor: useThemeColor(undefined, 'active_text'),
             }} />
+            <Stack.Screen name="invites" options={{
+              title: 'Invites',
+              headerStyle: {
+                backgroundColor: useThemeColor(undefined, 'brand'),
+              },
+              headerTintColor: useThemeColor(undefined, 'active_text'),
+            }} />
           </Stack>
         </ThemeProvider>
       </Provider>

@@ -7,15 +7,15 @@ import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import apiRoutes from '@/routes/apiRoutes';
-import { useInvalidateLeagues, useSelectedLeague } from '@/api/leagueQueries';
+import { useInvalidateLeagues, useLeagues, useSelectedLeague } from '@/api/leagueQueries';
 
 export default function InvitesScreen() {
 	const color = useColor();
 	const router = useRouter();
 	const [invites, setInvites] = useState<Invite[]>([]);
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-	const league = useSelectedLeague();
 	const invalidateLeagues = useInvalidateLeagues();
+	const { refetch: refetchLeagues } = useLeagues();
 
 	const fetchInvites = async () => {
 		const user_id = storageGetItem('user_id')
@@ -42,6 +42,8 @@ export default function InvitesScreen() {
 	const handleAccept = async (league_id: number) => {
 		try {
 			const response = await axios.put(apiRoutes.league.acceptInvite + `?league_id=${league_id}`, {
+
+			}, {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Authorization': `Token ${storageGetItem('token')}`,
@@ -51,7 +53,8 @@ export default function InvitesScreen() {
 			if (response.status == 200) {
 				fetchInvites();
 				invalidateLeagues();
-				router.navigate('/(tabs)/standings')
+				refetchLeagues();
+				router.replace('/(tabs)/standings')
 			}
 		} catch (error) {
 			console.error('Error accepting invite: ', error);
