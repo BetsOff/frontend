@@ -52,10 +52,24 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
       </View>
 
       {/* Credits remaining or Final */}
-      {status === 'in progress' ? (
+      {status !== 'final' ? (
         <View style={[styles.creditsRemainingContainer, { backgroundColor: color.background_2 }]}>
-          <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>{participant.credits_remaining}/{starting_credits}</Text>
-          <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>Remaining</Text>
+          <Text style={{ 
+            fontSize: 20,
+            fontWeight: 700,
+            fontStyle: 'italic',
+            color: color.inactive_text,
+          }}>
+            {participant.chance_of_winning}%
+          </Text>
+          <Text style={{
+            fontSize: 16,
+            color: color.inactive_text 
+          }}>
+            to win
+          </Text>
+          {/* <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>{participant.credits_remaining}/{starting_credits}</Text>
+          <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>Remaining</Text> */}
         </View>
       ) : <View style={[styles.creditsRemainingContainer, { backgroundColor: color.background_2 }]}></View>
       }

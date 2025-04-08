@@ -8,6 +8,7 @@ type MatchParticipant = {
   };
   record: string;
   credits_remaining: number;
+  chance_of_winning: number;
   score: number;
 }
 
