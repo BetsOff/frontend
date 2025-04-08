@@ -35,13 +35,15 @@ export default function LiveMatchScreen() {
   } = useSelectedMatch();
 
   const match = matchInfo?.matches[0];
-  
-  const currentUser = match
+
+  const participantExists = match
     ? match.participants
       ? match.participants[0]
-        ? match.participants[0].user_id == Number(storageGetItem('user_id'))
-        : false
       : false
+    : false
+  
+  const currentUser = participantExists
+    ? match!.participants[0].user_id == Number(storageGetItem('user_id'))
     : false
 
   const isToday = match
@@ -95,11 +97,11 @@ export default function LiveMatchScreen() {
         </>
       )}
       <MatchHeader isLoading={matchIsLoading}/>
-      {(matchIsLoading || currentUser) && (
+      {(matchIsLoading || participantExists) && (
         <PlayerVsPlayerHeader isLoading={matchIsLoading} />
       )}
       {match && <ScenarioInfo />}
-      {(matchIsLoading || currentUser) && (
+      {(matchIsLoading || participantExists) && (
         <BetList isLoading={matchIsLoading}/>
       )} 
       {showMakeBets && (

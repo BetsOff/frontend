@@ -24,7 +24,6 @@ const registerForPushNotificationsAsync = async () => {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
       return;
     }
   } else {
@@ -33,6 +32,7 @@ const registerForPushNotificationsAsync = async () => {
 };
 
 const scheduleDailyNotification = async () => {
+  await Notifications.cancelAllScheduledNotificationsAsync();
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Odds are in!",

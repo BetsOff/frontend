@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/state/store';
 import apiRoutes from '@/routes/apiRoutes';
-import { invalidateLeagues, useSelectedLeague } from '@/api/leagueQueries';
+import { useInvalidateLeagues, useSelectedLeague } from '@/api/leagueQueries';
 
 export default function InvitesScreen() {
 	const color = useColor();
@@ -15,6 +15,7 @@ export default function InvitesScreen() {
 	const [invites, setInvites] = useState<Invite[]>([]);
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 	const league = useSelectedLeague();
+	const invalidateLeagues = useInvalidateLeagues();
 
 	const fetchInvites = async () => {
 		const user_id = storageGetItem('user_id')

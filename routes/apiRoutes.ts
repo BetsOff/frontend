@@ -1,5 +1,5 @@
-// const apiUrl = "http://192.168.1.132:8000";
-const apiUrl = "https://betsoff-api-production.up.railway.app";
+const apiUrl = "http://192.168.1.132:8000";
+// const apiUrl = "https://betsoff-api-production.up.railway.app";
 
 const apiRoutes = {
   users: {
