@@ -52,8 +52,8 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
       </View>
 
       {/* Credits remaining or Final */}
-      {status !== 'final' ? (
-        <View style={[styles.creditsRemainingContainer, { backgroundColor: color.background_2 }]}>
+      {(status !== 'Final' && status !== 'upcoming') ? (
+        <View style={[styles.oddsContainer, { backgroundColor: color.background_2 }]}>
           <Text style={{ 
             fontSize: 20,
             fontWeight: 700,
@@ -68,10 +68,8 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
           }}>
             to win
           </Text>
-          {/* <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>{participant.credits_remaining}/{starting_credits}</Text>
-          <Text style={[styles.creditsRemainingText, { color: color.inactive_text }]}>Remaining</Text> */}
         </View>
-      ) : <View style={[styles.creditsRemainingContainer, { backgroundColor: color.background_2 }]}></View>
+      ) : <View style={[styles.oddsContainer, { backgroundColor: color.background_2, width: '20%' }]}></View>
       }
 
       {/* Score */}
@@ -80,7 +78,22 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
           <Text style={styles.scoreText}>{participant.score}</Text>
         </View>
       ) : (
-        <View style={[styles.emptyScoreBox, { backgroundColor: color.background_2 }]} />
+        <View style={[styles.oddsContainer, { backgroundColor: color.background_2, width: '25%' }]}>
+          <Text style={{ 
+            fontSize: 20,
+            fontWeight: 700,
+            fontStyle: 'italic',
+            color: color.inactive_text,
+          }}>
+            {participant.chance_of_winning}%
+          </Text>
+          <Text style={{
+            fontSize: 16,
+            color: color.inactive_text 
+          }}>
+            to win
+          </Text>
+        </View>
       )}
     </View>
   )
@@ -111,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingRight: 5,
   },
-  creditsRemainingContainer: {
+  oddsContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     width: '25%'
