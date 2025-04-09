@@ -29,7 +29,7 @@ const StandingsTable = () => {
           <Text style={styles.headerText}>Player</Text>
         </View>
         <View style={styles.infoHeaderCell}>
-          <Text style={styles.headerText}></Text>
+          <Text style={[styles.headerText, { fontSize: 14 }]}>Clinch</Text>
         </View>
         <View style={styles.recordHeaderCell}>
           <Text style={styles.headerText}>Record</Text>

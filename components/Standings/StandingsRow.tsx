@@ -58,9 +58,23 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
           )}
         </View>
         {/* Clinch Tag */}
-        <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
-          <ClinchTag clinch={standing.clinch} row_background={background_color} />
-        </View>
+        {standing.clinch && (
+          <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
+            <ClinchTag clinch={standing.clinch} row_background={background_color} />
+          </View>
+        )}
+        {!standing.clinch && (
+          <View style={[styles.clinchCell, { backgroundColor: background_color }]}>
+            <Text style={{ 
+              fontSize: 14,
+              fontWeight: 700,
+              fontStyle: 'italic',
+              color: color.inactive_text,
+            }}>
+              {standing.playoff_odds}%
+            </Text>
+          </View>
+        )}
         {/* Record */}
         <View style={[styles.recordCell, { backgroundColor: background_color }]}>
           <Text style={styles.cellTextMinor}>

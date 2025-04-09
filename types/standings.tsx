@@ -7,6 +7,7 @@ type Standing = {
   clinch: string | null;
   user: string;
   user_id: number;
+  playoff_odds: number;
   logo: Logo;
 }
 
