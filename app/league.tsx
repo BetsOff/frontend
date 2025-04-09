@@ -69,7 +69,6 @@ export default function LeagueScreen() {
             key={index}
             style={[styles.memberRow, { backgroundColor: index % 2 == 0 ? color.background_2 : color.background_1 }]}
           >
-            
             <Text style={styles.memberText}>{member.username}</Text>
             {member.commissioner && (
               <FontAwesome5 style={[{ paddingRight: 5 }]} name="crown" size={18} color={color.inactive_text} />

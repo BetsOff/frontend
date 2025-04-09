@@ -60,7 +60,7 @@ const CreateSeasonScreen = () => {
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="10"
+					placeholder="Enter a number..."
 					placeholderTextColor={color.inactive_text}
 					value={numMatches}
 					onChangeText={setNumMatches}
@@ -72,7 +72,7 @@ const CreateSeasonScreen = () => {
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="1"
+					placeholder="Enter a number 1-7..."
 					placeholderTextColor={color.inactive_text}
 					value={matchupLength}
 					onChangeText={setMatchupLength}
@@ -84,7 +84,7 @@ const CreateSeasonScreen = () => {
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="4"
+					placeholder="Enter a number minimum 2, maximum number of players in the season..."
 					placeholderTextColor={color.inactive_text}
 					value={teamsInPlayoffs}
 					onChangeText={setTeamsInPlayoffs}
@@ -96,7 +96,7 @@ const CreateSeasonScreen = () => {
 			<View style={[styles.inputView, { borderColor: color.active_text }]}>
 				<TextInput
 					style={[styles.inputText, { color: color.active_text }]}
-					placeholder="0"
+					placeholder="Enter a number 0-8..."
 					placeholderTextColor={color.inactive_text}
 					value={numBots}
 					onChangeText={setNumBots}
