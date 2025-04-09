@@ -28,6 +28,12 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
     ? [styles.cellTextMajor]
     : [styles.longCellTextMajor]
 
+  const pf = standing.pf >= 1000
+    ? Math.round(standing.pf)
+    : standing.pf >= 100
+      ? Math.round(standing.pf * 10) / 10
+      : standing.pf
+
   // standing.user == storageGetItem('user')
 
   const handleProfilePressed = () => {
@@ -83,7 +89,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
         </View>
         {/* Points For */}
         <View style={[styles.diffCell, { backgroundColor: background_color }]}>
-          <Text style={styles.cellTextMinor}>{standing.pf}</Text>
+          <Text style={styles.cellTextMinor}>{pf}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -121,7 +127,7 @@ const styles = StyleSheet.create({
   clinchCell: {
     ...baseStyles.cell,
     padding: 0,
-    width: '10%',
+    width: '15%',
   },
   recordCell: {
     ...baseStyles.cell,
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
   },
   diffCell: {
     ...baseStyles.cell,
-    width: '20%',
+    width: '15%',
   },
   cellTextMajor: {
     fontWeight: 500,

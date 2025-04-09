@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   infoHeaderCell: {
-    width: '10%',
+    width: '15%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pfHeaderCell: {
-    width: '20%',
+    width: '15%',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
