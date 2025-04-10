@@ -51,8 +51,8 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
         )}
       </View>
 
-      {/* Credits remaining or Final */}
-      {(status !== 'Final' && status !== 'upcoming') ? (
+      {/* Odds or Final */}
+      {(status !== 'final' && status !== 'upcoming') ? (
         <View style={[styles.oddsContainer, { backgroundColor: color.background_2 }]}>
           <Text style={{ 
             fontSize: 20,
@@ -69,11 +69,11 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ participant, winner, starting
             to win
           </Text>
         </View>
-      ) : <View style={[styles.oddsContainer, { backgroundColor: color.background_2, width: '20%' }]}></View>
+      ) : <View style={[styles.oddsContainer, { backgroundColor: color.background_2, width: status == 'final' ? '25%' : '20%' }]}></View>
       }
 
       {/* Score */}
-      {status !== 'upcoming' ? (
+      {(status !== 'upcoming') ? (
         <View style={[styles.scoreBox, { backgroundColor: scoreCardBackgroundColor }]}>
           <Text style={styles.scoreText}>{participant.score}</Text>
         </View>

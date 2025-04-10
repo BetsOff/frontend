@@ -6,7 +6,7 @@ interface HeaderLoadingProps {
 }
 
 const HeaderLoading: React.FC<HeaderLoadingProps> = ({
-  withDates = false
+  withDates = true
  }) => {
   const color = useColor();
 
@@ -15,7 +15,7 @@ const HeaderLoading: React.FC<HeaderLoadingProps> = ({
       flexDirection: 'column',
       alignItems: 'flex-start',
       padding: 15,
-      paddingTop: withDates ? 0 : 20,
+      paddingTop: !withDates ? 0 : 20,
       width: '100%',
     }}>
       <View style={[{
