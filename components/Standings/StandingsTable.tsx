@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 
 import StandingsRow from './StandingsRow'
 import { useInvalidateStandings, useStandings } from '@/api/seasonQueries';
+import EmptyStandingsRow from './EmptyStandingsRow';
 
 const StandingsTable = () => {
   const { data: standings, refetch } = useStandings();
@@ -45,11 +46,11 @@ const StandingsTable = () => {
       >
         {/* Data Row */}
         {!standings ? (
-          <View>
-            <Text>Loading...</Text>
-          </View>
+          Array.from({ length: 10 }).map((_, index) => (
+            <EmptyStandingsRow row={index} key={index}/>
+          ))
         ) : (
-          standings.map((standing, index) => (
+          standings!.map((standing, index) => (
             <StandingsRow
               standing={standing}
               row={index}

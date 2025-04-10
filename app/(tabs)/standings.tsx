@@ -33,17 +33,11 @@ export default function StandingsScreen() {
     if (league) refetch();
   }, [league]);
 
-  if (leagueIsLoading || leagueError) {
+  if (!league && !leagueIsLoading) {
     return (
       <NoDataScreen data='league' />
     );
-  } else if (seasonIsLoading || seasonError) {
-    return (
-      <NoDataScreen data='season' />
-    );
   }
-
-  if (!league) return (<NoDataScreen data='league' />);
 
   return (
     <View style={{
@@ -53,15 +47,15 @@ export default function StandingsScreen() {
       justifyContent: 'flex-start'
     }}>
       {(!!league || leagueIsLoading) && (
-        <TouchableOpacity onPress={() => router.push('/league_selector')}>
+        <TouchableOpacity disabled={!league} onPress={() => router.push('/league_selector')}>
           <LeagueHeader
-            leagueName={league!.name}
+            leagueName={league?.name || ''}
             isLoading={leagueIsLoading}
           />
         </TouchableOpacity>
       )}
 
-      {(!season) && (
+      {(league && (!season && !seasonIsLoading)) && (
         <>
           {league!.commissioner
             ? (
@@ -91,21 +85,20 @@ export default function StandingsScreen() {
         </>
       )}
 
-      {(!!season) && (
-        <View>
-          <TouchableOpacity onPress={() => router.push('/season_selector')}>
-            <SeasonHeader
-              name={`Season ${season!.season_number}`}
-              start_date={season!.start_date}
-              end_date={season!.end_date}
-            />
-          </TouchableOpacity>
-          {season.champion && (
-            <SeasonChampion champion={season.champion} />
-          )}
-          <StandingsTable />
-        </View>
-      )}
+      <View>
+        <TouchableOpacity disabled={!season} onPress={() => router.push('/season_selector')}>
+          <SeasonHeader
+            name={`Season ${season?.season_number || '0'}`}
+            start_date={season?.start_date || '01-01-1970'}
+            end_date={season?.end_date || '01-01-1970'}
+          />
+        </TouchableOpacity>
+        {!!season && season.champion && (
+          <SeasonChampion champion={season.champion} />
+        )}
+        <StandingsTable />
+      </View>
+      
     </View>
   );
 }

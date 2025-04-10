@@ -4,6 +4,7 @@ import { Text, View } from '@/components/Themed';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
+import HeaderLoading from './HeaderLoading';
 
 type LeagueProps = {
   leagueName: string;
@@ -16,8 +17,12 @@ const LeagueHeader: React.FC<LeagueProps> = ({
 }) => {
 
   if (isLoading) return (
-    <View style={styles.leagueContainer}>
-      <Text style={styles.leagueText}> </Text>
+    <View style={{
+      flexDirection: 'row',
+      width: '300%',
+      marginBottom: -13,
+    }}>
+      <HeaderLoading withDates={false} />
     </View>
   );
 

@@ -6,6 +6,7 @@ import formatDateWithDay from '@/util/date/formatDateWithDay';
 import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
 import { useMatches } from '@/api/matchQueries';
+import HeaderLoading from '../HeaderLoading';
 
 type MatchHeaderProps = {
   isLoading: boolean
@@ -18,28 +19,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({
 	const { data: matches } = useMatches();
   
   if (isLoading) return (
-    <View style={styles.matchContainer}>
-      <View style={{
-        backgroundColor: color.background_3,
-        borderRadius: 5,
-        paddingHorizontal: 5,
-        width: '20%',
-        marginTop: -2,
-        marginBottom: 2,
-      }}>
-        <Text style={styles.matchText}> </Text>
-      </View>
-      <View style={{
-        backgroundColor: color.background_2,
-        borderRadius: 5,
-        paddingHorizontal: 5,
-        width: '30%',
-        marginTop: 2,
-        marginBottom: -2,
-      }}>
-        <Text style={[styles.datesText, { color: color.inactive_text }]}>{" "}</Text>
-      </View>
-    </View>
+    <HeaderLoading />
   );
 
   if (!matches) return (<></>);

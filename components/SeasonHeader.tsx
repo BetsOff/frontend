@@ -9,6 +9,7 @@ import { RootState } from '@/state/store';
 import { useSelector } from 'react-redux';
 import { useSelectedLeague } from '@/api/leagueQueries';
 import { useSeasons, useSelectedSeason } from '@/api/seasonQueries';
+import HeaderLoading from './HeaderLoading';
 
 type SeasonProps = {
   name: string;
@@ -16,13 +17,17 @@ type SeasonProps = {
   end_date: string;
 }
 
-const SeasonHeader: React.FC<SeasonProps> = ({ name, start_date, end_date }) => {
+const SeasonHeader: React.FC<SeasonProps> = ({ 
+  name,
+  start_date, 
+  end_date, 
+}) => {
   const color = useColor();
   const { data: league, isLoading: leagueLoading, error: leagueError } = useSelectedLeague();
   const { data: seasons, isLoading: seasonLoading, error: seasonError } = useSeasons();
   const { data: currentSeason } = useSelectedSeason();
 
-  if (leagueLoading || seasonLoading) return (<></>);
+  if (leagueLoading || seasonLoading) return (<HeaderLoading />);
   if (!league || !seasons) return (<></>);
 
   const today = new Date();
