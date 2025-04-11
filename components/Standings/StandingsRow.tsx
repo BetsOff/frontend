@@ -34,7 +34,11 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
       ? Math.round(standing.pf * 10) / 10
       : standing.pf
 
-  // standing.user == storageGetItem('user')
+  const parsed_odds = standing.playoff_odds === 100
+    ? '>99'
+    : standing.playoff_odds === 0
+      ? '<1'
+      : standing.playoff_odds
 
   const handleProfilePressed = () => {
     dispatch(setUserId(standing.user_id));
@@ -77,7 +81,7 @@ const StandingsRow: React.FC<StandingsRowProps> = ({ standing, row }) => {
               fontStyle: 'italic',
               color: color.inactive_text,
             }}>
-              {standing.playoff_odds}%
+              {parsed_odds}%
             </Text>
           </View>
         )}
