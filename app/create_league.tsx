@@ -1,7 +1,7 @@
 import { Text, useColor, View } from '@/components/Themed';
 import axios from 'axios';
 import { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { storageGetItem } from '@/util/Storage';
 import { useRouter } from 'expo-router';
 import apiRoutes from '@/routes/apiRoutes';
@@ -41,20 +41,88 @@ const CreateLeagueScreen = () => {
 	}
 
 	return (
-		<View style={styles.container}>
-			<View style={[styles.inputView, {borderColor: color.active_text}]}>
-				<TextInput 
-					style={[styles.inputText, {color: color.active_text}]}
-					placeholder="League Name"
-					placeholderTextColor={color.inactive_text}
-					value={name}
-					onChangeText={setName}
-				/>
-			</View>
-			<TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleCreateLeague}>
-				<Text style={styles.buttonText}>Create League</Text>
-			</TouchableOpacity>
-    </View>
+		<SafeAreaView style={{flex: 1}}>
+			<KeyboardAvoidingView style={[styles.container, {
+				backgroundColor: '',
+				flex: 1,
+				}]} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<View style={[styles.inputView, {borderColor: color.active_text}]}>
+					<TextInput
+						style={[styles.inputText, {color: color.active_text}]}
+						placeholder="League Name"
+						placeholderTextColor={color.inactive_text}
+						value={name}
+						onChangeText={setName}
+					/>
+				</View>
+				<TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleCreateLeague}>
+					<Text style={styles.buttonText}>Create League</Text>
+				</TouchableOpacity>
+			</KeyboardAvoidingView>
+		</SafeAreaView>
 	);
 }
 
