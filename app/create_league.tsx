@@ -41,74 +41,7 @@ const CreateLeagueScreen = () => {
 	}
 
 	return (
-		<SafeAreaView style={{flex: 1}}>
-			<KeyboardAvoidingView style={[styles.container, {
-				backgroundColor: '',
-				flex: 1,
-				}]} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
-				<View style={[styles.inputView, {borderColor: color.active_text}]}>
-					<TextInput
-						style={[styles.inputText, {color: color.active_text}]}
-						placeholder="League Name"
-						placeholderTextColor={color.inactive_text}
-						value={name}
-						onChangeText={setName}
-					/>
-				</View>
+		<View style={{flex: 1}}>
 				<View style={[styles.inputView, {borderColor: color.active_text}]}>
 					<TextInput
 						style={[styles.inputText, {color: color.active_text}]}
@@ -121,8 +54,7 @@ const CreateLeagueScreen = () => {
 				<TouchableOpacity style={[styles.button, {backgroundColor: color.brand}]} onPress={handleCreateLeague}>
 					<Text style={styles.buttonText}>Create League</Text>
 				</TouchableOpacity>
-			</KeyboardAvoidingView>
-		</SafeAreaView>
+		</View>
 	);
 }
 
