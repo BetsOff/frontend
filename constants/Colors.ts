@@ -1,14 +1,20 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
+const transparent = 'rgba(0,0,0,0)';
+const brand = '#304f28';
+const won = '#228f3c';
+const loss = '#b32222';
+const white = '#fff'
 
 export default {
   light: {
     text: '#000',
-    brand: "#304f28",
-    won: '#2f9647',
-    scenarioWon: 'rgba(2f, 96, 47, 0.5)',
-    loss: '#9C2B2B',
-    scenarioLoss: 'rgba(9c, 2b, 2b, 0.5)',
+    white: white,
+    brand: brand,
+    won: won,
+    scenarioWon: 'rgba(47, 150, 71, 0.5)',
+    loss: loss,
+    scenarioLoss: 'rgba(156, 43, 43, 0.5)',
     background_1: '#fff',
     background_2: '#eee',
     background_3: '#ddd',
@@ -17,14 +23,15 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
-    transparent: 'rgba(0,0,0,0)',
+    transparent: transparent,
   },
   dark: {
     text: '#fff',
-    brand: "#304f28",
-    won: '#228f3c',
+    white: white,
+    brand: brand,
+    won: won,
     scenarioWon: 'rgba(47, 150, 71, 0.5)',
-    loss: '#b32222',
+    loss: loss,
     scenarioLoss: 'rgba(156, 43, 43, 0.5)',
     background_1: '#171717',
     background_2: '#272727',
@@ -34,7 +41,7 @@ export default {
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
-    transparent: 'rgba(0,0,0,0)',
+    transparent: transparent,
   },
   logo: {
     red: '#b31a1a',

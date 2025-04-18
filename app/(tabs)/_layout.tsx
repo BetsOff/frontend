@@ -28,6 +28,7 @@ export default function TabLayout() {
         name="standings"
         options={{
           title: 'Standings',
+          headerTintColor: useThemeColor(undefined, 'white'),
           tabBarIcon: ({ color }) => <AntDesign name="barschart" size={24} color={color} />,
         }}
       />
@@ -35,6 +36,7 @@ export default function TabLayout() {
         name="scores"
         options={{
           title: 'Scores',
+          headerTintColor: useThemeColor(undefined, 'white'),
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="scoreboard-outline" size={24} color={color} />,
         }}
       />
@@ -42,6 +44,7 @@ export default function TabLayout() {
         name="live-match"
         options={{
           title: 'Live Match',
+          headerTintColor: useThemeColor(undefined, 'white'),
           tabBarIcon: ({ color }) => <MaterialIcons name="attach-money" size={32} color={color} />,
         }}
       />
@@ -49,6 +52,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
+          headerTintColor: useThemeColor(undefined, 'white'),
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account" size={28} color={color} />,
         }}
       />
@@ -56,6 +60,7 @@ export default function TabLayout() {
         name="more"
         options={{
           title: 'More',
+          headerTintColor: useThemeColor(undefined, 'white'),
           tabBarIcon: ({ color }) =><Entypo name="dots-three-horizontal" size={24} color={color} />,
         }}
       />

@@ -2,9 +2,6 @@ import { Text, useColor, View } from '@/components/Themed';
 import { StyleSheet } from 'react-native';
 import Wager from './Wager'
 import { formatDateWithTime } from '@/util/date/formatDateWithDayTime';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/state/store';
-import { useEffect } from 'react';
 
 type BetCardProps = {
 	league_name: string;

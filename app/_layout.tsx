@@ -104,20 +104,20 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="create_account" options={{
               headerShown: false,
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="create_league" options={{
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="(tabs)" options={{
               title: '',
@@ -125,7 +125,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="make_bet" options={{
               title: 'Make Bet',
@@ -134,7 +134,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="other_profile" options={{
               title: 'Profile',
@@ -143,7 +143,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="season_selector" options={{
               title: 'Select Season',
@@ -151,7 +151,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="league_selector" options={{
               title: 'Select League',
@@ -159,7 +159,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="create_season" options={{
               title: 'Create Season',
@@ -167,7 +167,7 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="edit_logo" options={{
               title: 'Update Logo',
@@ -175,28 +175,28 @@ function RootLayoutNav() {
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="leagues" options={{
               title: 'My Leagues',
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="league" options={{
               title: 'League',
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
             <Stack.Screen name="invites" options={{
               title: 'Invites',
               headerStyle: {
                 backgroundColor: useThemeColor(undefined, 'brand'),
               },
-              headerTintColor: useThemeColor(undefined, 'active_text'),
+              headerTintColor: useThemeColor(undefined, 'white'),
             }} />
           </Stack>
         </ThemeProvider>

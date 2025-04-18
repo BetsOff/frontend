@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import { Text, useColor, View } from '@/components/Themed';
 import { RootState } from '@/state/store';
@@ -123,7 +123,7 @@ export default function EditLogoScreen() {
         <View style={[styles.selections, {width: '200%'}]}>
           {Object.keys(icons).map((icon, index) => (
             <TouchableOpacity style={styles.option} onPress={() => setIcon(icon)} key={index}>
-              <PlayerIcon color='white' icon={icon} size={36} />
+              <PlayerIcon color={color.active_text} icon={icon} size={36} />
             </TouchableOpacity>
           ))}
         </View>

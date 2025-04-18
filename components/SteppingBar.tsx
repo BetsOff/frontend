@@ -42,6 +42,7 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
       >
         <Text
           style={{
+            color: forwardDisabled ? color.active_text : color.white,
             fontSize: 16,
             fontWeight: 500,
           }}
@@ -67,6 +68,7 @@ const SteppingBar: React.FC<SteppingBarProps> = ({
       >
         <Text
           style={{
+            color: forwardDisabled ? color.active_text : color.white,
             fontSize: 16,
             fontWeight: 500,
           }}
