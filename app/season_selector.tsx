@@ -1,11 +1,9 @@
-import { useInvalidateMatches, useMatches } from '@/api/matchQueries';
 import { useSeasons, useSelectedSeason } from '@/api/seasonQueries';
 import SeasonHeader from '@/components/SeasonHeader';
-import { View, Text } from '@/components/Themed';
-import { resetMatches, useMatchSelector } from '@/state/MatchSlice';
+import { View } from '@/components/Themed';
+import { resetMatches } from '@/state/MatchSlice';
 import { setSeason } from '@/state/SeasonSlice';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -14,10 +12,6 @@ export default function SeasonSelectorScreen() {
   const router = useRouter();
   const { data: seasons } = useSeasons();
   const { data: selectedSeason } = useSelectedSeason();
-  const match = useMatchSelector();
-  const invalidateMatches = useInvalidateMatches();
-
-  //  
 
   const handlePress = async (season: Season) => {
     if (season !== selectedSeason) {
